@@ -7,10 +7,13 @@ private:
     const char* name;
     const char* description;
 
-    std::function<void(const CommnandArgs* expected_args)> action;
+    CommnandArgs* expected_args;
+
+    std::function<void*(ParsedArgs)> action;
 
 public:
     Command(const char* name, const char* description);
+    ~Command();
 
-
+    void execute(int argc, char* argv[]);
 };

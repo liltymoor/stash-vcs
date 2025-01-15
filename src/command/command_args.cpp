@@ -77,3 +77,7 @@ CommnandArgs::~CommnandArgs() {
         delete arg;
     }
 }
+
+bool ParsedArgs::hasArg(const char* str) const {
+    return parsed_args.find(str) != parsed_args.end();
+}

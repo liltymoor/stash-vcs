@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
-#include <set>
+#include <unordered_set>
 
 class Arg {
     private:
@@ -29,6 +29,11 @@ class Arg {
         bool operator==(const Arg& other) const;
 };
 
+struct ParsedArgs {
+    std::unordered_set<std::string> parsed_args;
+    bool hasArg(const char* str) const;
+};
+
 
 class CommnandArgs {
     private:
@@ -38,7 +43,7 @@ class CommnandArgs {
         CommnandArgs(std::vector<Arg*> args);
 
         // TODO: Реализовать
-        virtual std::set<Arg*> parseArgs(const char* str) const;
+        virtual ParsedArgs parseArgs(const std::vector<std::string> args) const;
 
-        ~CommnandArgs();
+        virtual ~CommnandArgs();
 };
