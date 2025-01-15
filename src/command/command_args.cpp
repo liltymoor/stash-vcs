@@ -61,13 +61,19 @@ bool Arg::operator==(const Arg& other) const {
 //
 
 CommnandArgs::CommnandArgs() {
-    expected_args = std::vector<Arg>();
-    expected_args.push_back(Arg("verbose", "Do explicit prints to console"));
-    expected_args.push_back(Arg("help", "Print help message to console"));
+    expected_args = std::vector<Arg*>();
+    expected_args.push_back(new Arg("verbose", "Do explicit prints to console"));
+    expected_args.push_back(new Arg("help", "Print help message to console"));
 }
 
-CommnandArgs::CommnandArgs(std::vector<Arg> args)
+CommnandArgs::CommnandArgs(std::vector<Arg*> args)
 : CommnandArgs::CommnandArgs()
 {
     expected_args.insert(expected_args.end(), args.begin(), args.end());
+}
+
+CommnandArgs::~CommnandArgs() {
+    for (auto arg : expected_args) {
+        delete arg;
+    }
 }

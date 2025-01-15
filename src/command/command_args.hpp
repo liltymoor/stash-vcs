@@ -32,11 +32,13 @@ class Arg {
 
 class CommnandArgs {
     private:
-        std::vector<Arg> expected_args;
+        std::vector<Arg*> expected_args;
     public:
         CommnandArgs();
-        CommnandArgs(std::vector<Arg> args);
+        CommnandArgs(std::vector<Arg*> args);
 
         // TODO: Реализовать
-        virtual std::set<Arg> parseArgs(const char* str) const = 0;
+        virtual std::set<Arg*> parseArgs(const char* str) const;
+
+        ~CommnandArgs();
 };
