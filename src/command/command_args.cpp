@@ -60,22 +60,39 @@ bool Arg::operator==(const Arg& other) const {
 // COMMAND ARGS
 //
 
-CommnandArgs::CommnandArgs() {
+CommandArgs::CommandArgs() {
     expected_args = std::vector<Arg*>();
     expected_args.push_back(new Arg("verbose", "Do explicit prints to console"));
     expected_args.push_back(new Arg("help", "Print help message to console"));
 }
 
-CommnandArgs::CommnandArgs(std::vector<Arg*> args)
-: CommnandArgs::CommnandArgs()
+CommandArgs::CommandArgs(std::vector<Arg*> args)
+: CommandArgs::CommandArgs()
 {
     expected_args.insert(expected_args.end(), args.begin(), args.end());
 }
 
-CommnandArgs::~CommnandArgs() {
+CommandArgs::~CommandArgs() {
     for (auto arg : expected_args) {
         delete arg;
     }
+}
+
+ParsedArgs CommandArgs::parseArgs(const std::vector<std::string> args) const
+{
+    ParsedArgs result;
+    for (const auto &token : args)
+    {
+        for (const auto &arg : expected_args)
+        {
+            if (arg->parse(token.c_str()))
+            {
+                result.parsed_args.insert(arg->getName());
+                break;
+            }
+        }
+    }
+    return result;
 }
 
 bool ParsedArgs::hasArg(const char* str) const {

@@ -3,7 +3,7 @@
 Command::Command(const char* name, const char* description) {
     this->name = name;
     this->description = description;
-    this->expected_args = new CommnandArgs();
+    this->expected_args = new CommandArgs();
 
     this->action = [](ParsedArgs args) {
         if (args.hasArg("help")) { // если help есть

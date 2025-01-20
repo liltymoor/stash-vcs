@@ -35,14 +35,14 @@ struct ParsedArgs {
 };
 
 
-class CommnandArgs {
+class CommandArgs {
     private:
         std::vector<Arg*> expected_args;
     public:
-        CommnandArgs();
-        CommnandArgs(std::vector<Arg*> args);
+        CommandArgs();
+        CommandArgs(std::vector<Arg*> args);
 
         virtual ParsedArgs parseArgs(const std::vector<std::string> args) const;
 
-        virtual ~CommnandArgs();
+        virtual ~CommandArgs();
 };
