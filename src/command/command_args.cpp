@@ -16,8 +16,8 @@ Arg::Arg(const char* name, const char* desc) {
 
     definitions = std::vector<std::string>();
 
-    definitions.push_back(FULL_ARG(name));
-    definitions.push_back(SHORT_ARG(name));
+    definitions.push_back(FULL_ARG(str_name));
+    definitions.push_back(SHORT_ARG(str_short_name));
 }
 
 Arg::Arg(const char* name, const char* desc, std::vector<std::string> definitions)
