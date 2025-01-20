@@ -146,3 +146,5 @@ ipch/
 *.e2e
 .vscode/launch.json
 .vscode/tasks.json
+
+Makefile

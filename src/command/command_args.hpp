@@ -42,7 +42,6 @@ class CommnandArgs {
         CommnandArgs();
         CommnandArgs(std::vector<Arg*> args);
 
-        // TODO: Реализовать
         virtual ParsedArgs parseArgs(const std::vector<std::string> args) const;
 
         virtual ~CommnandArgs();
