@@ -1,3 +1,6 @@
+#ifndef STASH_HPP
+#define STASH_HPP
+
 #include <filesystem>
 #include <iostream>
 #include "../vcs/repository.hpp"
@@ -12,7 +15,6 @@ class Stash {
 
     мета-данные о репозитории и о коммитах
     */
-
 private:
     static void init_repo();
     static void init_repo(const RepoSettings&);
@@ -20,7 +22,11 @@ private:
     inline const static std::filesystem::path stash_path = "./stash";
 
     static Repo vcs_repo;
+
+    static Repo get_repo();
 public:
     Stash();
     explicit Stash(const RepoSettings&);
 };
+
+#endif //STASH_HPP
