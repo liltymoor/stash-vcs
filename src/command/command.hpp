@@ -7,7 +7,7 @@ private:
     const char* name;
     const char* description;
 
-    CommandArgs* expected_args;
+    CommnandArgs* expected_args;
 
     std::function<void*(ParsedArgs)> action;
 
