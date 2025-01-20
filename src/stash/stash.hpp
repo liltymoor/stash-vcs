@@ -1,11 +1,12 @@
 #ifndef STASH_HPP
 #define STASH_HPP
 
+#include "../vcs/repository.hpp"
 #include <filesystem>
 #include <iostream>
-#include "../vcs/repository.hpp"
 
-class Stash {
+class Stash
+{
     /*
     commits - считывание папки с commits,
     и все папки внутри, которые и являются коммитами
@@ -16,17 +17,16 @@ class Stash {
     мета-данные о репозитории и о коммитах
     */
 private:
-    static void init_repo();
-    static void init_repo(const RepoSettings&);
+    std::filesystem::path stash_path;
+    Repo* vcs_repo;
 
-    inline const static std::filesystem::path stash_path = "./stash";
-
-    static Repo vcs_repo;
-
-    static Repo get_repo();
 public:
     Stash();
-    explicit Stash(const RepoSettings&);
+    void initialize_stash_directory();
+    explicit Stash(const RepoSettings &settings);
+    void init_repo(const RepoSettings &settings);
+    Repo &get_repo(); // Возвращаем ссылку на синглтон
+
 };
 
 #endif //STASH_HPP

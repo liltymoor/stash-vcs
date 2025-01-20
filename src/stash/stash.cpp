@@ -1,12 +1,12 @@
-#include "./stash.hpp"
+#include "stash.hpp"
+#include "../logger/logger.hpp"
 #include <fstream>
 #include <iostream>
-#include "../logger/logger.hpp"
 
 namespace fs = std::filesystem;
 
-
-RepoSettings ask_repo_stuff() {
+RepoSettings ask_repo_stuff()
+{
     RepoSettings settings;
 
     std::cout << "Please specify repository name:" << std::endl;
@@ -19,13 +19,25 @@ RepoSettings ask_repo_stuff() {
     return settings;
 }
 
-Stash::Stash() {
+Stash::Stash() : vcs_repo(&Repo::getInstance(RepoSettings{"default_repo", "core"})) {
+    initialize_stash_directory();
+}
 
-    if (!exists(stash_path))
-    {
+Stash::Stash(const RepoSettings &settings) : vcs_repo(&Repo::getInstance(settings)) {
+    initialize_stash_directory();
+
+    // Если репозиторий пуст, инициализируем его
+    if (vcs_repo->fnIsEmpty()) {
+        init_repo(settings);
+    }
+}
+
+void Stash::initialize_stash_directory() {
+    stash_path = fs::current_path() / "stash";
+
+    if (!exists(stash_path)) {
         bool b_isCreated = create_directory(stash_path);
-        if (!b_isCreated)
-        {
+        if (!b_isCreated) {
             ERROR("Can't create stash directory");
             return;
         }
@@ -33,46 +45,30 @@ Stash::Stash() {
         INFO("Stash created");
 
         bool b_isSubCreated = create_directory(stash_path / "branches");
-        if (!b_isSubCreated)
-        {
+        if (!b_isSubCreated) {
             ERROR("Can't create stash directory");
             return;
         }
 
         INFO("Subdirectory \"branches\" created");
     }
+}
 
-
-
-    if (vcs_repo.fnIsEmpty())
-    {
-        // Init repo
-        init_repo();
+void Stash::init_repo(const RepoSettings &settings) {
+    if (vcs_repo->fnIsEmpty()) {
+        vcs_repo = &Repo::getInstance(settings);
+        vcs_repo->create_branch(settings.str_startBranchName);
+        INFO("Repository initialized with name: " << settings.str_repoName);
     }
 }
 
-Stash::Stash(const RepoSettings& settings) {
-    // If repo is already exists
-    if (!vcs_repo.fnIsEmpty()) return;
-    
-    vcs_repo = Repo(settings);
-}
-
-void Stash::init_repo()
-{
-    if (vcs_repo.fnIsEmpty())
-        vcs_repo = Repo(ask_repo_stuff());
-}
-
-void Stash::init_repo(const RepoSettings &settings)
-{
-    if (vcs_repo.fnIsEmpty())
-        vcs_repo = Repo(settings);
-}
-
-Repo Stash::get_repo()
-{
-    if (!vcs_repo.fnIsEmpty()) return vcs_repo;
-    init_repo();
-    return vcs_repo;
+Repo &Stash::get_repo() {
+    if (!vcs_repo) {
+        std::cout << "no repo" << std::endl;
+        RepoSettings settings = ask_repo_stuff();
+        vcs_repo = &Repo::getInstance(settings); // Используем getInstance
+        vcs_repo->create_branch(settings.str_startBranchName);
+    }
+    std::cout << "some repo" << std::endl;
+    return *vcs_repo;
 }
