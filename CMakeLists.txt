@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
-project(stash)
+project(itmo_vcs)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/output)
 
 include_directories(src/command)
 include_directories(src/stash)
