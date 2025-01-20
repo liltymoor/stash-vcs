@@ -17,4 +17,8 @@ add_executable(itmo_vcs
     src/vcs/repository.hpp
     src/main.cpp
         src/logger/logger.hpp
-        src/vcs/repository.cpp)
+        src/vcs/repository.cpp
+        src/command/invoker.hpp
+        src/command/invoker.cpp
+        src/command/prepared_commands.hpp
+        src/command/prepared_commands.cpp)
