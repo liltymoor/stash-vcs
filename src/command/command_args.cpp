@@ -63,7 +63,7 @@ bool Arg::operator==(const Arg& other) const {
 CommandArgs::CommandArgs() {
     expected_args = std::vector<Arg*>();
     expected_args.push_back(new Arg("verbose", "Do explicit prints to console"));
-    expected_args.push_back(new Arg("help", "Print help message to console"));
+    expected_args.push_back(new Arg("description", "Print command description to console"));
 }
 
 CommandArgs::CommandArgs(std::vector<Arg*> args)

@@ -1,3 +1,6 @@
+#ifndef COMMAND_H
+#define COMMAND_H
+
 #include <iostream>
 #include <functional>
 #include "command_args.hpp"
@@ -9,11 +12,15 @@ private:
 
     CommandArgs* expected_args;
 
-    std::function<void*(ParsedArgs)> action;
-
+protected:
+    virtual void* action(ParsedArgs args) const;
 public:
     Command(const char* name, const char* description);
     ~Command();
 
-    void execute(int argc, char* argv[]);
+    void* execute(int argc, char* argv[]) const;
+
+    const char* get_name() const;
 };
+
+#endif
