@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(itmo_vcs)
+project(stash)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -7,7 +7,7 @@ include_directories(src/command)
 include_directories(src/stash)
 include_directories(src/vcs)
 
-add_executable(itmo_vcs
+add_executable(stash
     src/command/command.cpp
     src/command/command.hpp
     src/command/command_args.cpp
