@@ -12,7 +12,7 @@ RepoSettings ask_repo_stuff() {
     std::cout << "Please specify repository name:" << std::endl;
     std::cin >> settings.str_repoName;
 
-    std::cout << "Please specify start branch name:" << std::endl << "[core] ";
+    std::cout << "Please specify start branch name:" << std::endl;
     std::cin >> settings.str_startBranchName;
     settings.str_startBranchName = settings.str_startBranchName.empty() ? "core" : settings.str_startBranchName;
 
@@ -20,7 +20,6 @@ RepoSettings ask_repo_stuff() {
 }
 
 Stash::Stash() {
-
     if (!exists(stash_path))
     {
         bool b_isCreated = create_directory(stash_path);

@@ -16,7 +16,7 @@ class Stash {
     мета-данные о репозитории и о коммитах
     */
 private:
-    inline const static std::filesystem::path stash_path = "./stash";
+    inline const static std::filesystem::path stash_path = "./.stash";
     Stash();
 public:
     static Stash& getInstance();
