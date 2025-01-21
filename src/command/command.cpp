@@ -12,7 +12,14 @@ Command::~Command() {
 
 
 void* Command::execute(int argc, char* argv[]) const {
-    std::vector<std::string> const args = std::vector<std::string>(argv, argv + argc);
+
+    if (argv == nullptr)
+    {
+        ParsedArgs const parsed_args;
+        return this->action(parsed_args);
+    }
+
+    std::vector<std::string> const args = std::vector<std::string>(argv, argv + (argc - 2));
     ParsedArgs const parsed_args = this->expected_args->parseArgs(args);
 
     return this->action(parsed_args);

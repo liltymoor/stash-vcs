@@ -3,6 +3,7 @@
 //
 
 #include "prepared_commands.hpp"
+#include "../logger/logger.hpp"
 
 //
 // INIT COMMAND
@@ -13,6 +14,11 @@ InitCommand::InitCommand() : Command("init", "Initial command to create Stash") 
 
 void* InitCommand::action(ParsedArgs args) const
 {
+    INFO("Init command");
+
+    if (args.hasArg("description"))
+        INFO("Пока здесь нет описания");
+
     return nullptr;
 }
 

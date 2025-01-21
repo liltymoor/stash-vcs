@@ -25,8 +25,8 @@ bool CommandInvoker::invoke_command(int argc, char *argv[])
         INFO("command not found");
         return false;
     }
-
-    commands[command_name]->execute(argc, argv + 2);
+    char **command_args = argc > 2 ? (argv + 2) : nullptr;
+    commands[command_name]->execute(argc, command_args);
 
     return true;
 }

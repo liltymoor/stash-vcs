@@ -81,6 +81,7 @@ CommandArgs::~CommandArgs() {
 ParsedArgs CommandArgs::parseArgs(const std::vector<std::string> args) const
 {
     ParsedArgs result;
+
     for (const auto &token : args)
     {
         for (const auto &arg : expected_args)

@@ -21,6 +21,6 @@ add_executable(stash
         src/vcs/repository.cpp
         src/command/invoker.hpp
         src/command/invoker.cpp
+        src/exception/pers_stack_exc.h
         src/command/prepared_commands.hpp
-        src/command/prepared_commands.cpp
-        src/exception/pers_stack_exc.h)
+        src/command/prepared_commands.cpp)
