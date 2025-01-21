@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
-project(itmo_vcs)
+project(stash)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/output)
 
 include_directories(src/command)
 include_directories(src/stash)
 include_directories(src/vcs)
 
-add_executable(itmo_vcs
+add_executable(stash
     src/command/command.cpp
     src/command/command.hpp
     src/command/command_args.cpp
@@ -22,3 +23,4 @@ add_executable(itmo_vcs
         src/command/invoker.cpp
         src/command/prepared_commands.hpp
         src/command/prepared_commands.cpp)
+        src/exception/pers_stack_exc.h)

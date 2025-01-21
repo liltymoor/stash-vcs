@@ -16,17 +16,10 @@ class Stash {
     мета-данные о репозитории и о коммитах
     */
 private:
-    static void init_repo();
-    static void init_repo(const RepoSettings&);
-
-    inline const static std::filesystem::path stash_path = "./stash";
-
-    static Repo vcs_repo;
-
-    static Repo get_repo();
-public:
+    inline const static std::filesystem::path stash_path = "./.stash";
     Stash();
-    explicit Stash(const RepoSettings&);
+public:
+    static Stash& getInstance();
 };
 
 #endif //STASH_HPP

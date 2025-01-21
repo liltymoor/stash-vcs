@@ -1,5 +1,6 @@
 #include "invoker.hpp"
 #include "prepared_commands.hpp"
+#include "stash.hpp"
 
 #include <iostream>
 #include "command/command.hpp"
@@ -7,6 +8,7 @@
 
 int main(int argc, char *argv[])
 {
+    Stash::getInstance();
     const Command testCommand("test", "Test command");
     const InitCommand initCommand;
     const CommitCommand commitCommand;

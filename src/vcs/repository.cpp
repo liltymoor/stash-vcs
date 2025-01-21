@@ -3,6 +3,13 @@
 //
 
 #include "repository.hpp"
+#include "../exception/pers_stack_exc.h"
+
+PersistenceStack::PersistenceStack() {}
+bool PersistenceStack::isValid() const
+{
+    return branches.empty();
+}
 
 PersistenceStack::PersistenceStack(const std::string &startBranchName) : head(nullptr)
 {
@@ -11,6 +18,9 @@ PersistenceStack::PersistenceStack(const std::string &startBranchName) : head(nu
 
 void PersistenceStack::commit(const std::string &message)
 {
+    if (message.empty())
+        throw std::invalid_argument("Message can not be empty");
+
     const auto newCommit = std::make_shared<Commit>(message, generate_hash(message), head);
     head = newCommit;
 }
@@ -19,14 +29,12 @@ void PersistenceStack::create_branch(const std::string &branch_name)
 {
     if (branch_name.empty())
     {
-        // Invalid name
-        return;
+        throw std::invalid_argument("Name can not be empty");
     }
 
     if (branches.find(branch_name) != branches.end())
     {
-        // Branch already exists
-        return;
+        throw BranchAlreadyExistsException(branch_name);
     }
 
     branches[branch_name] = head;
@@ -36,8 +44,7 @@ void PersistenceStack::revert_previous()
 {
     if (head->prev == nullptr)
     {
-        // No commits back left
-        return;
+        throw NoCommitsLeftException();
     }
 
     head = head->prev;
@@ -53,8 +60,7 @@ void PersistenceStack::checkout_branch(const std::string &branch_name)
 {
     if (branches.find(branch_name) == branches.end())
     {
-        // Branch not found
-        return;
+        throw BranchNotFoundException(branch_name);
     }
 
     head = branches[branch_name];
@@ -67,14 +73,26 @@ void PersistenceStack::merge(const std::string &branch_name)
 
     if (branches.find(branch_name) == branches.end())
     {
-        // Branch not found
-        return;
+        throw BranchNotFoundException(branch_name);
     }
 
     auto targetBranch = branches[branch_name];
     auto currentBranch = head;
 
     bool b_sharedCommitExists = false;
+    std::shared_ptr<Commit> targetCommit = targetBranch;
+    std::shared_ptr<Commit> currentCommit = currentBranch;
+
+    while (targetCommit != nullptr && currentCommit != nullptr)
+    {
+        if (targetCommit == currentCommit)
+        {
+            b_sharedCommitExists = true;
+            break;
+        }
+        targetCommit = targetCommit->prev;
+        currentCommit = currentCommit->prev;
+    }
 
     if (b_sharedCommitExists)
     {
@@ -82,9 +100,47 @@ void PersistenceStack::merge(const std::string &branch_name)
     }
     else
     {
-        // Branches are different
-        return;
+        throw std::runtime_error("Branches have no common commit and cannot be merged");
     }
+}
+
+std::string PersistenceStack::generate_hash(const std::string &branch_name)
+{
+    auto timestamp = time(0);
+    return std::to_string(std::hash<std::string>{}(branch_name + std::to_string(timestamp)));
+}
+
+Repo::Repo() :
+repoName("~none"),
+branchStack(PersistenceStack("core"))
+{
+
+}
+
+Repo::Repo(const RepoSettings &settings) :
+repoName(settings.str_repoName),
+branchStack(PersistenceStack(settings.str_startBranchName))
+{
+
+}
+
+void Repo::initRepository(const RepoSettings &settings)
+{
+    // TODO Validate
+    this->repoName = settings.str_repoName;
+    this->branchStack = PersistenceStack(settings.str_startBranchName);
+}
+
+Repo &Repo::getInstance()
+{
+    static Repo stashRepository = Repo();
+    return stashRepository;
+}
+
+bool Repo::IsEmpty()
+{
+    Repo stashRepository = Repo::getInstance();
+    return stashRepository.branchStack.isValid();
 }
 
 
