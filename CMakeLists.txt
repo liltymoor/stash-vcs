@@ -24,6 +24,6 @@ add_executable(stash
         src/exception/pers_stack_exc.h
         src/command/prepared_commands.hpp
         src/command/prepared_commands.cpp
-        src/state/commitState.hpp
-        src/state/commitState.cpp
+        src/vcs/commit_state.hpp
+        src/vcs/commit_state.cpp
 )

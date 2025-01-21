@@ -2,7 +2,7 @@
 // Created by Ivanov Ilya on 21.01.2025.
 //
 
-#include "commitState.hpp"
+#include "commit_state.hpp"
 #include "repository.hpp"
 
 std::string File::read(const std::string &filepath) {
