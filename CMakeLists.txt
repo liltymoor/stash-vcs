@@ -17,4 +17,5 @@ add_executable(itmo_vcs
     src/vcs/repository.hpp
     src/main.cpp
         src/logger/logger.hpp
-        src/vcs/repository.cpp)
+        src/vcs/repository.cpp
+        src/exception/pers_stack_exc.h)

@@ -26,6 +26,7 @@ private:
 
 public:
     PersistenceStack(const std::string &startBranchName);
+    PersistenceStack();
 
     void commit(const std::string& message);
     void revert_previous();
@@ -34,6 +35,8 @@ public:
     void create_branch(const std::string& branch_name);
     void checkout_branch(const std::string& branch_name);
     void merge(const std::string& branch_name);
+
+    bool isValid() const;
     void log() const;
 };
 
@@ -46,12 +49,17 @@ struct RepoSettings {
 
 class Repo {
 private:
-    RepoSettings settings;
+    std::string repoName;
     PersistenceStack branchStack;
-public:
-    explicit Repo(const RepoSettings& settings);
+    static Repo *stashRepository;
 
-    bool fnIsEmpty();
+    Repo();
+    explicit Repo(const RepoSettings& settings);
+public:
+    void initRepository(const RepoSettings& settings);
+    static Repo &getInstance();
+
+    static bool IsEmpty();
 };
 
 #endif

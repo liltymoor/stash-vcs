@@ -40,39 +40,23 @@ Stash::Stash() {
         }
 
         INFO("Subdirectory \"branches\" created");
+
+        // Create repository
+
+        Repo::getInstance().initRepository(ask_repo_stuff());
+
+        if (Repo::IsEmpty())
+        {
+            ERROR("Repo wasn't initialized");
+            return;
+        }
+
+        INFO("Repository initialized");
     }
-
-
-
-    if (vcs_repo.fnIsEmpty())
-    {
-        // Init repo
-        init_repo();
-    }
 }
 
-Stash::Stash(const RepoSettings& settings) {
-    // If repo is already exists
-    if (!vcs_repo.fnIsEmpty()) return;
-    
-    vcs_repo = Repo(settings);
-}
-
-void Stash::init_repo()
+Stash& Stash::getInstance()
 {
-    if (vcs_repo.fnIsEmpty())
-        vcs_repo = Repo(ask_repo_stuff());
-}
-
-void Stash::init_repo(const RepoSettings &settings)
-{
-    if (vcs_repo.fnIsEmpty())
-        vcs_repo = Repo(settings);
-}
-
-Repo Stash::get_repo()
-{
-    if (!vcs_repo.fnIsEmpty()) return vcs_repo;
-    init_repo();
-    return vcs_repo;
+    static Stash instance;
+    return instance;
 }
