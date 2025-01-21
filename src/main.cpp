@@ -8,9 +8,9 @@
 
 int main(int argc, char *argv[])
 {
-    Stash::getInstance();
     const Command testCommand("test", "Test command");
     const InitCommand initCommand;
+    const AddCommand addCommand;
     const CommitCommand commitCommand;
     const CheckoutCommand checkoutCommand;
     const MergeCommand mergeCommand;
@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     CommandInvoker invoker;
 
     invoker.init_command(&initCommand);
+    invoker.init_command(&addCommand);
     invoker.init_command(&commitCommand);
     invoker.init_command(&checkoutCommand);
     invoker.init_command(&mergeCommand);

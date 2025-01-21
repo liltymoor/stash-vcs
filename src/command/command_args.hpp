@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <map>
-#include <unordered_set>
+#include <unordered_map>
 
 class Arg {
     private:
@@ -9,6 +8,7 @@ class Arg {
         std::string str_description;
         std::string str_short_name;
 
+        bool b_valuable;
         bool b_required;
 
         std::vector<std::string> definitions;
@@ -16,10 +16,11 @@ class Arg {
         Arg(const char* name, const char* desc);
         Arg(const char* name, const char* desc, std::vector<std::string> definitions);
 
-        Arg(const char* name, const char* desc, bool required);
-        Arg(const char* name, const char* desc, std::vector<std::string> definitions, bool required);
+        Arg(const char* name, const char* desc, bool required, bool valuable);
+        Arg(const char* name, const char* desc, std::vector<std::string> definitions, bool required, bool valuable);
 
         bool isRequired() const;
+        bool isValuable() const;
 
         const char* getName() const;
         const char* getDescription() const;
@@ -30,13 +31,14 @@ class Arg {
 };
 
 struct ParsedArgs {
-    std::unordered_set<std::string> parsed_args;
+    std::unordered_map<std::string, std::string> parsed_args;
     bool hasArg(const char* str) const;
+    std::string getArgValue(const std::string&);
 };
 
 
 class CommandArgs {
-    private:
+    protected:
         std::vector<Arg*> expected_args;
     public:
         CommandArgs();

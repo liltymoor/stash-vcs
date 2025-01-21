@@ -65,8 +65,9 @@ private:
     explicit Repo(const RepoSettings& settings);
 public:
     void initRepository(const RepoSettings& settings);
-    static Repo &getInstance();
+    PersistenceStack& getRepoStack();
 
+    static Repo &getInstance();
     static bool IsEmpty();
 };
 

@@ -133,6 +133,11 @@ void Repo::initRepository(const RepoSettings &settings)
     this->branchStack = PersistenceStack(settings.str_startBranchName);
 }
 
+PersistenceStack & Repo::getRepoStack()
+{
+    return this->branchStack;
+}
+
 Repo &Repo::getInstance()
 {
     static Repo stashRepository = Repo();

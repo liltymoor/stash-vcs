@@ -22,7 +22,7 @@ bool CommandInvoker::invoke_command(int argc, char *argv[])
 
     if (commands.find(command_name) == commands.end())
     {
-        INFO("command not found");
+        ERROR("Command not found");
         return false;
     }
     char **command_args = argc > 2 ? (argv + 2) : nullptr;
