@@ -2,8 +2,6 @@
 #define STASH_HPP
 
 #include <filesystem>
-#include <iostream>
-#include "../vcs/repository.hpp"
 
 class Stash {
     /*
@@ -20,6 +18,7 @@ private:
     Stash();
 public:
     static Stash& getInstance();
+    static const std::filesystem::path& getStashPath();
 };
 
 #endif //STASH_HPP

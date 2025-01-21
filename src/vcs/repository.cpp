@@ -5,7 +5,10 @@
 #include "repository.hpp"
 #include "../exception/pers_stack_exc.h"
 
-PersistenceStack::PersistenceStack() {}
+PersistenceStack::PersistenceStack()
+{
+    // TODO Init branches and repo from .stash sources
+}
 bool PersistenceStack::isValid() const
 {
     return branches.empty();
@@ -23,7 +26,16 @@ void PersistenceStack::commit(const std::string &message)
 
     const auto newCommit = std::make_shared<Commit>(message, generate_hash(message), head);
     head = newCommit;
+    branches[currentBranch] = head;
     // TODO Commit being produced not to the actual branch but in commit-stack.
+}
+
+void PersistenceStack::stage(const std::string &files)
+{
+    if (files.empty())
+        throw std::invalid_argument("Files can not be empty");
+
+    File::move_files(files, Repo::getBranchesPath() / STAGE_FOLDER_NAME, File::isRegexp(files));
 }
 
 void PersistenceStack::create_branch(const std::string &branch_name)
@@ -39,7 +51,9 @@ void PersistenceStack::create_branch(const std::string &branch_name)
     }
 
     branches[branch_name] = head;
-    // TODO Track current branch
+    create_directory(Repo::getBranchesPath() / branch_name);
+    create_directory(Repo::getBranchesPath() / "staged");
+    currentBranch = branch_name;
 }
 
 void PersistenceStack::revert_previous()
@@ -114,7 +128,7 @@ std::string PersistenceStack::generate_hash(const std::string &branch_name)
 
 Repo::Repo() :
 repoName("~none"),
-branchStack(PersistenceStack("core"))
+branchStack(PersistenceStack())
 {
 
 }
@@ -142,6 +156,11 @@ Repo &Repo::getInstance()
 {
     static Repo stashRepository = Repo();
     return stashRepository;
+}
+
+std::filesystem::path Repo::getBranchesPath()
+{
+    return branchesPath;
 }
 
 bool Repo::IsEmpty()

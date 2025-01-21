@@ -3,6 +3,9 @@
 //
 
 #include "prepared_commands.hpp"
+
+#include "stash.hpp"
+#include "repository.hpp"
 #include "../logger/logger.hpp"
 
 //
@@ -26,6 +29,8 @@ void *InitCommand::action(ParsedArgs args) const
         INFO(get_desc());
         return nullptr;
     }
+
+    Stash::getInstance(); // Stash initialization
 
     return nullptr;
 }
@@ -63,6 +68,7 @@ void *AddCommand::action(ParsedArgs args) const
         std::string value = args.getArgValue("files");
         // TODO verify value
 
+        Repo::getInstance().getRepoStack().stage(value);
     }
 
     return nullptr;

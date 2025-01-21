@@ -8,6 +8,11 @@
 #include <unordered_map>
 #include <utility>
 #include "commit_state.hpp"
+#include "stash.hpp"
+
+#include <filesystem>
+
+#define STAGE_FOLDER_NAME "staged"
 
 struct Commit {
     std::string message;
@@ -28,6 +33,7 @@ struct Commit {
 class PersistenceStack {
 private:
     std::shared_ptr<Commit> head;
+    std::string currentBranch;
     std::unordered_map<std::string, std::shared_ptr<Commit>> branches;
 
     std::string generate_hash(const std::string& message);
@@ -37,6 +43,7 @@ public:
     PersistenceStack();
 
     void commit(const std::string& message);
+    void stage(const std::string& files);
     void revert_previous();
     // TODO To think of...
     //void revert_to(const std::string &hash);
@@ -60,6 +67,7 @@ private:
     std::string repoName;
     PersistenceStack branchStack;
     static Repo *stashRepository;
+    inline const static std::filesystem::path branchesPath = Stash::getStashPath() / "branches";
 
     Repo();
     explicit Repo(const RepoSettings& settings);
@@ -68,6 +76,7 @@ public:
     PersistenceStack& getRepoStack();
 
     static Repo &getInstance();
+    static std::filesystem::path getBranchesPath();
     static bool IsEmpty();
 };
 

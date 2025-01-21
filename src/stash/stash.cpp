@@ -1,6 +1,7 @@
 #include "./stash.hpp"
 #include <fstream>
 #include <iostream>
+#include "../vcs/repository.hpp"
 #include "../logger/logger.hpp"
 
 namespace fs = std::filesystem;
@@ -58,4 +59,9 @@ Stash& Stash::getInstance()
 {
     static Stash instance;
     return instance;
+}
+
+const std::filesystem::path & Stash::getStashPath()
+{
+    return stash_path;
 }
