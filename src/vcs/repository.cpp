@@ -23,6 +23,7 @@ void PersistenceStack::commit(const std::string &message)
 
     const auto newCommit = std::make_shared<Commit>(message, generate_hash(message), head);
     head = newCommit;
+    // TODO Commit being produced not to the actual branch but in commit-stack.
 }
 
 void PersistenceStack::create_branch(const std::string &branch_name)
@@ -38,6 +39,7 @@ void PersistenceStack::create_branch(const std::string &branch_name)
     }
 
     branches[branch_name] = head;
+    // TODO Track current branch
 }
 
 void PersistenceStack::revert_previous()
