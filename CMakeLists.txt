@@ -6,20 +6,23 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(src/command)
 include_directories(src/stash)
 include_directories(src/vcs)
+include_directories(src/logger)
 
-add_executable(stash
-    src/command/command.cpp
-    src/command/command.hpp
-    src/command/command_args.cpp
-    src/command/command_args.hpp
-    src/stash/stash.cpp
-    src/stash/stash.hpp
-    src/vcs/repository.hpp
-    src/main.cpp
-        src/logger/logger.hpp
+
+add_executable(itmo-vcs
+        src/command/command.cpp
+        src/command/command.hpp
+        src/command/command_args.cpp
+        src/command/command_args.hpp
+        src/stash/stash.cpp
+        src/stash/stash.hpp
         src/vcs/repository.cpp
-        src/command/invoker.hpp
-        src/command/invoker.cpp
+        src/vcs/repository.hpp
+        src/logger/logger.hpp
+        src/main.cpp
         src/exception/pers_stack_exc.h
         src/command/prepared_commands.hpp
-        src/command/prepared_commands.cpp)
+        src/command/prepared_commands.cpp
+        src/state/commitState.cpp
+        src/state/commitState.hpp
+)

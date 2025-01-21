@@ -2,18 +2,26 @@
 #define REPO_HPP
 
 
-#include <unordered_map>
 #include <iostream>
 #include <memory>
 #include <string>
+#include <unordered_map>
+#include <utility>
+#include "../state/commitState.hpp"
 
 struct Commit {
     std::string message;
     std::string hash;
     std::shared_ptr<Commit> prev;
+    std::shared_ptr<CommitState> state;
 
-    Commit(const std::string& msg, const std::string& h, std::shared_ptr<Commit> p = nullptr)
-        : message(msg), hash(h), prev(p) {}
+    Commit(std::string msg, std::string h, std::shared_ptr<Commit> p = nullptr)
+            : message(std::move(msg)),
+              hash(std::move(h)),
+              prev(std::move(p)),
+              state(std::make_shared<CommitState>())
+    {
+    }
 };
 
 
