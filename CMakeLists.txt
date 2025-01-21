@@ -9,18 +9,21 @@ include_directories(src/stash)
 include_directories(src/vcs)
 
 add_executable(stash
-    src/command/command.cpp
-    src/command/command.hpp
-    src/command/command_args.cpp
-    src/command/command_args.hpp
-    src/stash/stash.cpp
-    src/stash/stash.hpp
-    src/vcs/repository.hpp
-    src/main.cpp
+        src/command/command.cpp
+        src/command/command.hpp
+        src/command/command_args.cpp
+        src/command/command_args.hpp
+        src/stash/stash.cpp
+        src/stash/stash.hpp
+        src/vcs/repository.hpp
+        src/main.cpp
         src/logger/logger.hpp
         src/vcs/repository.cpp
         src/command/invoker.hpp
         src/command/invoker.cpp
         src/exception/pers_stack_exc.h
         src/command/prepared_commands.hpp
-        src/command/prepared_commands.cpp)
+        src/command/prepared_commands.cpp
+        src/state/commitState.hpp
+        src/state/commitState.cpp
+)

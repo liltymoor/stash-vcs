@@ -25,3 +25,24 @@ int main(int argc, char *argv[])
 
     if (!invoker.invoke_command(argc, argv)) ERROR("Command failed. Check output above to see more detailed info.");
 }
+
+/*
+
+Way to operate file contents
+
+std::map<int, std::string> initialLines = {
+            {1, "Hello"},
+            {2, "world"},
+            {3, "test"}
+    };
+
+    FileContent fileContent(initialLines);
+
+    const auto& allLines = fileContent.getAllLines();
+    for (const auto& [lineNumber, line] : allLines) {
+        std::cout << "Line " << lineNumber << ": " << line << std::endl;
+    }
+
+    std::cout << "Full content:\n" << fileContent.getFullContent() << std::endl;
+
+*/

@@ -150,3 +150,5 @@ ipch/
 .vscode/tasks.json
 
 Makefile
+cmake-build-debug/*
+.idea/
