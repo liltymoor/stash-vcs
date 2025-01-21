@@ -1,27 +1,22 @@
 #include "command/command.hpp"
 #include "repository.hpp"
-#include "stash.hpp"
 #include <iostream>
 
-int main(int argc, char *argv[])
-{
-    Command *command = new Command("test", "Test command");
-    command->execute(argc, argv);
+int main() {
+    std::map<int, std::string> initialLines = {
+            {1, "Hello"},
+            {2, "world"},
+            {3, "test"}
+    };
 
+    FileContent fileContent(initialLines);
 
-    Stash stash;
-
-    // Получаем репозиторий
-    Repo &repo = stash.get_repo();
-
-    // Проверяем, инициализирован ли репозиторий
-    if (!repo.fnIsEmpty())
-    {
-        std::cout << "Repository is initialized!" << std::endl;
-    }
-    else
-    {
-        std::cout << "Repository is not initialized!" << std::endl;
+    const auto& allLines = fileContent.getAllLines();
+    for (const auto& [lineNumber, line] : allLines) {
+        std::cout << "Line " << lineNumber << ": " << line << std::endl;
     }
 
+    std::cout << "Full content:\n" << fileContent.getFullContent() << std::endl;
+
+    return 0;
 }

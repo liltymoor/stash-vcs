@@ -21,4 +21,6 @@ add_executable(itmo-vcs
         src/logger/logger.hpp
         src/main.cpp
         src/exception/pers_stack_exc.h
+        src/state/commitState.cpp
+        src/state/commitState.hpp
 )
