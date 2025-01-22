@@ -4,8 +4,8 @@
 
 #include <iostream>
 #include <filesystem>
-#include "command/command.hpp"
-#include "logger/logger.hpp"
+#include "command.hpp"
+#include "logger.hpp"
 
 int main(int argc, char *argv[])
 {

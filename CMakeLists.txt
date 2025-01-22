@@ -1,31 +1,31 @@
-cmake_minimum_required(VERSION 3.10)
-project(stash)
+cmake_minimum_required(VERSION 3.10.2)
+project(stash VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/output)
 
-include_directories(src/command)
-include_directories(src/stash)
-include_directories(src/vcs)
+file(GLOB SOURCES
+        "src/command/*.cpp"
+        "src/stash/*.cpp"
+        "src/vcs/*.cpp"
+        "src/main.cpp"
+)
 
-add_executable(stash
-        src/command/command.cpp
-        src/command/command.hpp
-        src/command/command_args.cpp
-        src/command/command_args.hpp
-        src/stash/stash.cpp
-        src/stash/stash.hpp
-        src/vcs/repository.hpp
-        src/main.cpp
-        src/logger/logger.hpp
-        src/vcs/repository.cpp
-        src/command/invoker.hpp
-        src/command/invoker.cpp
-        src/exception/pers_stack_exc.h
-        src/command/prepared_commands.hpp
-        src/command/prepared_commands.cpp
-        src/vcs/commit_state.hpp
-        src/vcs/commit_state.cpp
-        src/vcs/metadata.hpp
-        src/vcs/metadata.cpp
+file(GLOB HEADERS
+        "include/command/*.hpp"
+        "include/exception/*.h"
+        "include/logger/*.hpp"
+        "include/stash/*.hpp"
+        "include/vcs/*.hpp"
+)
+
+add_executable(stash ${SOURCES} ${HEADERS})
+
+target_include_directories(stash PRIVATE
+        include/command
+        include/exception
+        include/logger
+        include/stash
+        include/vcs
 )
