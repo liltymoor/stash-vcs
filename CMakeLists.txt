@@ -26,4 +26,6 @@ add_executable(stash
         src/command/prepared_commands.cpp
         src/vcs/commit_state.hpp
         src/vcs/commit_state.cpp
+        src/vcs/metadata.hpp
+        src/vcs/metadata.cpp
 )

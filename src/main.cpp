@@ -3,11 +3,15 @@
 #include "stash.hpp"
 
 #include <iostream>
+#include <filesystem>
 #include "command/command.hpp"
 #include "logger/logger.hpp"
 
 int main(int argc, char *argv[])
 {
+    if (std::filesystem::exists(".stash"))
+        Stash::getInstance();
+
     const Command testCommand("test", "Test command");
     const InitCommand initCommand;
     const AddCommand addCommand;
