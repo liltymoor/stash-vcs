@@ -45,3 +45,8 @@ const char * Command::get_name() const
 {
     return this->name;
 }
+
+const char * Command::get_desc() const
+{
+    return this->description;
+}

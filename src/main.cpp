@@ -3,14 +3,18 @@
 #include "stash.hpp"
 
 #include <iostream>
-#include "command/command.hpp"
-#include "logger/logger.hpp"
+#include <filesystem>
+#include "command.hpp"
+#include "logger.hpp"
 
 int main(int argc, char *argv[])
 {
-    Stash::getInstance();
+    if (std::filesystem::exists(".stash"))
+        Stash::getInstance();
+
     const Command testCommand("test", "Test command");
     const InitCommand initCommand;
+    const AddCommand addCommand;
     const CommitCommand commitCommand;
     const CheckoutCommand checkoutCommand;
     const MergeCommand mergeCommand;
@@ -18,6 +22,7 @@ int main(int argc, char *argv[])
     CommandInvoker invoker;
 
     invoker.init_command(&initCommand);
+    invoker.init_command(&addCommand);
     invoker.init_command(&commitCommand);
     invoker.init_command(&checkoutCommand);
     invoker.init_command(&mergeCommand);

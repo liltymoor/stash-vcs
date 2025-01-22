@@ -15,6 +15,9 @@ public:
     static std::string read(const std::string &filepath);
 
     static void write(const std::string &filepath, const std::string &content);
+
+    static bool isRegexp(const std::string &str);
+    static void move_files(const std::string& source_pattern, const std::string& target_dir, bool use_regex = true);
 };
 
 class FileContent {

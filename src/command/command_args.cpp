@@ -28,8 +28,27 @@ Arg::Arg(const char* name, const char* desc, std::vector<std::string> definition
     );
 }
 
+Arg::Arg(const char *name, const char *desc, bool required, bool valuable)
+    : Arg(name, desc)
+{
+    b_required = required;
+    b_valuable = valuable;
+}
+
+Arg::Arg(const char *name, const char *desc, std::vector<std::string> definitions, bool required, bool valuable)
+    : Arg(name, desc, definitions)
+{
+    b_required = required;
+    b_valuable = valuable;
+}
+
 bool Arg::isRequired() const {
     return b_required;
+}
+
+bool Arg::isValuable() const
+{
+    return b_valuable;
 }
 
 const char* Arg::getName() const {
@@ -82,14 +101,31 @@ ParsedArgs CommandArgs::parseArgs(const std::vector<std::string> args) const
 {
     ParsedArgs result;
 
-    for (const auto &token : args)
+    for (int i = 0; i < args.size(); i++)
     {
         for (const auto &arg : expected_args)
         {
-            if (arg->parse(token.c_str()))
+            if (arg->parse(args[i].c_str())) // Argument found
             {
-                result.parsed_args.insert(arg->getName());
+                if (arg->isValuable())
+                {
+                    if (args.size() <= i + 1)
+                    {
+                        // TODO throw value for arg expected
+                    }
+
+                    std::string value = args[++i];
+                    result.parsed_args[arg->getName()] = value;
+                    break;
+
+                }
+                result.parsed_args[arg->getName()] = std::string();
                 break;
+            }
+
+            if (arg->isRequired())
+            {
+                // TODO throw arg expected
             }
         }
     }
@@ -98,4 +134,12 @@ ParsedArgs CommandArgs::parseArgs(const std::vector<std::string> args) const
 
 bool ParsedArgs::hasArg(const char* str) const {
     return parsed_args.find(str) != parsed_args.end();
+}
+
+std::string ParsedArgs::getArgValue(const std::string &arg_name) {
+    if (this->hasArg(arg_name.c_str()))
+    {
+        return parsed_args[arg_name];
+    }
+    return {};
 }

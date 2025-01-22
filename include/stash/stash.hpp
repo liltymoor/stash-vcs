@@ -2,8 +2,6 @@
 #define STASH_HPP
 
 #include <filesystem>
-#include <iostream>
-#include "../vcs/repository.hpp"
 
 class Stash {
     /*
@@ -17,9 +15,12 @@ class Stash {
     */
 private:
     inline const static std::filesystem::path stash_path = "./.stash";
+    inline static bool isExists = false;
     Stash();
 public:
     static Stash& getInstance();
+    static bool stashExists();
+    static const std::filesystem::path& getStashPath();
 };
 
 #endif //STASH_HPP

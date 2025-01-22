@@ -4,6 +4,12 @@
 
 #include "commit_state.hpp"
 #include "repository.hpp"
+#include "../logger/logger.hpp"
+
+#include <filesystem>
+#include <regex>
+
+namespace fs = std::filesystem;
 
 std::string File::read(const std::string &filepath) {
     std::ifstream file(filepath);
@@ -21,6 +27,59 @@ void File::write(const std::string &filepath, const std::string &content) {
         throw std::runtime_error("Failed to open file: " + filepath);
     }
     file << content;
+}
+
+bool File::isRegexp(const std::string &str)
+{
+    const std::string regex_chars = ".*+?[]()|{}^$\\";
+    return str.find_first_of(regex_chars) != std::string::npos;
+}
+
+void File::move_files(const std::string &source_pattern, const std::string &target_dir, bool use_regex)
+{
+    try {
+        fs::create_directories(target_dir);
+
+        fs::path current_dir = fs::current_path();
+
+        std::vector<fs::path> files_to_move;
+
+        if (use_regex) {
+            std::regex pattern(source_pattern);
+            for (const auto& entry : fs::directory_iterator(current_dir)) {
+                if (fs::is_regular_file(entry)) {
+                    std::string filename = entry.path().filename().string();
+                    if (std::regex_match(filename, pattern)) {
+                        files_to_move.push_back(entry.path());
+                    }
+                }
+            }
+        } else {
+            fs::path source_path = current_dir / source_pattern;
+            if (fs::exists(source_path)) {
+                files_to_move.push_back(source_path);
+            }
+            else
+            {
+                WARN("File not found");
+            }
+        }
+
+
+        for (const auto& file : files_to_move) {
+            fs::path target_path = fs::path(target_dir) / file.filename();
+
+            if (fs::exists(target_path)) {
+                fs::remove(target_path);
+            }
+            INFO(file);
+            copy(file, target_path);
+        }
+
+    } catch (const std::exception& ex) {
+        ERROR("Error while transfering files: ");
+        ERROR(ex.what());
+    }
 }
 
 FileContent::FileContent(const std::map<int, std::string> &lines) {
