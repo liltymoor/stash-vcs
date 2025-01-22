@@ -119,5 +119,3 @@ For questions or feedback, feel free to reach out:
 - **Email:** timur.chelter@mail.ru or ilya.ivanov@mail.ru
 - **GitHub Issues:** [Open an Issue](https://github.com/liltymoor/stash-vcs/issues)
 
----
-```
