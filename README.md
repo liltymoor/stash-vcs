@@ -7,11 +7,11 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 
 ## Key Features ⚙️
 
-- **Commit Changes:** Track and save changes in the repository.
 - **Branch Management:** Create, switch, and delete branches.
-- **Branch Merging:** Combine changes from different branches.
-- **Revert Changes:** Roll back to previous versions of files.
-- **Logging:** View the history of changes.
+- **Commit Changes:** Track and save changes in the repository. *(soon)*
+- **Branch Merging:** Combine changes from different branches. *(soon)*
+- **Revert Changes:** Roll back to previous versions of files. *(soon)*
+- **Logging:** View the history of changes. *(soon)*
 
 ---
 
@@ -19,7 +19,7 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 
 ### Requirements
 - C++17
-- CMake (version 3.14 or higher)
+- CMake (version 3.10.2 or higher)
 - Doxygen (for generating documentation)
 
 ### Installation Steps
@@ -44,15 +44,15 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 ### Example Commands
 - Create a new commit:
   ```bash
-  ./stash-vcs commit -m "Initial commit"
+  ./stash commit -m "..."
   ```
 - Create a new branch:
   ```bash
-  ./stash-vcs branch new-feature
+  ./stash branch ...
   ```
 - Merge branches:
   ```bash
-  ./stash-vcs merge new-feature
+  ./stash merge <branch_name> (merging current->specified)
   ```
 
 ---
@@ -66,13 +66,13 @@ Project documentation is available at:
 
 ## Screenshots 🖼️
 
-![Example Usage](https://via.placeholder.com/600x400) <!-- Replace with actual screenshots -->
+![Example Usage](https://via.placeholder.com/600x400)
 
 ---
 
 ## Demo Video 🎥
 
-[![Demo](https://via.placeholder.com/600x400)](https://youtu.be/your-video-link) <!-- Replace with actual video link -->
+[![Demo](https://via.placeholder.com/600x400)](https://youtu.be/your-video-link)
 
 ---
 
