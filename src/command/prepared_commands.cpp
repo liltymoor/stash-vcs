@@ -1,6 +1,7 @@
-//
-// Created by Timmie on 21.01.2025.
-//
+/**
+ * @file prepared_commands.cpp
+ * @brief Implementation of predefined commands and their arguments.
+ */
 
 #include "prepared_commands.hpp"
 #include "../logger/logger.hpp"
@@ -9,11 +10,17 @@
 // INIT COMMAND
 //
 
-
+/**
+ * @brief Constructs a new InitCommand object.
+ */
 InitCommand::InitCommand() : Command("init", "Initial command to create Stash") {}
 
-void* InitCommand::action(ParsedArgs args) const
-{
+/**
+ * @brief Executes the initialization command.
+ * @param args The parsed arguments passed to the command.
+ * @return A pointer to the result of the action (nullptr by default).
+ */
+void *InitCommand::action(ParsedArgs args) const {
     INFO("Init command");
 
     if (args.hasArg("description"))
@@ -22,52 +29,85 @@ void* InitCommand::action(ParsedArgs args) const
     return nullptr;
 }
 
-InitArgs::InitArgs() : CommandArgs() // Init default args like verbose or description
-{
-    // No need in arguments here
+/**
+ * @brief Constructs a new InitArgs object.
+ */
+InitArgs::InitArgs() : CommandArgs() {
+    // No additional arguments needed for initialization
 }
 
 //
 // COMMIT COMMAND
 //
 
+/**
+ * @brief Constructs a new CommitCommand object.
+ */
 CommitCommand::CommitCommand() : Command("commit", "Create commit command") {}
-void* CommitCommand::action(ParsedArgs args) const
-{
+
+/**
+ * @brief Executes the commit command.
+ * @param args The parsed arguments passed to the command.
+ * @return A pointer to the result of the action (nullptr by default).
+ */
+void *CommitCommand::action(ParsedArgs args) const {
     return nullptr;
 }
 
-CommitArgs::CommitArgs() : CommandArgs() // Init default args like verbose or description
-{
-
+/**
+ * @brief Constructs a new CommitArgs object.
+ */
+CommitArgs::CommitArgs() : CommandArgs() {
+    // No additional arguments needed for commit
 }
 
 //
 // CHECKOUT COMMAND
 //
 
+/**
+ * @brief Constructs a new CheckoutCommand object.
+ */
 CheckoutCommand::CheckoutCommand() : Command("checkout", "Switch branch command") {}
-void* CheckoutCommand::action(ParsedArgs args) const
-{
+
+/**
+ * @brief Executes the checkout command.
+ * @param args The parsed arguments passed to the command.
+ * @return A pointer to the result of the action (nullptr by default).
+ */
+void *CheckoutCommand::action(ParsedArgs args) const {
     return nullptr;
 }
 
-CheckoutArgs::CheckoutArgs() : CommandArgs() // Init default args like verbose or description
-{
-
+/**
+ * @brief Constructs a new CheckoutArgs object.
+ */
+CheckoutArgs::CheckoutArgs() : CommandArgs() {
+    // No additional arguments needed for checkout
 }
 
 //
 // MERGE COMMAND
 //
 
-MergeCommand::MergeCommand() : Command("merge", "Merge branches command. This command requires branches to have at least 1 shared commit.") {}
-void* MergeCommand::action(ParsedArgs args) const
-{
+/**
+ * @brief Constructs a new MergeCommand object.
+ */
+MergeCommand::MergeCommand() : Command("merge",
+                                       "Merge branches command. This command requires branches to have at least 1 shared commit.") {}
+
+/**
+ * @brief Executes the merge command.
+ * @param args The parsed arguments passed to the command.
+ * @return A pointer to the result of the action (nullptr by default).
+ */
+void *MergeCommand::action(ParsedArgs args) const {
     return nullptr;
 }
 
-MergeArgs::MergeArgs() : CommandArgs() // Init default args like verbose or description
-{
-
+/**
+ * @brief Constructs a new MergeArgs object.
+ */
+MergeArgs::MergeArgs() : CommandArgs() {
+    // No additional arguments needed for merge
 }
