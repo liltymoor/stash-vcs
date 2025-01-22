@@ -3,10 +3,10 @@ name: Build Project
 on:
   push:
     branches:
-      - main
+      - feature/repo-design  # Добавьте вашу ветку
   pull_request:
     branches:
-      - main
+      - feature/repo-design  # Добавьте вашу ветку
 
 jobs:
   build:
