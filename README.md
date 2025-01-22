@@ -1,6 +1,6 @@
 # STASH VCS 🚀
 
-**STASH VCS** is an educational project implementing a version control system similar to Git.  
+**STASH VCS** is an educational project implementing a version control system.  
 The project is developed in C++ using CMake for building and Doxygen for documentation.
 
 ---
