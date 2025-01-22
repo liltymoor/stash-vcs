@@ -1,7 +1,5 @@
 # STASH VCS 🚀
 
-![Logo](https://via.placeholder.com/150) <!-- Replace with your logo -->
-
 **STASH VCS** is an educational project implementing a version control system similar to Git.  
 The project is developed in C++ using CMake for building and Doxygen for documentation.
 
@@ -27,10 +25,10 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 ### Installation Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/liltymoor/itmo-vcs
+   git clone https://github.com/liltymoor/stash-vcs
 2. Navigate to the project directory:
    ```bash
-   cd itmo-vcs
+   cd stash-vcs
    ```
 3. Build the project using CMake:
    ```bash
@@ -46,15 +44,15 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 ### Example Commands
 - Create a new commit:
   ```bash
-  ./itmo-vcs commit -m "Initial commit"
+  ./stash-vcs commit -m "Initial commit"
   ```
 - Create a new branch:
   ```bash
-  ./itmo-vcs branch new-feature
+  ./stash-vcs branch new-feature
   ```
 - Merge branches:
   ```bash
-  ./itmo-vcs merge new-feature
+  ./stash-vcs merge new-feature
   ```
 
 ---
@@ -62,7 +60,7 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 ## Documentation 📚
 
 Project documentation is available at:  
-[STASH VCS Documentation](https://fr2eof.github.io/itmo-vcs/)
+[STASH VCS Documentation](https://liltymoor.github.io/stash-vcs/)
 
 ---
 
@@ -102,7 +100,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Badges 🛡️
 
-![Build Status](https://github.com/fr2eof/itmo-vcs/actions/workflows/build.yml/badge.svg)
+![Build Status](https://github.com/liltymoor/stash-vcs/actions/workflows/build.yml/badge.svg)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ---
@@ -118,8 +116,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact 📧
 
 For questions or feedback, feel free to reach out:  
-- **Email:** your-email@example.com  
-- **GitHub Issues:** [Open an Issue](https://github.com/fr2eof/itmo-vcs/issues)
+- **Email:** timur.chelter@mail.ru or ilya.ivanov@mail.ru
+- **GitHub Issues:** [Open an Issue](https://github.com/liltymoor/stash-vcs/issues)
 
 ---
 ```
