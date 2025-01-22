@@ -121,12 +121,3 @@ For questions or feedback, feel free to reach out:
 
 ---
 ```
-
----
-
-### How to Use:
-1. Copy the above Markdown content into your `README.md` file.
-2. Replace placeholders (e.g., logo, screenshots, video link) with actual content.
-3. Customize the roadmap, acknowledgments, and contact information as needed.
-
-Let me know if you need further assistance! 😊
