@@ -251,7 +251,7 @@ void PersistenceStack::commit(const Commit &commit)
     {
         // TODO unsafe place (produces new commit with old paths to data)
         newCommit->state->addFile(filename, file);
-        File::copy_files(Repo::getBranchesPath() / commit.branch / commit.hash / META_COMMIT_FILES_FOLDER,
+        File::copy_files(Repo::getBranchesPath() / commit.branch / commit.hash / META_COMMIT_FILES_FOLDER / filename,
                          Repo::getBranchesPath() / newCommit->branch / newCommit->hash / META_COMMIT_FILES_FOLDER,
                          false);
     }
