@@ -30,10 +30,14 @@ Commit::Commit(std::map<std::string, std::string>& metaData, const std::unordere
 
 PersistenceStack::PersistenceStack()
 {
-    // TODO Init branches and repo from .stash sources
 
-    if (exists(Stash::getStashPath() / META_BRANCH_FOLDER))
+}
+
+PersistenceStack::PersistenceStack(std::string currentBranch)
+{
+    if (exists(Stash::getStashPath() / META_BRANCH_FOLDER) && !currentBranch.empty())
     {
+        this->currentBranch = currentBranch;
         try
         {
             for (const auto &entry : std::filesystem::directory_iterator(Stash::getStashPath() / META_BRANCH_FOLDER))
@@ -50,7 +54,6 @@ PersistenceStack::PersistenceStack()
             std::__throw_bad_variant_access(e.what());
         }
     }
-
 }
 
 std::string PersistenceStack::getCurrentBranch() const
@@ -137,12 +140,6 @@ std::map<std::string, std::string> RepoSettings::map_settings() const
     map["StartBranchName"] = str_startBranchName;
     return map;
 };
-
-PersistenceStack::PersistenceStack(const std::string &startBranchName)
-    : head(nullptr)
-{
-    create_branch(startBranchName);
-}
 
 void PersistenceStack::commit(const std::string &message)
 {
@@ -336,31 +333,29 @@ std::string PersistenceStack::generate_hash(const std::string &branch_name)
 }
 
 Repo::Repo()
-    : repoName("~none"),
-      branchStack(PersistenceStack())
+    : repoName("~none")
 {
-    if (std::filesystem::exists(Stash::getStashPath() / META_FILENAME))
+    if (exists(Stash::getStashPath() / META_FILENAME))
     {
         std::map<std::string, std::string> metadata = MetadataHandler::load(Stash::getStashPath() / META_FILENAME);
         // TODO validate metadata
         repoName = metadata[META_REPO_NAME];
-        branchStack.migrateBranch(metadata[META_CURRENT_BRANCH]);
-
+        branchStack = PersistenceStack(metadata[META_CURRENT_BRANCH]);
     }
 }
 
 Repo::Repo(const RepoSettings &settings)
-    : repoName(settings.str_repoName),
-      branchStack(PersistenceStack(settings.str_startBranchName))
+    : repoName(settings.str_repoName)
 {
-
+    branchStack.create_branch(settings.str_startBranchName);
 }
 
 void Repo::initRepository(const RepoSettings &settings)
 {
     // TODO Validate
     this->repoName = settings.str_repoName;
-    this->branchStack = PersistenceStack(settings.str_startBranchName);
+    this->branchStack = PersistenceStack();
+    branchStack.create_branch(settings.str_startBranchName);
 }
 
 void Repo::stashMeta() const

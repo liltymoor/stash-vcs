@@ -46,7 +46,7 @@ struct Commit {
 
 class PersistenceStack {
 private:
-    std::shared_ptr<Commit> head;
+    std::shared_ptr<Commit> head = nullptr;
     std::string currentBranch;
     std::unordered_map<std::string, std::shared_ptr<Commit>> branches;
     std::unordered_map<std::string, std::shared_ptr<Commit>> commits; // <hash, commit>
@@ -54,8 +54,8 @@ private:
     std::string generate_hash(const std::string& message);
 
 public:
-    PersistenceStack(const std::string &startBranchName);
     PersistenceStack();
+    PersistenceStack(std::string currentBranch);
 
     std::string getCurrentBranch() const;
     void migrateBranch(const std::string& branch_name);
