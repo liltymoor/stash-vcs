@@ -14,10 +14,6 @@ Commit::Commit(std::map<std::string, std::string>& metaData, const std::unordere
     message = metaData[META_COMMIT_MSG];
     hash = metaData[META_COMMIT_HASH];
 
-    INFO(message);
-    INFO(hash);
-    INFO(metaData[META_COMMIT_PREV]);
-
     prev = nullptr;
 
     // init commit files
@@ -44,7 +40,7 @@ PersistenceStack::PersistenceStack(std::string currentBranch)
             {
                 if (entry.is_directory())
                 {
-                    INFO("Branch: " << entry.path().filename());
+                    //INFO("Branch: " << entry.path().filename());
                     init_branch(entry.path().filename());
                 }
             }
@@ -190,7 +186,16 @@ void PersistenceStack::stage(const std::string &files)
     if (files.empty())
         throw std::invalid_argument("Files can not be empty");
 
-    File::copy_files(files, Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER, File::isRegexp(files));
+    auto stage_dir = Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER;
+
+    INFO("Already staged :");
+    for (const auto& entry : std::filesystem::directory_iterator(stage_dir)) {
+        if (is_regular_file(entry)) {
+            INFO(entry.path().filename() << " : " << entry.last_write_time())
+        }
+    }
+
+    File::copy_files(files, stage_dir, File::isRegexp(files));
 }
 
 void PersistenceStack::create_branch(const std::string &branch_name)
@@ -244,7 +249,7 @@ void PersistenceStack::init_branch(const std::string &branch_name)
 
             if (entry.is_directory() && entry.path().filename() != "staged")
             {
-                INFO("Commit: " << entry.path().filename());
+                //INFO("Commit: " << entry.path().filename());
                 init_commit(entry.path());
             }
         }

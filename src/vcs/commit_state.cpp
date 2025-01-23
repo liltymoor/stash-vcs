@@ -121,7 +121,6 @@ void File::copy_files(const std::string &source_pattern, const std::string &targ
             if (exists(target_path)) {
                 fs::remove(target_path);
             }
-            INFO(file);
             copy(file, target_path);
         }
 
