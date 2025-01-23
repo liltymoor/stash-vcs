@@ -45,6 +45,8 @@ PersistenceStack::PersistenceStack(std::string currentBranch)
                     init_branch(entry.path().filename());
                 }
             }
+            // init head after the branches
+            head = branches[currentBranch];
         }
         catch (const std::filesystem::filesystem_error &e)
         {
@@ -235,6 +237,33 @@ void PersistenceStack::commit(const std::string &message)
     INFO("New commit HEAD is " << ((head->prev == nullptr) ? "NULL" : head->prev->hash) << "--->" << head->hash);
 }
 
+void PersistenceStack::commit(const Commit &commit)
+{
+    std::string msg = "Reverted to commit " + commit.hash;
+
+    const auto newCommit = std::make_shared<Commit>(msg, generate_hash(msg), currentBranch, head);
+    create_directories(Repo::getBranchesPath() / currentBranch / newCommit->hash / META_COMMIT_FILES_FOLDER);
+
+    // it could be that head is empty ( fresh branch with no commits )
+    auto statedFiles = head == nullptr ? std::unordered_map<std::string, File>() : commit.state->getFiles();
+
+    for (const auto &[filename, file] : statedFiles)
+    {
+        // TODO unsafe place (produces new commit with old paths to data)
+        newCommit->state->addFile(filename, file);
+        File::copy_files(Repo::getBranchesPath() / commit.branch / commit.hash / META_COMMIT_FILES_FOLDER,
+                         Repo::getBranchesPath() / newCommit->branch / newCommit->hash / META_COMMIT_FILES_FOLDER,
+                         false);
+    }
+
+    head = newCommit;
+    branches[currentBranch] = head;
+
+    INFO("Commited " << statedFiles.size() << " files");
+
+    INFO("New commit HEAD is " << ((head->prev == nullptr) ? "NULL" : head->prev->hash) << "--->" << head->hash);
+}
+
 void PersistenceStack::stage(const std::string &files)
 // TODO feature version should decline this way to stage files because it's very heavy
 // Better way is to store meta-data like file_path, update_time and hash (sha1), than the right order to stage will be
@@ -281,7 +310,7 @@ void PersistenceStack::create_branch(const std::string &branch_name)
     create_directories(Repo::getBranchesPath() / branch_name / "staged");
     currentBranch = branch_name;
 
-    INFO("Branch " << branch_name << "created");
+    INFO("Branch " << branch_name << " created");
 }
 
 void PersistenceStack::revert_previous()
@@ -318,8 +347,7 @@ void PersistenceStack::init_branch(const std::string &branch_name)
                 init_commit(entry.path());
             }
         }
-        head = commits[meta[META_CURRENT_HEAD]];
-        branches[branch_name] = head;
+        branches[branch_name] = commits[meta[META_CURRENT_HEAD]];
     }
     catch (const std::filesystem::filesystem_error &e)
     {
@@ -346,10 +374,46 @@ void PersistenceStack::init_commit(const std::filesystem::path &commit_hash)
 }
 
 // TODO To think of...
-// void PersistenceStack::revert_to(const std::string &hash)
-// {
-//
-// }
+void PersistenceStack::revert_to(const std::string &hash)
+{
+    if (hash.empty())
+        throw std::invalid_argument("Hash cannot be empty");
+
+    if (hash == head->hash)
+    {
+        ERROR("Can't revert to itself");
+        return;
+    }
+
+    if (head == nullptr)
+    {
+        ERROR("There are no commits in this branch yet");
+        return;
+    }
+
+    auto commitIter = *head;
+
+    do
+    {
+        commitIter = *commitIter.prev;
+        if (commitIter.branch != currentBranch) // No way to revert to another branch commit
+        {
+            ERROR("Can't revert");
+            ERROR("Commit " << hash << " not found in current branch (" << currentBranch << ")");
+            return;
+        }
+
+        if (commitIter.hash == hash)
+        {
+            // Revert to given commit
+            commit(commitIter);
+            return;
+        }
+    } while (commitIter.prev != nullptr);
+
+    ERROR("Can't revert");
+    ERROR("Commit " << hash << " not found in current branch (" << currentBranch << ")");
+}
 
 void PersistenceStack::checkout_branch(const std::string &branch_name)
 {
@@ -371,6 +435,46 @@ void PersistenceStack::checkout_branch(const std::string &branch_name)
         migrateBranch(branch_name);
     }
 }
+
+void PersistenceStack::list_branches() const
+{
+    int branchCount = 0;
+    for (const auto &[branchName, head] : branches)
+    {
+        branchCount++;
+        INFO("Branch " << branchName << " | HEAD " << head->hash);
+    }
+    INFO("===========================")
+    INFO("Branch count: " << branchCount);
+}
+
+void PersistenceStack::list_commits() const
+{
+    if (head == nullptr)
+    {
+        ERROR("There are no commits in this branch yet");
+        return;
+    }
+
+    int commitCount = 1;
+    INFO("Branch " << currentBranch << " commits:\n")
+
+    auto commitIter = *head;
+    INFO("HEAD");
+    do
+    {
+        if (commitIter.prev != nullptr)
+            INFO(commitIter.prev->hash << "--->" << commitIter.hash)
+        else
+            INFO(head->hash)
+        INFO("Message: " << commitIter.message);
+        INFO("Files commited:" << commitIter.state->getFiles().size() << std::endl);
+        commitCount++;
+    } while (commitIter.prev != nullptr);
+    INFO("===========================")
+    INFO("Commit count: " << commitCount);
+}
+
 
 void PersistenceStack::merge(const std::string &branch_name)
 {

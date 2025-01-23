@@ -66,21 +66,23 @@ public:
     void migrateBranch(const std::string& branch_name);
 
     void commit(const std::string& message);
+    void commit(const Commit &commit);
     void stage(const std::string& files);
     void revert_previous();
     // TODO To think of...
-    //void revert_to(const std::string &hash);
+    void revert_to(const std::string &hash);
     void init_branch(const std::string& branch_name);
     void init_commit(const std::filesystem::path& commit_hash);
     void create_branch(const std::string& branch_name);
     void checkout_branch(const std::string& branch_name);
     void merge(const std::string& branch_name);
+    void list_branches() const;
+    void list_commits() const;
 
     bool isValid() const;
     void stashMeta() const;
     void log() const;
 };
-
 
 struct RepoSettings {
     std::string str_repoName;

@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     const CommitCommand commitCommand;
     const CheckoutCommand checkoutCommand;
     const MergeCommand mergeCommand;
+    const RevertToCommand revertToCommand;
 
     CommandInvoker invoker;
 
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
     invoker.init_command(&checkoutCommand);
     invoker.init_command(&mergeCommand);
     invoker.init_command(&testCommand);
+    invoker.init_command(&revertToCommand);
 
     if (!invoker.invoke_command(argc, argv)) ERROR("Command failed. Check output above to see more detailed info.");
 }

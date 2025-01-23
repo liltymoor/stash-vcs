@@ -119,6 +119,11 @@ void *CommitCommand::action(ParsedArgs args) const
         Repo::getInstance().stashMeta();
     }
 
+    if (args.hasArg("list"))
+    {
+        Repo::getInstance().getRepoStack().list_commits();
+    }
+
     return nullptr;
 }
 
@@ -130,6 +135,11 @@ CommitArgs::CommitArgs()
                                 true,
                                 true)
     );
+    expected_args.push_back(new Arg("list",
+                            "List current branch commits",
+                            true,
+                            true)
+);
 }
 
 //
@@ -161,6 +171,11 @@ void *CheckoutCommand::action(ParsedArgs args) const
         Repo::getInstance().stashMeta();
     }
 
+    if (args.hasArg("list"))
+    {
+        Repo::getInstance().getRepoStack().list_branches();
+    }
+
     return nullptr;
 }
 
@@ -172,6 +187,12 @@ CheckoutArgs::CheckoutArgs()
                                     true,
                                     true)
         );
+
+    expected_args.push_back(new Arg("list",
+                                "List all the branches you have",
+                                true,
+                                true)
+    );
 }
 
 //
@@ -203,6 +224,47 @@ MergeArgs::MergeArgs()
 {
     expected_args.push_back(new Arg("branch",
                                 "Argument to specify branch name you want to merge to (current->specified)",
+                                true,
+                                true)
+    );
+}
+
+//
+// REVERT_TO COMMAND
+//
+
+RevertToCommand::RevertToCommand()
+    : Command("revert_to", "Reverts to specified commit. Works only in current branch bounds.")
+{
+    expected_args = new RevertToArgs();
+}
+
+void *RevertToCommand::action(ParsedArgs args) const
+{
+    if (args.hasArg("verbose"))
+        INFO("Revert To command");
+
+    if (args.hasArg("description"))
+    {
+        INFO(get_desc());
+        return nullptr;
+    }
+
+    if (args.hasArg("hash"))
+    {
+        std::string value = args.getArgValue("hash");
+        Repo::getInstance().getRepoStack().revert_to(value);
+        Repo::getInstance().stashMeta();
+    }
+
+    return nullptr;
+}
+
+RevertToArgs::RevertToArgs()
+    : CommandArgs() // Init default args like verbose or description
+{
+    expected_args.push_back(new Arg("hash",
+                                "Argument to specify hash, you want to revert to (current->specified)",
                                 true,
                                 true)
     );
