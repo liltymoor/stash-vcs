@@ -470,6 +470,7 @@ void PersistenceStack::list_commits() const
         INFO("Message: " << commitIter.message);
         INFO("Files commited:" << commitIter.state->getFiles().size() << std::endl);
         commitCount++;
+        commitIter = *commitIter.prev;
     } while (commitIter.prev != nullptr);
     INFO("===========================")
     INFO("Commit count: " << commitCount);
