@@ -49,6 +49,7 @@ public:
 
     static bool isRegexp(const std::string &str);
     static void copy_files(const std::string& source_pattern, const std::string& target_dir, bool use_regex = true);
+    static void clean_dir(const std::string &str);
     static std::unordered_map<std::string, File> getFilesFromDir(const std::filesystem::path& dir);
 };
 

@@ -131,6 +131,32 @@ void File::copy_files(const std::string &source_pattern, const std::string &targ
     }
 }
 
+void File::clean_dir(const std::string &dir_path)
+{
+    fs::path directory(dir_path);
+
+    if (!fs::exists(directory)) {
+        return;
+    }
+
+    if (!fs::is_directory(directory)) {
+        throw std::invalid_argument("Path is not a directory: " + dir_path);
+    }
+
+
+    std::error_code ec;
+    for (const auto& entry : fs::directory_iterator(directory)) {
+        fs::remove_all(entry.path(), ec);
+
+        if (ec) {
+            throw std::runtime_error(
+                "Failed to remove " + entry.path().string() +
+                ": " + ec.message()
+            );
+        }
+    }
+}
+
 std::unordered_map<std::string, File> File::getFilesFromDir(const std::filesystem::path &dir)
 {
     std::unordered_map<std::string, File> files;

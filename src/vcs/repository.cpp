@@ -83,7 +83,7 @@ void PersistenceStack::stashMeta() const
         // TODO Unsafe place
         return;
     }
-    INFO(head->prev->hash);
+
     metadataBranch[META_CURRENT_HEAD] = head->hash;
     if (head->prev != nullptr)
     {
@@ -170,13 +170,14 @@ void PersistenceStack::commit(const std::string &message)
     }
 
     for (const auto &[filename, file] : stagedFiles)
-        // TODO !!! STAGE MUST BE CLEAR AFTER COMMIT
     {
         newCommit->state->addFile(filename, file);
         File::copy_files(filename,
                          Repo::getBranchesPath() / currentBranch / newCommit->hash / META_COMMIT_FILES_FOLDER,
                          false);
     }
+
+    File::clean_dir(Repo::getBranchesPath() / getCurrentBranch() / META_STAGE_FOLDER);
 
     head = newCommit;
     branches[currentBranch] = head;
