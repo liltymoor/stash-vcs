@@ -1,20 +1,31 @@
 #include "command.hpp"
 
+/**
+ * @brief Constructor for the Command class.
+ * @param name The name of the command.
+ * @param description The description of the command.
+ */
 Command::Command(const char* name, const char* description) {
     this->name = name;
     this->description = description;
     this->expected_args = new CommandArgs();
 }
 
+/**
+ * @brief Destructor for the Command class.
+ */
 Command::~Command() {
     delete this->expected_args;
 }
 
-
+/**
+ * @brief Executes the command with the provided arguments.
+ * @param argc The number of arguments.
+ * @param argv The array of arguments.
+ * @return A pointer to the result of the command execution.
+ */
 void* Command::execute(int argc, char* argv[]) const {
-
-    if (argv == nullptr)
-    {
+    if (argv == nullptr) {
         ParsedArgs const parsed_args;
         return this->action(parsed_args);
     }
@@ -25,14 +36,18 @@ void* Command::execute(int argc, char* argv[]) const {
     return this->action(parsed_args);
 }
 
-void* Command::action(ParsedArgs const args) const
-{
-    if (args.hasArg("description")) { // если description есть
+/**
+ * @brief The default action performed by the command.
+ * @param args The parsed arguments.
+ * @return A pointer to the result of the action.
+ */
+void* Command::action(ParsedArgs const args) const {
+    if (args.hasArg("description")) { // If "description" argument is present
         std::cout << description << std::endl;
         return nullptr;
     }
 
-    if (args.hasArg("verbose")) { // если verbose есть
+    if (args.hasArg("verbose")) { // If "verbose" argument is present
         std::cout << "Verbose mode is on" << std::endl;
     }
 
@@ -41,12 +56,18 @@ void* Command::action(ParsedArgs const args) const
     return nullptr;
 }
 
-const char * Command::get_name() const
-{
+/**
+ * @brief Returns the name of the command.
+ * @return The name of the command.
+ */
+const char* Command::get_name() const {
     return this->name;
 }
 
-const char * Command::get_desc() const
-{
+/**
+ * @brief Returns the description of the command.
+ * @return The description of the command.
+ */
+const char* Command::get_desc() const {
     return this->description;
 }

@@ -1,0 +1,25 @@
+\doxysection{invoker.\+hpp}
+\hypertarget{invoker_8hpp_source}{}\label{invoker_8hpp_source}\index{include/command/invoker.hpp@{include/command/invoker.hpp}}
+\mbox{\hyperlink{invoker_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ INVOKER\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ INVOKER\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{command_8hpp}{command.hpp}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_command_invoker_a01c8e970240ac9331d88305d01fa689e}{CommandInvoker}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00015\ \ \ \ \ std::unordered\_map<std::string,\ const\ Command*>\ \mbox{\hyperlink{class_command_invoker_a71aa3aae538b84403749c6056516e10f}{commands}};\ }
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_command_invoker_a01c8e970240ac9331d88305d01fa689e}{CommandInvoker}}();}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_command_invoker_a8632a0203aad6a36811eb11fb86940b7}{init\_command}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_command}{Command}}*\ command);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_command_invoker_aa960683da9e498b32d6368ad934d6fc8}{invoke\_command}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}*\ argv[]);}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ INVOKER\_HPP}}
+
+\end{DoxyCode}

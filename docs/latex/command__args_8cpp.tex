@@ -1,0 +1,35 @@
+\doxysection{src/command/command\+\_\+args.cpp File Reference}
+\hypertarget{command__args_8cpp}{}\label{command__args_8cpp}\index{src/command/command\_args.cpp@{src/command/command\_args.cpp}}
+{\ttfamily \#include "{}command\+\_\+args.\+hpp"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{command__args_8cpp_a2befda58d954c7746643b6ba6be89bf3}{FULL\+\_\+\+ARG}}(arg)
+\item 
+\#define \mbox{\hyperlink{command__args_8cpp_a1b9691fe7829345fdfc26aad408a78e3}{SHORT\+\_\+\+ARG}}(arg)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{command__args_8cpp_a2befda58d954c7746643b6ba6be89bf3}\index{command\_args.cpp@{command\_args.cpp}!FULL\_ARG@{FULL\_ARG}}
+\index{FULL\_ARG@{FULL\_ARG}!command\_args.cpp@{command\_args.cpp}}
+\doxysubsubsection{\texorpdfstring{FULL\_ARG}{FULL\_ARG}}
+{\footnotesize\ttfamily \label{command__args_8cpp_a2befda58d954c7746643b6ba6be89bf3} 
+\#define FULL\+\_\+\+ARG(\begin{DoxyParamCaption}\item[{}]{arg}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::string(\textcolor{stringliteral}{"{}-\/-\/"{}})\ +\ arg}
+
+\end{DoxyCode}
+\Hypertarget{command__args_8cpp_a1b9691fe7829345fdfc26aad408a78e3}\index{command\_args.cpp@{command\_args.cpp}!SHORT\_ARG@{SHORT\_ARG}}
+\index{SHORT\_ARG@{SHORT\_ARG}!command\_args.cpp@{command\_args.cpp}}
+\doxysubsubsection{\texorpdfstring{SHORT\_ARG}{SHORT\_ARG}}
+{\footnotesize\ttfamily \label{command__args_8cpp_a1b9691fe7829345fdfc26aad408a78e3} 
+\#define SHORT\+\_\+\+ARG(\begin{DoxyParamCaption}\item[{}]{arg}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::string(\textcolor{stringliteral}{"{}-\/"{}})\ +\ arg}
+
+\end{DoxyCode}

@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['meta_5fblock_5fseparator_0',['META_BLOCK_SEPARATOR',['../metadata_8hpp.html#aa581bc93f1d337da835e00c53b6b9bc3',1,'metadata.hpp']]],
+  ['meta_5fbranch_5ffolder_1',['META_BRANCH_FOLDER',['../repository_8hpp.html#a8d0f000dfe2ce7aad7a2a1269f38b7de',1,'repository.hpp']]],
+  ['meta_5fcommit_5fbranch_2',['META_COMMIT_BRANCH',['../repository_8hpp.html#a8dfec367e0ff70fdbfeaba03dbbacc46',1,'repository.hpp']]],
+  ['meta_5fcommit_5ffiles_5ffolder_3',['META_COMMIT_FILES_FOLDER',['../repository_8hpp.html#ad183ceb32c32a2dfcea18d38b4b857e6',1,'repository.hpp']]],
+  ['meta_5fcommit_5fhash_4',['META_COMMIT_HASH',['../repository_8hpp.html#adf2d585bff701b6d54900c4d84d078eb',1,'repository.hpp']]],
+  ['meta_5fcommit_5fmsg_5',['META_COMMIT_MSG',['../repository_8hpp.html#a5b31fe4702e0616e4f608c25b5224c3b',1,'repository.hpp']]],
+  ['meta_5fcommit_5fprev_6',['META_COMMIT_PREV',['../repository_8hpp.html#a33c935c183c444bf153f0d9f4c87ef33',1,'repository.hpp']]],
+  ['meta_5fcurrent_5fbranch_7',['META_CURRENT_BRANCH',['../repository_8hpp.html#a0a124cff21b00eca58aa6ba8b531e3e7',1,'repository.hpp']]],
+  ['meta_5fcurrent_5fhead_8',['META_CURRENT_HEAD',['../repository_8hpp.html#ac8ce95ef3d6e65d50f79bb12dd9f1701',1,'repository.hpp']]],
+  ['meta_5fdata_5fseparator_9',['META_DATA_SEPARATOR',['../metadata_8hpp.html#a634bd5958c3536be04d983d82c987e74',1,'metadata.hpp']]],
+  ['meta_5fend_5fmarker_10',['META_END_MARKER',['../metadata_8hpp.html#afb7a92c4ddeb851a1e047cb3658b8bae',1,'metadata.hpp']]],
+  ['meta_5ffilename_11',['META_FILENAME',['../repository_8hpp.html#a217fb476829bc9b3ecdaf583262b3b1c',1,'repository.hpp']]],
+  ['meta_5frepo_5fcore_5fbranch_12',['META_REPO_CORE_BRANCH',['../repository_8hpp.html#a64f94510664daa8dc122e5d241c72e54',1,'repository.hpp']]],
+  ['meta_5frepo_5fname_13',['META_REPO_NAME',['../repository_8hpp.html#ab144801794ff2e53a468c8bb74b7abb3',1,'repository.hpp']]],
+  ['meta_5fstage_5ffolder_14',['META_STAGE_FOLDER',['../repository_8hpp.html#a0f28d8192d52f4d345414ddf5a3ca272',1,'repository.hpp']]],
+  ['meta_5fstart_5fmarker_15',['META_START_MARKER',['../metadata_8hpp.html#a2e3b640ea47c5e8b9242a9ebf51f95e1',1,'metadata.hpp']]]
+];

@@ -1,0 +1,194 @@
+\doxysection{Command Class Reference}
+\hypertarget{class_command}{}\label{class_command}\index{Command@{Command}}
+
+
+Base class for creating commands.  
+
+
+
+
+{\ttfamily \#include $<$command.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_command_ad255bc9dd141ffdcb6d5ec677b3f81bf}{Command}} (const char \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_command_aaac7db0461198bc84c6bb01e64ae82e3}{name}}, const char \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_command_a138b25860069077ad2a1d0100f4cb60d}{description}})
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_command}{Command} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_command_ab552bb3a07fdd1acbfd8ea76e69b2278}{\texorpdfstring{$\sim$}{\string~}\+Command}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \doxylink{class_command}{Command} class. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_command_a88123d7bbf5605b5b29156309b8055a3}{execute}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]}) const
+\begin{DoxyCompactList}\small\item\em Executes the command. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_command_addaa3c970a31f3babd990ca453538f9b}{get\+\_\+name}} () const
+\begin{DoxyCompactList}\small\item\em Returns the name of the command. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_command_a26b55094b53eee75f1802ccf8dcfd18f}{get\+\_\+desc}} () const
+\begin{DoxyCompactList}\small\item\em Returns the description of the command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_command_a9d1af3b9e75ed61826a4891c8db3720d}{action}} (\mbox{\hyperlink{struct_parsed_args}{Parsed\+Args}} args) const
+\begin{DoxyCompactList}\small\item\em The action performed by the command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_command_args}{Command\+Args}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_command_a0f1dfd013e464a855531dcf041a70d76}{expected\+\_\+args}}
+\begin{DoxyCompactList}\small\item\em Expected arguments for the command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_command_aaac7db0461198bc84c6bb01e64ae82e3}{name}}
+\begin{DoxyCompactList}\small\item\em The name of the command. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_command_a138b25860069077ad2a1d0100f4cb60d}{description}}
+\begin{DoxyCompactList}\small\item\em The description of the command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for creating commands. 
+
+The \doxylink{class_command}{Command} class provides an interface for creating commands with a name, description, and an action that is executed when the command is invoked. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_command_ad255bc9dd141ffdcb6d5ec677b3f81bf}\index{Command@{Command}!Command@{Command}}
+\index{Command@{Command}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{Command()}{Command()}}
+{\footnotesize\ttfamily \label{class_command_ad255bc9dd141ffdcb6d5ec677b3f81bf} 
+Command\+::\+Command (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{description}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_command}{Command} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the command. \\
+\hline
+{\em description} & The description of the command. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_command_ab552bb3a07fdd1acbfd8ea76e69b2278}\index{Command@{Command}!````~Command@{\texorpdfstring{$\sim$}{\string~}Command}}
+\index{````~Command@{\texorpdfstring{$\sim$}{\string~}Command}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Command()}{\string~Command()}}
+{\footnotesize\ttfamily \label{class_command_ab552bb3a07fdd1acbfd8ea76e69b2278} 
+Command\+::\texorpdfstring{$\sim$}{\string~}\+Command (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Destructor for the \doxylink{class_command}{Command} class. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_command_a9d1af3b9e75ed61826a4891c8db3720d}\index{Command@{Command}!action@{action}}
+\index{action@{action}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{action()}{action()}}
+{\footnotesize\ttfamily \label{class_command_a9d1af3b9e75ed61826a4891c8db3720d} 
+void \texorpdfstring{$\ast$}{*} Command\+::action (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parsed_args}{Parsed\+Args}}}]{args}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+The action performed by the command. 
+
+The default action performed by the command.
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & Arguments passed to the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the result of the command execution.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em args} & The parsed arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the result of the action. 
+\end{DoxyReturn}
+\Hypertarget{class_command_a88123d7bbf5605b5b29156309b8055a3}\index{Command@{Command}!execute@{execute}}
+\index{execute@{execute}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily \label{class_command_a88123d7bbf5605b5b29156309b8055a3} 
+void \texorpdfstring{$\ast$}{*} Command\+::execute (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption}) const}
+
+
+
+Executes the command. 
+
+Executes the command with the provided arguments.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The number of arguments. \\
+\hline
+{\em argv} & The array of arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the result of the command execution. 
+\end{DoxyReturn}
+\Hypertarget{class_command_a26b55094b53eee75f1802ccf8dcfd18f}\index{Command@{Command}!get\_desc@{get\_desc}}
+\index{get\_desc@{get\_desc}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{get\_desc()}{get\_desc()}}
+{\footnotesize\ttfamily \label{class_command_a26b55094b53eee75f1802ccf8dcfd18f} 
+const char \texorpdfstring{$\ast$}{*} Command\+::get\+\_\+desc (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the description of the command. 
+
+\begin{DoxyReturn}{Returns}
+The description of the command. 
+\end{DoxyReturn}
+\Hypertarget{class_command_addaa3c970a31f3babd990ca453538f9b}\index{Command@{Command}!get\_name@{get\_name}}
+\index{get\_name@{get\_name}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{get\_name()}{get\_name()}}
+{\footnotesize\ttfamily \label{class_command_addaa3c970a31f3babd990ca453538f9b} 
+const char \texorpdfstring{$\ast$}{*} Command\+::get\+\_\+name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the name of the command. 
+
+\begin{DoxyReturn}{Returns}
+The name of the command. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_command_a138b25860069077ad2a1d0100f4cb60d}\index{Command@{Command}!description@{description}}
+\index{description@{description}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{description}{description}}
+{\footnotesize\ttfamily \label{class_command_a138b25860069077ad2a1d0100f4cb60d} 
+const char\texorpdfstring{$\ast$}{*} Command\+::description\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The description of the command. 
+
+\Hypertarget{class_command_a0f1dfd013e464a855531dcf041a70d76}\index{Command@{Command}!expected\_args@{expected\_args}}
+\index{expected\_args@{expected\_args}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{expected\_args}{expected\_args}}
+{\footnotesize\ttfamily \label{class_command_a0f1dfd013e464a855531dcf041a70d76} 
+\mbox{\hyperlink{class_command_args}{Command\+Args}}\texorpdfstring{$\ast$}{*} Command\+::expected\+\_\+args\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Expected arguments for the command. 
+
+\Hypertarget{class_command_aaac7db0461198bc84c6bb01e64ae82e3}\index{Command@{Command}!name@{name}}
+\index{name@{name}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{class_command_aaac7db0461198bc84c6bb01e64ae82e3} 
+const char\texorpdfstring{$\ast$}{*} Command\+::name\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The name of the command. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/command/\mbox{\hyperlink{command_8hpp}{command.\+hpp}}\item 
+src/command/\mbox{\hyperlink{command_8cpp}{command.\+cpp}}\end{DoxyCompactItemize}

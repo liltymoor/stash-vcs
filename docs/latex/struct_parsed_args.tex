@@ -1,0 +1,96 @@
+\doxysection{Parsed\+Args Struct Reference}
+\hypertarget{struct_parsed_args}{}\label{struct_parsed_args}\index{ParsedArgs@{ParsedArgs}}
+
+
+Represents parsed command arguments.  
+
+
+
+
+{\ttfamily \#include $<$command\+\_\+args.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{struct_parsed_args_ad5f2ef9722f3d1255a3d458118d3d7a5}{has\+Arg}} (const char \texorpdfstring{$\ast$}{*}str) const
+\begin{DoxyCompactList}\small\item\em Checks if an argument exists. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{struct_parsed_args_a7460494e4f7c3f63da5c038e10228b20}{get\+Arg\+Value}} (const std\+::string \&str)
+\begin{DoxyCompactList}\small\item\em Returns the value of an argument. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{struct_parsed_args_a9ac78959b204c631494c070f66ded21f}{parsed\+\_\+args}}
+\begin{DoxyCompactList}\small\item\em Map of parsed arguments. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents parsed command arguments. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_parsed_args_a7460494e4f7c3f63da5c038e10228b20}\index{ParsedArgs@{ParsedArgs}!getArgValue@{getArgValue}}
+\index{getArgValue@{getArgValue}!ParsedArgs@{ParsedArgs}}
+\doxysubsubsection{\texorpdfstring{getArgValue()}{getArgValue()}}
+{\footnotesize\ttfamily \label{struct_parsed_args_a7460494e4f7c3f63da5c038e10228b20} 
+std\+::string Parsed\+Args\+::get\+Arg\+Value (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{arg\+\_\+name}{}\end{DoxyParamCaption})}
+
+
+
+Returns the value of an argument. 
+
+Retrieves the value of an argument.
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The name of the argument. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the argument.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em arg\+\_\+name} & The name of the argument. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the argument. 
+\end{DoxyReturn}
+\Hypertarget{struct_parsed_args_ad5f2ef9722f3d1255a3d458118d3d7a5}\index{ParsedArgs@{ParsedArgs}!hasArg@{hasArg}}
+\index{hasArg@{hasArg}!ParsedArgs@{ParsedArgs}}
+\doxysubsubsection{\texorpdfstring{hasArg()}{hasArg()}}
+{\footnotesize\ttfamily \label{struct_parsed_args_ad5f2ef9722f3d1255a3d458118d3d7a5} 
+bool Parsed\+Args\+::has\+Arg (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks if an argument exists. 
+
+Checks if an argument exists in the parsed arguments.
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The name of the argument. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the argument exists, otherwise false. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_parsed_args_a9ac78959b204c631494c070f66ded21f}\index{ParsedArgs@{ParsedArgs}!parsed\_args@{parsed\_args}}
+\index{parsed\_args@{parsed\_args}!ParsedArgs@{ParsedArgs}}
+\doxysubsubsection{\texorpdfstring{parsed\_args}{parsed\_args}}
+{\footnotesize\ttfamily \label{struct_parsed_args_a9ac78959b204c631494c070f66ded21f} 
+std\+::unordered\+\_\+map$<$std\+::string, std\+::string$>$ Parsed\+Args\+::parsed\+\_\+args}
+
+
+
+Map of parsed arguments. 
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/command/\mbox{\hyperlink{command__args_8hpp}{command\+\_\+args.\+hpp}}\item 
+src/command/\mbox{\hyperlink{command__args_8cpp}{command\+\_\+args.\+cpp}}\end{DoxyCompactItemize}

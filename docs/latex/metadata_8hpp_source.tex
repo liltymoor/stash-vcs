@@ -1,0 +1,30 @@
+\doxysection{metadata.\+hpp}
+\hypertarget{metadata_8hpp_source}{}\label{metadata_8hpp_source}\index{include/vcs/metadata.hpp@{include/vcs/metadata.hpp}}
+\mbox{\hyperlink{metadata_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Timmie\ on\ 22.01.2025.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ METADATA\_HPP}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ METADATA\_HPP}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ Format\ constants}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ META\_START\_MARKER\ \ \ \ '['\ }}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ META\_END\_MARKER\ \ \ \ \ \ ']'\ }}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ META\_DATA\_SEPARATOR\ \ "{}="{}\ }}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ META\_BLOCK\_SEPARATOR\ "{}\(\backslash\)n\(\backslash\)n"{}\ }}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_metadata_handler}{MetadataHandler}}\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_metadata_handler_af355d3e0bf32ccd6a1b425a0569fcd30}{save}}(\textcolor{keyword}{const}\ std::string\&\ filepath,\ \textcolor{keyword}{const}\ std::map<std::string,\ std::string>\&\ data);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ std::map<std::string,\ std::string>\ \mbox{\hyperlink{class_metadata_handler_ad0fe31e9202ba01dad0e7f695f3c1181}{load}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00036\ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ METADATA\_HPP}}
+
+\end{DoxyCode}

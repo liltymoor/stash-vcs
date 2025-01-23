@@ -1,0 +1,28 @@
+var class_persistence_stack =
+[
+    [ "PersistenceStack", "class_persistence_stack.html#a91b2376c8e3f49b64baa0d66ff92bb69", null ],
+    [ "PersistenceStack", "class_persistence_stack.html#a159b8362b341ef8422f5d48abc3393cc", null ],
+    [ "checkout_branch", "class_persistence_stack.html#af35af8a30529009cb3c8ed556ef39612", null ],
+    [ "commit", "class_persistence_stack.html#aca043ee351dd10c7f03b1c5692b8163d", null ],
+    [ "commit", "class_persistence_stack.html#a4516ed6248430ca02c0f01ccc5b000ce", null ],
+    [ "create_branch", "class_persistence_stack.html#ae0cce13521983014b210c6d16fad2f92", null ],
+    [ "generate_hash", "class_persistence_stack.html#a48f602fe8b90a4c349f93474b9315af2", null ],
+    [ "getCurrentBranch", "class_persistence_stack.html#a1f17319a70838063bca2d0aa2abcfc18", null ],
+    [ "init_branch", "class_persistence_stack.html#a012f4065cf681a761c4aa1f0faac38a1", null ],
+    [ "init_commit", "class_persistence_stack.html#a0be28d4bf30eb8a64706844accbf05d6", null ],
+    [ "isValid", "class_persistence_stack.html#ad96558a69d739d95a9dbefaa5a5ae4f7", null ],
+    [ "list_branches", "class_persistence_stack.html#ac1fab8e2278a573fa0d09b1cabe3750c", null ],
+    [ "list_commits", "class_persistence_stack.html#ab27ce222d226cfa58b62294229344727", null ],
+    [ "log", "class_persistence_stack.html#ac427761c14ba01a22aad1c4f5325763f", null ],
+    [ "merge", "class_persistence_stack.html#a9178897557a17cf9373e2c0515085d65", null ],
+    [ "migrateBranch", "class_persistence_stack.html#a0ed569b4386ca5464ae0337adf79547f", null ],
+    [ "move_branch_files", "class_persistence_stack.html#abb29329faa2e956ed6124a6b2ea591a2", null ],
+    [ "revert_previous", "class_persistence_stack.html#ab6d8586455b2edbcd87acc39ca66470d", null ],
+    [ "revert_to", "class_persistence_stack.html#a1a7ffe16df921ddf7585b0aab618286d", null ],
+    [ "stage", "class_persistence_stack.html#a09b95fc15851dee459fcc0ce3e8b6c30", null ],
+    [ "stashMeta", "class_persistence_stack.html#a5eec2269dd07cc2da935e8ba553ef6dc", null ],
+    [ "branches", "class_persistence_stack.html#a440d62f894d476004c38fca0c71404a0", null ],
+    [ "commits", "class_persistence_stack.html#ae5171cf3e86b7509ec098477045bd4e4", null ],
+    [ "currentBranch", "class_persistence_stack.html#a1d6b177ffb36fed948df368c8542e779", null ],
+    [ "head", "class_persistence_stack.html#a0a172b896371720f93b248ff608d4155", null ]
+];

@@ -1,0 +1,123 @@
+\doxysection{Stash Class Reference}
+\hypertarget{class_stash}{}\label{class_stash}\index{Stash@{Stash}}
+
+
+Manages the stash (storage) for commits and repository metadata.  
+
+
+
+
+{\ttfamily \#include $<$stash.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_stash}{Stash}} \& \mbox{\hyperlink{class_stash_a97de9cac526239eefc945ba5986ba199}{get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em Returns the singleton instance of the \doxylink{class_stash}{Stash} class. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_stash_a457efc5c7b0614dfd1495d32d4a6f1e0}{stash\+Exists}} ()
+\begin{DoxyCompactList}\small\item\em Checks if the stash directory exists. \end{DoxyCompactList}\item 
+static const std\+::filesystem\+::path \& \mbox{\hyperlink{class_stash_a5e884ab9f817aab55aa18e8caf14a674}{get\+Stash\+Path}} ()
+\begin{DoxyCompactList}\small\item\em Returns the path to the stash directory. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_stash_ab3774665676b02a7a875035660810a25}{Stash}} ()
+\begin{DoxyCompactList}\small\item\em Private constructor for the \doxylink{class_stash}{Stash} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const std\+::filesystem\+::path \mbox{\hyperlink{class_stash_a50d64125f3cd1510e7fb3ea0a9e6c71b}{stash\+\_\+path}} = "{}./.stash"{}
+\begin{DoxyCompactList}\small\item\em Path to the stash directory. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_stash_ac5a72dcac32d8baca4f1ddcb0a71d57f}{is\+Exists}} = false
+\begin{DoxyCompactList}\small\item\em Flag indicating whether the stash exists. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages the stash (storage) for commits and repository metadata. 
+
+The \doxylink{class_stash}{Stash} class is responsible for managing the directory structure for commits and providing functionality to create and access commits. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_stash_ab3774665676b02a7a875035660810a25}\index{Stash@{Stash}!Stash@{Stash}}
+\index{Stash@{Stash}!Stash@{Stash}}
+\doxysubsubsection{\texorpdfstring{Stash()}{Stash()}}
+{\footnotesize\ttfamily \label{class_stash_ab3774665676b02a7a875035660810a25} 
+Stash\+::\+Stash (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Private constructor for the \doxylink{class_stash}{Stash} class. 
+
+Constructor for the \doxylink{class_stash}{Stash} class.
+
+Initializes the stash directory and repository if it doesn\textquotesingle{}t already exist. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_stash_a97de9cac526239eefc945ba5986ba199}\index{Stash@{Stash}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!Stash@{Stash}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily \label{class_stash_a97de9cac526239eefc945ba5986ba199} 
+\mbox{\hyperlink{class_stash}{Stash}} \& Stash\+::get\+Instance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Returns the singleton instance of the \doxylink{class_stash}{Stash} class. 
+
+\begin{DoxyReturn}{Returns}
+Reference to the \doxylink{class_stash}{Stash} instance. 
+\end{DoxyReturn}
+\Hypertarget{class_stash_a5e884ab9f817aab55aa18e8caf14a674}\index{Stash@{Stash}!getStashPath@{getStashPath}}
+\index{getStashPath@{getStashPath}!Stash@{Stash}}
+\doxysubsubsection{\texorpdfstring{getStashPath()}{getStashPath()}}
+{\footnotesize\ttfamily \label{class_stash_a5e884ab9f817aab55aa18e8caf14a674} 
+const std\+::filesystem\+::path \& Stash\+::get\+Stash\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Returns the path to the stash directory. 
+
+\begin{DoxyReturn}{Returns}
+The path to the stash directory. 
+\end{DoxyReturn}
+\Hypertarget{class_stash_a457efc5c7b0614dfd1495d32d4a6f1e0}\index{Stash@{Stash}!stashExists@{stashExists}}
+\index{stashExists@{stashExists}!Stash@{Stash}}
+\doxysubsubsection{\texorpdfstring{stashExists()}{stashExists()}}
+{\footnotesize\ttfamily \label{class_stash_a457efc5c7b0614dfd1495d32d4a6f1e0} 
+bool Stash\+::stash\+Exists (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Checks if the stash directory exists. 
+
+\begin{DoxyReturn}{Returns}
+true if the stash exists, otherwise false. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_stash_ac5a72dcac32d8baca4f1ddcb0a71d57f}\index{Stash@{Stash}!isExists@{isExists}}
+\index{isExists@{isExists}!Stash@{Stash}}
+\doxysubsubsection{\texorpdfstring{isExists}{isExists}}
+{\footnotesize\ttfamily \label{class_stash_ac5a72dcac32d8baca4f1ddcb0a71d57f} 
+bool Stash\+::is\+Exists = false\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Flag indicating whether the stash exists. 
+
+\Hypertarget{class_stash_a50d64125f3cd1510e7fb3ea0a9e6c71b}\index{Stash@{Stash}!stash\_path@{stash\_path}}
+\index{stash\_path@{stash\_path}!Stash@{Stash}}
+\doxysubsubsection{\texorpdfstring{stash\_path}{stash\_path}}
+{\footnotesize\ttfamily \label{class_stash_a50d64125f3cd1510e7fb3ea0a9e6c71b} 
+const std\+::filesystem\+::path Stash\+::stash\+\_\+path = "{}./.stash"{}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Path to the stash directory. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/stash/\mbox{\hyperlink{stash_8hpp}{stash.\+hpp}}\item 
+src/stash/\mbox{\hyperlink{stash_8cpp}{stash.\+cpp}}\end{DoxyCompactItemize}

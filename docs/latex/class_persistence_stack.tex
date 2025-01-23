@@ -1,0 +1,424 @@
+\doxysection{Persistence\+Stack Class Reference}
+\hypertarget{class_persistence_stack}{}\label{class_persistence_stack}\index{PersistenceStack@{PersistenceStack}}
+
+
+Manages the persistence stack for commits and branches.  
+
+
+
+
+{\ttfamily \#include $<$repository.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_persistence_stack_a91b2376c8e3f49b64baa0d66ff92bb69}{Persistence\+Stack}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_persistence_stack_a159b8362b341ef8422f5d48abc3393cc}{Persistence\+Stack}} (std\+::string \mbox{\hyperlink{class_persistence_stack_a1d6b177ffb36fed948df368c8542e779}{current\+Branch}})
+\begin{DoxyCompactList}\small\item\em Constructor that initializes the persistence stack with a current branch. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_persistence_stack_a1f17319a70838063bca2d0aa2abcfc18}{get\+Current\+Branch}} () const
+\begin{DoxyCompactList}\small\item\em Retrieves the current branch. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_a0ed569b4386ca5464ae0337adf79547f}{migrate\+Branch}} (const std\+::string \&branch\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Migrates to a new branch. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_a4516ed6248430ca02c0f01ccc5b000ce}{commit}} (const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Creates a new commit with a message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_aca043ee351dd10c7f03b1c5692b8163d}{commit}} (const \mbox{\hyperlink{struct_commit}{Commit}} \&commit)
+\begin{DoxyCompactList}\small\item\em Creates a new commit from an existing \doxylink{struct_commit}{Commit} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_a09b95fc15851dee459fcc0ce3e8b6c30}{stage}} (const std\+::string \&files)
+\begin{DoxyCompactList}\small\item\em Stages files for the next commit. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_ab6d8586455b2edbcd87acc39ca66470d}{revert\+\_\+previous}} ()
+\begin{DoxyCompactList}\small\item\em Reverts to the previous commit. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_a1a7ffe16df921ddf7585b0aab618286d}{revert\+\_\+to}} (const std\+::string \&hash)
+\begin{DoxyCompactList}\small\item\em Reverts to a specific commit by hash. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_a012f4065cf681a761c4aa1f0faac38a1}{init\+\_\+branch}} (const std\+::string \&branch\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Initializes a new branch. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_a0be28d4bf30eb8a64706844accbf05d6}{init\+\_\+commit}} (const std\+::filesystem\+::path \&commit\+\_\+hash)
+\begin{DoxyCompactList}\small\item\em Initializes a commit from a given hash. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_ae0cce13521983014b210c6d16fad2f92}{create\+\_\+branch}} (const std\+::string \&branch\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Creates a new branch. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_af35af8a30529009cb3c8ed556ef39612}{checkout\+\_\+branch}} (const std\+::string \&branch\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Checks out a branch. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_a9178897557a17cf9373e2c0515085d65}{merge}} (const std\+::string \&branch\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Merges a branch into the current branch. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_ac1fab8e2278a573fa0d09b1cabe3750c}{list\+\_\+branches}} () const
+\begin{DoxyCompactList}\small\item\em Lists all branches. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_ab27ce222d226cfa58b62294229344727}{list\+\_\+commits}} () const
+\begin{DoxyCompactList}\small\item\em Lists all commits. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_persistence_stack_ad96558a69d739d95a9dbefaa5a5ae4f7}{is\+Valid}} () const
+\begin{DoxyCompactList}\small\item\em Checks if the persistence stack is valid. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_a5eec2269dd07cc2da935e8ba553ef6dc}{stash\+Meta}} () const
+\begin{DoxyCompactList}\small\item\em Saves metadata to the stash. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_ac427761c14ba01a22aad1c4f5325763f}{log}} () const
+\begin{DoxyCompactList}\small\item\em Logs the current state of the persistence stack. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{class_persistence_stack_a48f602fe8b90a4c349f93474b9315af2}{generate\+\_\+hash}} (const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Generates a hash for a commit message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_persistence_stack_abb29329faa2e956ed6124a6b2ea591a2}{move\+\_\+branch\+\_\+files}} (const std\+::string \&branch\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Moves branch files to a new location. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{struct_commit}{Commit}} $>$ \mbox{\hyperlink{class_persistence_stack_a0a172b896371720f93b248ff608d4155}{head}} = nullptr
+\begin{DoxyCompactList}\small\item\em Pointer to the head commit. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_persistence_stack_a1d6b177ffb36fed948df368c8542e779}{current\+Branch}}
+\begin{DoxyCompactList}\small\item\em The current branch. \end{DoxyCompactList}\item 
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{struct_commit}{Commit}} $>$ $>$ \mbox{\hyperlink{class_persistence_stack_a440d62f894d476004c38fca0c71404a0}{branches}}
+\begin{DoxyCompactList}\small\item\em Map of branch names to commits. \end{DoxyCompactList}\item 
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{struct_commit}{Commit}} $>$ $>$ \mbox{\hyperlink{class_persistence_stack_ae5171cf3e86b7509ec098477045bd4e4}{commits}}
+\begin{DoxyCompactList}\small\item\em Map of commit hashes to commits. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages the persistence stack for commits and branches. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_persistence_stack_a91b2376c8e3f49b64baa0d66ff92bb69}\index{PersistenceStack@{PersistenceStack}!PersistenceStack@{PersistenceStack}}
+\index{PersistenceStack@{PersistenceStack}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{PersistenceStack()}{PersistenceStack()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a91b2376c8e3f49b64baa0d66ff92bb69} 
+Persistence\+Stack\+::\+Persistence\+Stack (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Default constructor. 
+
+Default constructor for the \doxylink{class_persistence_stack}{Persistence\+Stack} class. \Hypertarget{class_persistence_stack_a159b8362b341ef8422f5d48abc3393cc}\index{PersistenceStack@{PersistenceStack}!PersistenceStack@{PersistenceStack}}
+\index{PersistenceStack@{PersistenceStack}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{PersistenceStack()}{PersistenceStack()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a159b8362b341ef8422f5d48abc3393cc} 
+Persistence\+Stack\+::\+Persistence\+Stack (\begin{DoxyParamCaption}\item[{std\+::string}]{current\+Branch}{}\end{DoxyParamCaption})}
+
+
+
+Constructor that initializes the persistence stack with a current branch. 
+
+Constructor for the \doxylink{class_persistence_stack}{Persistence\+Stack} class with a current branch.
+
+
+\begin{DoxyParams}{Parameters}
+{\em current\+Branch} & The current branch. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_persistence_stack_af35af8a30529009cb3c8ed556ef39612}\index{PersistenceStack@{PersistenceStack}!checkout\_branch@{checkout\_branch}}
+\index{checkout\_branch@{checkout\_branch}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{checkout\_branch()}{checkout\_branch()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_af35af8a30529009cb3c8ed556ef39612} 
+void Persistence\+Stack\+::checkout\+\_\+branch (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{branch\+\_\+name}{}\end{DoxyParamCaption})}
+
+
+
+Checks out a branch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em branch\+\_\+name} & The name of the branch. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_aca043ee351dd10c7f03b1c5692b8163d}\index{PersistenceStack@{PersistenceStack}!commit@{commit}}
+\index{commit@{commit}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{commit()}{commit()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_persistence_stack_aca043ee351dd10c7f03b1c5692b8163d} 
+void Persistence\+Stack\+::commit (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_commit}{Commit}} \&}]{commit}{}\end{DoxyParamCaption})}
+
+
+
+Creates a new commit from an existing \doxylink{struct_commit}{Commit} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em commit} & The \doxylink{struct_commit}{Commit} object. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_a4516ed6248430ca02c0f01ccc5b000ce}\index{PersistenceStack@{PersistenceStack}!commit@{commit}}
+\index{commit@{commit}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{commit()}{commit()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a4516ed6248430ca02c0f01ccc5b000ce} 
+void Persistence\+Stack\+::commit (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message}{}\end{DoxyParamCaption})}
+
+
+
+Creates a new commit with a message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The commit message. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_ae0cce13521983014b210c6d16fad2f92}\index{PersistenceStack@{PersistenceStack}!create\_branch@{create\_branch}}
+\index{create\_branch@{create\_branch}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{create\_branch()}{create\_branch()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_ae0cce13521983014b210c6d16fad2f92} 
+void Persistence\+Stack\+::create\+\_\+branch (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{branch\+\_\+name}{}\end{DoxyParamCaption})}
+
+
+
+Creates a new branch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em branch\+\_\+name} & The name of the branch. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_a48f602fe8b90a4c349f93474b9315af2}\index{PersistenceStack@{PersistenceStack}!generate\_hash@{generate\_hash}}
+\index{generate\_hash@{generate\_hash}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{generate\_hash()}{generate\_hash()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a48f602fe8b90a4c349f93474b9315af2} 
+std\+::string Persistence\+Stack\+::generate\+\_\+hash (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{branch\+\_\+name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Generates a hash for a commit message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The commit message. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The generated hash.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em branch\+\_\+name} & The name of the branch. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The generated hash. 
+\end{DoxyReturn}
+\Hypertarget{class_persistence_stack_a1f17319a70838063bca2d0aa2abcfc18}\index{PersistenceStack@{PersistenceStack}!getCurrentBranch@{getCurrentBranch}}
+\index{getCurrentBranch@{getCurrentBranch}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{getCurrentBranch()}{getCurrentBranch()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a1f17319a70838063bca2d0aa2abcfc18} 
+std\+::string Persistence\+Stack\+::get\+Current\+Branch (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retrieves the current branch. 
+
+Returns the current branch.
+
+\begin{DoxyReturn}{Returns}
+The current branch. 
+\end{DoxyReturn}
+\Hypertarget{class_persistence_stack_a012f4065cf681a761c4aa1f0faac38a1}\index{PersistenceStack@{PersistenceStack}!init\_branch@{init\_branch}}
+\index{init\_branch@{init\_branch}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{init\_branch()}{init\_branch()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a012f4065cf681a761c4aa1f0faac38a1} 
+void Persistence\+Stack\+::init\+\_\+branch (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{branch\+\_\+name}{}\end{DoxyParamCaption})}
+
+
+
+Initializes a new branch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em branch\+\_\+name} & The name of the branch. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_a0be28d4bf30eb8a64706844accbf05d6}\index{PersistenceStack@{PersistenceStack}!init\_commit@{init\_commit}}
+\index{init\_commit@{init\_commit}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{init\_commit()}{init\_commit()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a0be28d4bf30eb8a64706844accbf05d6} 
+void Persistence\+Stack\+::init\+\_\+commit (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{commit\+\_\+hash}{}\end{DoxyParamCaption})}
+
+
+
+Initializes a commit from a given hash. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em commit\+\_\+hash} & The hash of the commit. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_ad96558a69d739d95a9dbefaa5a5ae4f7}\index{PersistenceStack@{PersistenceStack}!isValid@{isValid}}
+\index{isValid@{isValid}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_ad96558a69d739d95a9dbefaa5a5ae4f7} 
+bool Persistence\+Stack\+::is\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks if the persistence stack is valid. 
+
+\begin{DoxyReturn}{Returns}
+true if valid, otherwise false. 
+\end{DoxyReturn}
+\Hypertarget{class_persistence_stack_ac1fab8e2278a573fa0d09b1cabe3750c}\index{PersistenceStack@{PersistenceStack}!list\_branches@{list\_branches}}
+\index{list\_branches@{list\_branches}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{list\_branches()}{list\_branches()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_ac1fab8e2278a573fa0d09b1cabe3750c} 
+void Persistence\+Stack\+::list\+\_\+branches (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Lists all branches. 
+
+\Hypertarget{class_persistence_stack_ab27ce222d226cfa58b62294229344727}\index{PersistenceStack@{PersistenceStack}!list\_commits@{list\_commits}}
+\index{list\_commits@{list\_commits}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{list\_commits()}{list\_commits()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_ab27ce222d226cfa58b62294229344727} 
+void Persistence\+Stack\+::list\+\_\+commits (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Lists all commits. 
+
+Lists all commits in the current branch. \Hypertarget{class_persistence_stack_ac427761c14ba01a22aad1c4f5325763f}\index{PersistenceStack@{PersistenceStack}!log@{log}}
+\index{log@{log}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{log()}{log()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_ac427761c14ba01a22aad1c4f5325763f} 
+void Persistence\+Stack\+::log (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Logs the current state of the persistence stack. 
+
+\Hypertarget{class_persistence_stack_a9178897557a17cf9373e2c0515085d65}\index{PersistenceStack@{PersistenceStack}!merge@{merge}}
+\index{merge@{merge}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{merge()}{merge()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a9178897557a17cf9373e2c0515085d65} 
+void Persistence\+Stack\+::merge (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{branch\+\_\+name}{}\end{DoxyParamCaption})}
+
+
+
+Merges a branch into the current branch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em branch\+\_\+name} & The name of the branch to merge. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_a0ed569b4386ca5464ae0337adf79547f}\index{PersistenceStack@{PersistenceStack}!migrateBranch@{migrateBranch}}
+\index{migrateBranch@{migrateBranch}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{migrateBranch()}{migrateBranch()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a0ed569b4386ca5464ae0337adf79547f} 
+void Persistence\+Stack\+::migrate\+Branch (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{branch\+\_\+name}{}\end{DoxyParamCaption})}
+
+
+
+Migrates to a new branch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em branch\+\_\+name} & The name of the branch to migrate to. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_abb29329faa2e956ed6124a6b2ea591a2}\index{PersistenceStack@{PersistenceStack}!move\_branch\_files@{move\_branch\_files}}
+\index{move\_branch\_files@{move\_branch\_files}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{move\_branch\_files()}{move\_branch\_files()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_abb29329faa2e956ed6124a6b2ea591a2} 
+void Persistence\+Stack\+::move\+\_\+branch\+\_\+files (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{branch\+\_\+name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Moves branch files to a new location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em branch\+\_\+name} & The name of the branch. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_ab6d8586455b2edbcd87acc39ca66470d}\index{PersistenceStack@{PersistenceStack}!revert\_previous@{revert\_previous}}
+\index{revert\_previous@{revert\_previous}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{revert\_previous()}{revert\_previous()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_ab6d8586455b2edbcd87acc39ca66470d} 
+void Persistence\+Stack\+::revert\+\_\+previous (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Reverts to the previous commit. 
+
+\Hypertarget{class_persistence_stack_a1a7ffe16df921ddf7585b0aab618286d}\index{PersistenceStack@{PersistenceStack}!revert\_to@{revert\_to}}
+\index{revert\_to@{revert\_to}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{revert\_to()}{revert\_to()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a1a7ffe16df921ddf7585b0aab618286d} 
+void Persistence\+Stack\+::revert\+\_\+to (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{hash}{}\end{DoxyParamCaption})}
+
+
+
+Reverts to a specific commit by hash. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hash} & The hash of the commit to revert to. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_a09b95fc15851dee459fcc0ce3e8b6c30}\index{PersistenceStack@{PersistenceStack}!stage@{stage}}
+\index{stage@{stage}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{stage()}{stage()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a09b95fc15851dee459fcc0ce3e8b6c30} 
+void Persistence\+Stack\+::stage (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{files}{}\end{DoxyParamCaption})}
+
+
+
+Stages files for the next commit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em files} & The files to stage. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_persistence_stack_a5eec2269dd07cc2da935e8ba553ef6dc}\index{PersistenceStack@{PersistenceStack}!stashMeta@{stashMeta}}
+\index{stashMeta@{stashMeta}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{stashMeta()}{stashMeta()}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a5eec2269dd07cc2da935e8ba553ef6dc} 
+void Persistence\+Stack\+::stash\+Meta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Saves metadata to the stash. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_persistence_stack_a440d62f894d476004c38fca0c71404a0}\index{PersistenceStack@{PersistenceStack}!branches@{branches}}
+\index{branches@{branches}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{branches}{branches}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a440d62f894d476004c38fca0c71404a0} 
+std\+::unordered\+\_\+map$<$std\+::string, std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{struct_commit}{Commit}}$>$ $>$ Persistence\+Stack\+::branches\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Map of branch names to commits. 
+
+\Hypertarget{class_persistence_stack_ae5171cf3e86b7509ec098477045bd4e4}\index{PersistenceStack@{PersistenceStack}!commits@{commits}}
+\index{commits@{commits}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{commits}{commits}}
+{\footnotesize\ttfamily \label{class_persistence_stack_ae5171cf3e86b7509ec098477045bd4e4} 
+std\+::unordered\+\_\+map$<$std\+::string, std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{struct_commit}{Commit}}$>$ $>$ Persistence\+Stack\+::commits\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Map of commit hashes to commits. 
+
+\Hypertarget{class_persistence_stack_a1d6b177ffb36fed948df368c8542e779}\index{PersistenceStack@{PersistenceStack}!currentBranch@{currentBranch}}
+\index{currentBranch@{currentBranch}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{currentBranch}{currentBranch}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a1d6b177ffb36fed948df368c8542e779} 
+std\+::string Persistence\+Stack\+::current\+Branch\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The current branch. 
+
+\Hypertarget{class_persistence_stack_a0a172b896371720f93b248ff608d4155}\index{PersistenceStack@{PersistenceStack}!head@{head}}
+\index{head@{head}!PersistenceStack@{PersistenceStack}}
+\doxysubsubsection{\texorpdfstring{head}{head}}
+{\footnotesize\ttfamily \label{class_persistence_stack_a0a172b896371720f93b248ff608d4155} 
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{struct_commit}{Commit}}$>$ Persistence\+Stack\+::head = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Pointer to the head commit. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/vcs/\mbox{\hyperlink{repository_8hpp}{repository.\+hpp}}\item 
+src/vcs/\mbox{\hyperlink{repository_8cpp}{repository.\+cpp}}\end{DoxyCompactItemize}

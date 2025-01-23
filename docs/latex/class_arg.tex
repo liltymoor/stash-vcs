@@ -1,0 +1,337 @@
+\doxysection{Arg Class Reference}
+\hypertarget{class_arg}{}\label{class_arg}\index{Arg@{Arg}}
+
+
+Represents a command argument.  
+
+
+
+
+{\ttfamily \#include $<$command\+\_\+args.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_arg_a311673c41c0434ed8a9a47ce8fe01091}{Arg}} (const char \texorpdfstring{$\ast$}{*}name, const char \texorpdfstring{$\ast$}{*}desc)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_arg}{Arg} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_arg_a567ac0eb7f1bf78b90c9714f2719e576}{Arg}} (const char \texorpdfstring{$\ast$}{*}name, const char \texorpdfstring{$\ast$}{*}desc, std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_arg_a20fc95a22a1fbfa36f52a111d8e4cc54}{definitions}})
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_arg}{Arg} class with valid values. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_arg_aa6a63f9ec2438fde8fd55af04268290f}{Arg}} (const char \texorpdfstring{$\ast$}{*}name, const char \texorpdfstring{$\ast$}{*}desc, bool required, bool valuable)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_arg}{Arg} class with flags. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_arg_a3b81db6e14e3347636c37176b6dee9d8}{Arg}} (const char \texorpdfstring{$\ast$}{*}name, const char \texorpdfstring{$\ast$}{*}desc, std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_arg_a20fc95a22a1fbfa36f52a111d8e4cc54}{definitions}}, bool required, bool valuable)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_arg}{Arg} class with valid values and flags. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_arg_aa2d28d72c6988dd6adb8a1fb84b71177}{is\+Required}} () const
+\begin{DoxyCompactList}\small\item\em Checks if the argument is required. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_arg_a2e52c8e2e2f7b2b01e5b2d154f119324}{is\+Valuable}} () const
+\begin{DoxyCompactList}\small\item\em Checks if the argument requires a value. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_arg_a4163c90c3927aa150b9d6c885825cf0a}{get\+Name}} () const
+\begin{DoxyCompactList}\small\item\em Returns the name of the argument. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_arg_a9b13868c2a64cf1a34c6157b78b3ea8d}{get\+Description}} () const
+\begin{DoxyCompactList}\small\item\em Returns the description of the argument. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_arg_a78d438ab6dbfa96a2c95ed47aea0881c}{parse}} (const char \texorpdfstring{$\ast$}{*}str) const
+\begin{DoxyCompactList}\small\item\em Parses the argument value. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_arg_a268aef07b4367d48e3345e8543a2a5fb}{operator==}} (const \mbox{\hyperlink{class_arg}{Arg}} \&other) const
+\begin{DoxyCompactList}\small\item\em Compares two \doxylink{class_arg}{Arg} objects for equality. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{class_arg_a931ed106aa75d0f085166a5f9dd95e69}{str\+\_\+name}}
+\begin{DoxyCompactList}\small\item\em The name of the argument. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_arg_a2206f1c535a28bc7f4003d53129f3706}{str\+\_\+description}}
+\begin{DoxyCompactList}\small\item\em The description of the argument. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_arg_a7238ee5183bbc5a6ce3d40d1aeec773b}{str\+\_\+short\+\_\+name}}
+\begin{DoxyCompactList}\small\item\em The short name of the argument. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_arg_aa81a8c8255318300854a7c5555388b36}{b\+\_\+valuable}}
+\begin{DoxyCompactList}\small\item\em Flag indicating whether the argument requires a value. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_arg_afa86eb7584d950e49a4c8eae3847384f}{b\+\_\+required}}
+\begin{DoxyCompactList}\small\item\em Flag indicating whether the argument is required. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_arg_a20fc95a22a1fbfa36f52a111d8e4cc54}{definitions}}
+\begin{DoxyCompactList}\small\item\em List of valid values for the argument. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a command argument. 
+
+The \doxylink{class_arg}{Arg} class contains information about the argument\textquotesingle{}s name, description, short name, and flags indicating whether the argument is required and whether it requires a value. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_arg_a311673c41c0434ed8a9a47ce8fe01091}\index{Arg@{Arg}!Arg@{Arg}}
+\index{Arg@{Arg}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{Arg()}{Arg()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{class_arg_a311673c41c0434ed8a9a47ce8fe01091} 
+Arg\+::\+Arg (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{desc}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_arg}{Arg} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the argument. \\
+\hline
+{\em desc} & The description of the argument. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_arg_a567ac0eb7f1bf78b90c9714f2719e576}\index{Arg@{Arg}!Arg@{Arg}}
+\index{Arg@{Arg}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{Arg()}{Arg()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{class_arg_a567ac0eb7f1bf78b90c9714f2719e576} 
+Arg\+::\+Arg (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{desc}{, }\item[{std\+::vector$<$ std\+::string $>$}]{definitions}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_arg}{Arg} class with valid values. 
+
+Constructor for the \doxylink{class_arg}{Arg} class with custom definitions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the argument. \\
+\hline
+{\em desc} & The description of the argument. \\
+\hline
+{\em definitions} & List of valid values.\\
+\hline
+{\em name} & The name of the argument. \\
+\hline
+{\em desc} & The description of the argument. \\
+\hline
+{\em definitions} & A list of custom definitions for the argument. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_arg_aa6a63f9ec2438fde8fd55af04268290f}\index{Arg@{Arg}!Arg@{Arg}}
+\index{Arg@{Arg}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{Arg()}{Arg()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{class_arg_aa6a63f9ec2438fde8fd55af04268290f} 
+Arg\+::\+Arg (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{desc}{, }\item[{bool}]{required}{, }\item[{bool}]{valuable}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_arg}{Arg} class with flags. 
+
+Constructor for the \doxylink{class_arg}{Arg} class with required and valuable flags.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the argument. \\
+\hline
+{\em desc} & The description of the argument. \\
+\hline
+{\em required} & Flag indicating whether the argument is required. \\
+\hline
+{\em valuable} & Flag indicating whether the argument requires a value.\\
+\hline
+{\em name} & The name of the argument. \\
+\hline
+{\em desc} & The description of the argument. \\
+\hline
+{\em required} & Whether the argument is required. \\
+\hline
+{\em valuable} & Whether the argument requires a value. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_arg_a3b81db6e14e3347636c37176b6dee9d8}\index{Arg@{Arg}!Arg@{Arg}}
+\index{Arg@{Arg}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{Arg()}{Arg()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{class_arg_a3b81db6e14e3347636c37176b6dee9d8} 
+Arg\+::\+Arg (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{desc}{, }\item[{std\+::vector$<$ std\+::string $>$}]{definitions}{, }\item[{bool}]{required}{, }\item[{bool}]{valuable}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_arg}{Arg} class with valid values and flags. 
+
+Constructor for the \doxylink{class_arg}{Arg} class with custom definitions, required, and valuable flags.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the argument. \\
+\hline
+{\em desc} & The description of the argument. \\
+\hline
+{\em definitions} & List of valid values. \\
+\hline
+{\em required} & Flag indicating whether the argument is required. \\
+\hline
+{\em valuable} & Flag indicating whether the argument requires a value.\\
+\hline
+{\em name} & The name of the argument. \\
+\hline
+{\em desc} & The description of the argument. \\
+\hline
+{\em definitions} & A list of custom definitions for the argument. \\
+\hline
+{\em required} & Whether the argument is required. \\
+\hline
+{\em valuable} & Whether the argument requires a value. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_arg_a9b13868c2a64cf1a34c6157b78b3ea8d}\index{Arg@{Arg}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily \label{class_arg_a9b13868c2a64cf1a34c6157b78b3ea8d} 
+const char \texorpdfstring{$\ast$}{*} Arg\+::get\+Description (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the description of the argument. 
+
+\begin{DoxyReturn}{Returns}
+The description of the argument. 
+\end{DoxyReturn}
+\Hypertarget{class_arg_a4163c90c3927aa150b9d6c885825cf0a}\index{Arg@{Arg}!getName@{getName}}
+\index{getName@{getName}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily \label{class_arg_a4163c90c3927aa150b9d6c885825cf0a} 
+const char \texorpdfstring{$\ast$}{*} Arg\+::get\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the name of the argument. 
+
+\begin{DoxyReturn}{Returns}
+The name of the argument. 
+\end{DoxyReturn}
+\Hypertarget{class_arg_aa2d28d72c6988dd6adb8a1fb84b71177}\index{Arg@{Arg}!isRequired@{isRequired}}
+\index{isRequired@{isRequired}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{isRequired()}{isRequired()}}
+{\footnotesize\ttfamily \label{class_arg_aa2d28d72c6988dd6adb8a1fb84b71177} 
+bool Arg\+::is\+Required (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks if the argument is required. 
+
+\begin{DoxyReturn}{Returns}
+true if the argument is required, otherwise false. 
+\end{DoxyReturn}
+\Hypertarget{class_arg_a2e52c8e2e2f7b2b01e5b2d154f119324}\index{Arg@{Arg}!isValuable@{isValuable}}
+\index{isValuable@{isValuable}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{isValuable()}{isValuable()}}
+{\footnotesize\ttfamily \label{class_arg_a2e52c8e2e2f7b2b01e5b2d154f119324} 
+bool Arg\+::is\+Valuable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks if the argument requires a value. 
+
+\begin{DoxyReturn}{Returns}
+true if the argument requires a value, otherwise false. 
+\end{DoxyReturn}
+\Hypertarget{class_arg_a268aef07b4367d48e3345e8543a2a5fb}\index{Arg@{Arg}!operator==@{operator==}}
+\index{operator==@{operator==}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{class_arg_a268aef07b4367d48e3345e8543a2a5fb} 
+bool Arg\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_arg}{Arg}} \&}]{other}{}\end{DoxyParamCaption}) const}
+
+
+
+Compares two \doxylink{class_arg}{Arg} objects for equality. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other \doxylink{class_arg}{Arg} object to compare with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the arguments are equal, otherwise false. 
+\end{DoxyReturn}
+\Hypertarget{class_arg_a78d438ab6dbfa96a2c95ed47aea0881c}\index{Arg@{Arg}!parse@{parse}}
+\index{parse@{parse}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{parse()}{parse()}}
+{\footnotesize\ttfamily \label{class_arg_a78d438ab6dbfa96a2c95ed47aea0881c} 
+bool Arg\+::parse (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption}) const}
+
+
+
+Parses the argument value. 
+
+Parses the argument to check if it matches any definition.
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The value to parse. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the value is valid, otherwise false.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The argument string to parse. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the argument matches any definition, otherwise false. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_arg_afa86eb7584d950e49a4c8eae3847384f}\index{Arg@{Arg}!b\_required@{b\_required}}
+\index{b\_required@{b\_required}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{b\_required}{b\_required}}
+{\footnotesize\ttfamily \label{class_arg_afa86eb7584d950e49a4c8eae3847384f} 
+bool Arg\+::b\+\_\+required\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Flag indicating whether the argument is required. 
+
+\Hypertarget{class_arg_aa81a8c8255318300854a7c5555388b36}\index{Arg@{Arg}!b\_valuable@{b\_valuable}}
+\index{b\_valuable@{b\_valuable}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{b\_valuable}{b\_valuable}}
+{\footnotesize\ttfamily \label{class_arg_aa81a8c8255318300854a7c5555388b36} 
+bool Arg\+::b\+\_\+valuable\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Flag indicating whether the argument requires a value. 
+
+\Hypertarget{class_arg_a20fc95a22a1fbfa36f52a111d8e4cc54}\index{Arg@{Arg}!definitions@{definitions}}
+\index{definitions@{definitions}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{definitions}{definitions}}
+{\footnotesize\ttfamily \label{class_arg_a20fc95a22a1fbfa36f52a111d8e4cc54} 
+std\+::vector$<$std\+::string$>$ Arg\+::definitions\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+List of valid values for the argument. 
+
+\Hypertarget{class_arg_a2206f1c535a28bc7f4003d53129f3706}\index{Arg@{Arg}!str\_description@{str\_description}}
+\index{str\_description@{str\_description}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{str\_description}{str\_description}}
+{\footnotesize\ttfamily \label{class_arg_a2206f1c535a28bc7f4003d53129f3706} 
+std\+::string Arg\+::str\+\_\+description\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The description of the argument. 
+
+\Hypertarget{class_arg_a931ed106aa75d0f085166a5f9dd95e69}\index{Arg@{Arg}!str\_name@{str\_name}}
+\index{str\_name@{str\_name}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{str\_name}{str\_name}}
+{\footnotesize\ttfamily \label{class_arg_a931ed106aa75d0f085166a5f9dd95e69} 
+std\+::string Arg\+::str\+\_\+name\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The name of the argument. 
+
+\Hypertarget{class_arg_a7238ee5183bbc5a6ce3d40d1aeec773b}\index{Arg@{Arg}!str\_short\_name@{str\_short\_name}}
+\index{str\_short\_name@{str\_short\_name}!Arg@{Arg}}
+\doxysubsubsection{\texorpdfstring{str\_short\_name}{str\_short\_name}}
+{\footnotesize\ttfamily \label{class_arg_a7238ee5183bbc5a6ce3d40d1aeec773b} 
+std\+::string Arg\+::str\+\_\+short\+\_\+name\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The short name of the argument. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/command/\mbox{\hyperlink{command__args_8hpp}{command\+\_\+args.\+hpp}}\item 
+src/command/\mbox{\hyperlink{command__args_8cpp}{command\+\_\+args.\+cpp}}\end{DoxyCompactItemize}

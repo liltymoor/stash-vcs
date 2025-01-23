@@ -1,0 +1,138 @@
+\doxysection{repository.\+hpp}
+\hypertarget{repository_8hpp_source}{}\label{repository_8hpp_source}\index{include/vcs/repository.hpp@{include/vcs/repository.hpp}}
+\mbox{\hyperlink{repository_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ REPO\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ REPO\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{commit__state_8hpp}{commit\_state.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{stash_8hpp}{stash.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ Metadata\ constants}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ META\_FILENAME\ "{}metadata"{}\ }}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ META\_STAGE\_FOLDER\ "{}staged"{}\ }}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ META\_BRANCH\_FOLDER\ "{}branches"{}\ }}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ META\_COMMIT\_FILES\_FOLDER\ "{}files"{}\ }}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ META\_REPO\_NAME\ "{}RepoName"{}\ }}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ META\_CURRENT\_BRANCH\ "{}CurrentBranch"{}\ }}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ META\_CURRENT\_HEAD\ "{}CurrentHead"{}\ }}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ META\_REPO\_CORE\_BRANCH\ "{}RepoStartBranch"{}\ }}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ META\_COMMIT\_MSG\ "{}CommitMessage"{}\ }}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ META\_COMMIT\_PREV\ "{}PrevCommit"{}\ }}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ META\_COMMIT\_HASH\ "{}CommitHash"{}\ }}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ META\_COMMIT\_BRANCH\ "{}CommitBranch"{}\ }}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_commit_a3c2f52cc8bf0d9a3f36dfc2d5b371477}{Commit}}\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_commit_a03965aa22c7ff4bda99adeccca2a23f4}{message}};\ }
+\DoxyCodeLine{00035\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_commit_a751a5577a06505bab6cf1a54dd180023}{hash}};\ }
+\DoxyCodeLine{00036\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_commit_ac94e32c30f3030af6fc14f8249b8c172}{branch}};\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ std::shared\_ptr<Commit>\ \mbox{\hyperlink{struct_commit_a23f4d115f00c0dddaf47aed4fa481fc8}{prev}};\ }
+\DoxyCodeLine{00039\ \ \ \ \ std::shared\_ptr<CommitState>\ \mbox{\hyperlink{struct_commit_a2000cca4e582b1d46d21b805294c796c}{state}};\ }
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{struct_commit_a3c2f52cc8bf0d9a3f36dfc2d5b371477}{Commit}}(std::string\ msg,\ std::string\ h,\ std::string\ b,\ std::shared\_ptr<Commit>\ p\ =\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_commit_a03965aa22c7ff4bda99adeccca2a23f4}{message}}(std::move(msg)),}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_commit_a751a5577a06505bab6cf1a54dd180023}{hash}}(std::move(h)),}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_commit_ac94e32c30f3030af6fc14f8249b8c172}{branch}}(b),}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_commit_a23f4d115f00c0dddaf47aed4fa481fc8}{prev}}(std::move(p)),}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_commit_a2000cca4e582b1d46d21b805294c796c}{state}}(std::make\_shared<\mbox{\hyperlink{class_commit_state}{CommitState}}>())\ \{\}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{struct_commit_a3c2f52cc8bf0d9a3f36dfc2d5b371477}{Commit}}(std::map<std::string,\ std::string>\&\ metaData,\ \textcolor{keyword}{const}\ std::unordered\_map<std::string,\ File>\&\ commit\_files);}
+\DoxyCodeLine{00061\ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_persistence_stack_a91b2376c8e3f49b64baa0d66ff92bb69}{PersistenceStack}}\ \{}
+\DoxyCodeLine{00068\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00069\ \ \ \ \ std::shared\_ptr<Commit>\ \mbox{\hyperlink{class_persistence_stack_a0a172b896371720f93b248ff608d4155}{head}}\ =\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{00070\ \ \ \ \ std::string\ \mbox{\hyperlink{class_persistence_stack_a1d6b177ffb36fed948df368c8542e779}{currentBranch}};\ }
+\DoxyCodeLine{00071\ \ \ \ \ std::unordered\_map<std::string,\ std::shared\_ptr<Commit>>\ \mbox{\hyperlink{class_persistence_stack_a440d62f894d476004c38fca0c71404a0}{branches}};\ }
+\DoxyCodeLine{00072\ \ \ \ \ std::unordered\_map<std::string,\ std::shared\_ptr<Commit>>\ \mbox{\hyperlink{class_persistence_stack_ae5171cf3e86b7509ec098477045bd4e4}{commits}};\ }
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00079\ \ \ \ \ std::string\ \mbox{\hyperlink{class_persistence_stack_a48f602fe8b90a4c349f93474b9315af2}{generate\_hash}}(\textcolor{keyword}{const}\ std::string\&\ message);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_abb29329faa2e956ed6124a6b2ea591a2}{move\_branch\_files}}(\textcolor{keyword}{const}\ std::string\ \&branch\_name);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{class_persistence_stack_a91b2376c8e3f49b64baa0d66ff92bb69}{PersistenceStack}}();}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{class_persistence_stack_a91b2376c8e3f49b64baa0d66ff92bb69}{PersistenceStack}}(std::string\ \mbox{\hyperlink{class_persistence_stack_a1d6b177ffb36fed948df368c8542e779}{currentBranch}});}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00101\ \ \ \ \ std::string\ \mbox{\hyperlink{class_persistence_stack_a1f17319a70838063bca2d0aa2abcfc18}{getCurrentBranch}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_a0ed569b4386ca5464ae0337adf79547f}{migrateBranch}}(\textcolor{keyword}{const}\ std::string\&\ branch\_name);}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_a4516ed6248430ca02c0f01ccc5b000ce}{commit}}(\textcolor{keyword}{const}\ std::string\&\ message);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_a4516ed6248430ca02c0f01ccc5b000ce}{commit}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_commit}{Commit}}\ \&\mbox{\hyperlink{class_persistence_stack_a4516ed6248430ca02c0f01ccc5b000ce}{commit}});}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_a09b95fc15851dee459fcc0ce3e8b6c30}{stage}}(\textcolor{keyword}{const}\ std::string\&\ files);}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_ab6d8586455b2edbcd87acc39ca66470d}{revert\_previous}}();}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_a1a7ffe16df921ddf7585b0aab618286d}{revert\_to}}(\textcolor{keyword}{const}\ std::string\ \&hash);}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_a012f4065cf681a761c4aa1f0faac38a1}{init\_branch}}(\textcolor{keyword}{const}\ std::string\&\ branch\_name);}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_a0be28d4bf30eb8a64706844accbf05d6}{init\_commit}}(\textcolor{keyword}{const}\ std::filesystem::path\&\ commit\_hash);}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_ae0cce13521983014b210c6d16fad2f92}{create\_branch}}(\textcolor{keyword}{const}\ std::string\&\ branch\_name);}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_af35af8a30529009cb3c8ed556ef39612}{checkout\_branch}}(\textcolor{keyword}{const}\ std::string\&\ branch\_name);}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_a9178897557a17cf9373e2c0515085d65}{merge}}(\textcolor{keyword}{const}\ std::string\&\ branch\_name);}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_ac1fab8e2278a573fa0d09b1cabe3750c}{list\_branches}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_ab27ce222d226cfa58b62294229344727}{list\_commits}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_persistence_stack_ad96558a69d739d95a9dbefaa5a5ae4f7}{isValid}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_a5eec2269dd07cc2da935e8ba553ef6dc}{stashMeta}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_persistence_stack_ac427761c14ba01a22aad1c4f5325763f}{log}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00193\ \};}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00199\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_repo_settings}{RepoSettings}}\ \{}
+\DoxyCodeLine{00200\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_repo_settings_afef8c10b55f8987aa7c620223cb5fb27}{str\_repoName}};\ }
+\DoxyCodeLine{00201\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_repo_settings_afa29694225b96306571f02563ab02080}{str\_startBranchName}};\ }
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00207\ \ \ \ \ std::map<std::string,\ std::string>\ \mbox{\hyperlink{struct_repo_settings_aba7a00d4cb827c0927a013901b81312f}{map\_settings}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00208\ \};}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00214\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_repo_ae435617778368d1c7b1049af0a15e47a}{Repo}}\ \{}
+\DoxyCodeLine{00215\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00216\ \ \ \ \ std::string\ \mbox{\hyperlink{class_repo_aac751c5077fb49f147b9f2d5cf867b1e}{repoName}};\ }
+\DoxyCodeLine{00217\ \ \ \ \ \mbox{\hyperlink{class_persistence_stack}{PersistenceStack}}\ \mbox{\hyperlink{class_repo_a1d4edd9c77e005e4ab46671815e0d5a9}{branchStack}};\ }
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_repo_ae435617778368d1c7b1049af0a15e47a}{Repo}}\ *\mbox{\hyperlink{class_repo_a721c043bc71a67ce9d1d2e77831f9c2e}{stashRepository}};\ }
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keyword}{static}\ std::filesystem::path\ \mbox{\hyperlink{class_repo_adb549d3fafc4eed372618df13c39b7e6}{branchesPath}}\ =\ \mbox{\hyperlink{class_stash_a5e884ab9f817aab55aa18e8caf14a674}{Stash::getStashPath}}()\ /\ \textcolor{stringliteral}{"{}branches"{}};\ }
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00222\ \ \ \ \ \mbox{\hyperlink{class_repo_ae435617778368d1c7b1049af0a15e47a}{Repo}}();}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_repo_ae435617778368d1c7b1049af0a15e47a}{Repo}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_repo_settings}{RepoSettings}}\&\ settings);}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_repo_a5bd090209fe655cd52c69aad3a96d599}{initRepository}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_repo_settings}{RepoSettings}}\&\ settings);}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_repo_ab58e8c5ef0a0fc5c48782596e49793ce}{stashMeta}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_repo_settings}{RepoSettings}}\&\ settings);}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_repo_ab58e8c5ef0a0fc5c48782596e49793ce}{stashMeta}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00252\ \ \ \ \ \mbox{\hyperlink{class_persistence_stack}{PersistenceStack}}\&\ \mbox{\hyperlink{class_repo_ac9b106d35cc0ce81f1f572d9a227b388}{getRepoStack}}();}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_repo_ae435617778368d1c7b1049af0a15e47a}{Repo}}\ \&\mbox{\hyperlink{class_repo_a68bef566fac41e60d05dee8b94dfe652}{getInstance}}();}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keyword}{static}\ std::filesystem::path\ \mbox{\hyperlink{class_repo_a43bc77efc85bc816201e2d7eccb9210d}{getBranchesPath}}();}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_repo_aafcc6a344f88daf599d08b9df3146380}{IsEmpty}}();}
+\DoxyCodeLine{00271\ \};}
+\DoxyCodeLine{00272\ }
+\DoxyCodeLine{00273\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ REPO\_HPP}}
+
+\end{DoxyCode}

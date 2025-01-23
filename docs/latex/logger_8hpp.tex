@@ -1,0 +1,74 @@
+\doxysection{include/logger/logger.hpp File Reference}
+\hypertarget{logger_8hpp}{}\label{logger_8hpp}\index{include/logger/logger.hpp@{include/logger/logger.hpp}}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{logger_8hpp_a108d6c5c51dd46e82a62b262394f0242}{WARN}}(msg)
+\begin{DoxyCompactList}\small\item\em Logs a warning message. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{logger_8hpp_a3ae64706314066fdc8b6c8029a915aa7}{INFO}}(msg)
+\begin{DoxyCompactList}\small\item\em Logs an informational message. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{logger_8hpp_a435175024ad996b2a45d734fa9eea0e3}{ERROR}}(msg)
+\begin{DoxyCompactList}\small\item\em Logs an error message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{logger_8hpp_a435175024ad996b2a45d734fa9eea0e3}\index{logger.hpp@{logger.hpp}!ERROR@{ERROR}}
+\index{ERROR@{ERROR}!logger.hpp@{logger.hpp}}
+\doxysubsubsection{\texorpdfstring{ERROR}{ERROR}}
+{\footnotesize\ttfamily \label{logger_8hpp_a435175024ad996b2a45d734fa9eea0e3} 
+\#define ERROR(\begin{DoxyParamCaption}\item[{}]{msg}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::cout\ <<\ \textcolor{stringliteral}{"{}[ERROR]\ "{}}\ <<\ msg\ <<\ std::endl;}
+
+\end{DoxyCode}
+
+
+Logs an error message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & The error message to log. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{logger_8hpp_a3ae64706314066fdc8b6c8029a915aa7}\index{logger.hpp@{logger.hpp}!INFO@{INFO}}
+\index{INFO@{INFO}!logger.hpp@{logger.hpp}}
+\doxysubsubsection{\texorpdfstring{INFO}{INFO}}
+{\footnotesize\ttfamily \label{logger_8hpp_a3ae64706314066fdc8b6c8029a915aa7} 
+\#define INFO(\begin{DoxyParamCaption}\item[{}]{msg}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::cout\ <<\ \textcolor{stringliteral}{"{}[STASH]\ "{}}\ <<\ msg\ <<\ std::endl;}
+
+\end{DoxyCode}
+
+
+Logs an informational message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & The informational message to log. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{logger_8hpp_a108d6c5c51dd46e82a62b262394f0242}\index{logger.hpp@{logger.hpp}!WARN@{WARN}}
+\index{WARN@{WARN}!logger.hpp@{logger.hpp}}
+\doxysubsubsection{\texorpdfstring{WARN}{WARN}}
+{\footnotesize\ttfamily \label{logger_8hpp_a108d6c5c51dd46e82a62b262394f0242} 
+\#define WARN(\begin{DoxyParamCaption}\item[{}]{msg}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::cout\ <<\ \textcolor{stringliteral}{"{}[WARNING]\ "{}}\ <<\ msg\ <<\ std::endl;}
+
+\end{DoxyCode}
+
+
+Logs a warning message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & The warning message to log. \\
+\hline
+\end{DoxyParams}
