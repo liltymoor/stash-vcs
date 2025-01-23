@@ -132,13 +132,13 @@ CommitArgs::CommitArgs()
 {
     expected_args.push_back(new Arg("message",
                                 "Argument to specify commit message",
-                                true,
+                                false,
                                 true)
     );
     expected_args.push_back(new Arg("list",
                             "List current branch commits",
-                            true,
-                            true)
+                            false,
+                            false)
 );
 }
 
@@ -184,14 +184,14 @@ CheckoutArgs::CheckoutArgs()
 {
     expected_args.push_back(new Arg("branch",
                                     "Argument to specify branch name you want checkout to",
-                                    true,
+                                    false,
                                     true)
         );
 
     expected_args.push_back(new Arg("list",
                                 "List all the branches you have",
-                                true,
-                                true)
+                                false,
+                                false)
     );
 }
 
