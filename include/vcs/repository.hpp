@@ -12,13 +12,19 @@
 
 #include <filesystem>
 
-#define STAGE_FOLDER_NAME "staged"
-#define METADATA_FILE_NAME "metadata"
-#define BRANCHES_FOLDER_NAME "branches"
+#define META_FILENAME "metadata"
+#define META_STAGE_FOLDER "staged"
+#define META_BRANCH_FOLDER "branches"
+#define META_COMMIT_FILES_FOLDER "files"
 
 #define META_REPO_NAME "RepoName"
 #define META_CURRENT_BRANCH "CurrentBranch"
+#define META_CURRENT_HEAD "CurrentHead"
 #define META_REPO_CORE_BRANCH "RepoStartBranch"
+
+#define META_COMMIT_MSG "CommitMessage"
+#define META_COMMIT_PREV "PrevCommit"
+#define META_COMMIT_HASH "CommitHash"
 
 struct Commit {
     std::string message;
@@ -33,6 +39,8 @@ struct Commit {
               state(std::make_shared<CommitState>())
     {
     }
+
+    Commit(std::map<std::string, std::string>& metaData, const std::unordered_map<std::string, File>& commit_files);
 };
 
 
@@ -41,6 +49,7 @@ private:
     std::shared_ptr<Commit> head;
     std::string currentBranch;
     std::unordered_map<std::string, std::shared_ptr<Commit>> branches;
+    std::unordered_map<std::string, std::shared_ptr<Commit>> commits; // <hash, commit>
 
     std::string generate_hash(const std::string& message);
 
@@ -48,7 +57,8 @@ public:
     PersistenceStack(const std::string &startBranchName);
     PersistenceStack();
 
-    std::string getCurrentBranch();
+    std::string getCurrentBranch() const;
+    void migrateBranch(const std::string& branch_name);
 
     void commit(const std::string& message);
     void stage(const std::string& files);
@@ -56,12 +66,14 @@ public:
     // TODO To think of...
     //void revert_to(const std::string &hash);
     void init_branch(const std::string& branch_name);
+    void init_commit(const std::filesystem::path& commit_hash);
     void create_branch(const std::string& branch_name);
     void checkout_branch(const std::string& branch_name);
     void merge(const std::string& branch_name);
 
     bool isValid() const;
     void log() const;
+    void stashMeta() const;
 };
 
 
@@ -85,7 +97,7 @@ private:
 public:
     void initRepository(const RepoSettings& settings);
     void stashMeta(const RepoSettings& settings);
-    void stashMeta();
+    void stashMeta() const;
     PersistenceStack& getRepoStack();
 
     static Repo &getInstance();
