@@ -4,7 +4,7 @@
 The project is developed in C++ using CMake for building and Doxygen for documentation.
 
 ---
-You can find documentation [here] https://fr2eof.github.io/stash-vcs-docs/html/files.html
+You can find documentation [here](https://fr2eof.github.io/stash-vcs-docs/html/files.html)
 
 ---
 
