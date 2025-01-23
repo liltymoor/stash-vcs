@@ -407,6 +407,7 @@ void PersistenceStack::revert_to(const std::string &hash)
         {
             // Revert to given commit
             commit(commitIter);
+            move_branch_files(currentBranch);
             return;
         }
     } while (commitIter.prev != nullptr);
