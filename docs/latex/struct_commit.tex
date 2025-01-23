@@ -1,0 +1,136 @@
+\doxysection{Commit Struct Reference}
+\hypertarget{struct_commit}{}\label{struct_commit}\index{Commit@{Commit}}
+
+
+Represents a commit in the version control system.  
+
+
+
+
+{\ttfamily \#include $<$repository.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_commit_a3c2f52cc8bf0d9a3f36dfc2d5b371477}{Commit}} (std\+::string msg, std\+::string h, std\+::string b, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{struct_commit}{Commit}} $>$ p=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{struct_commit}{Commit}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_commit_adc1402dd91236a79ba42133ca5c45b05}{Commit}} (std\+::map$<$ std\+::string, std\+::string $>$ \&meta\+Data, const std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_file}{File}} $>$ \&commit\+\_\+files)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{struct_commit}{Commit} that initializes from metadata and files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{struct_commit_a03965aa22c7ff4bda99adeccca2a23f4}{message}}
+\begin{DoxyCompactList}\small\item\em The commit message. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{struct_commit_a751a5577a06505bab6cf1a54dd180023}{hash}}
+\begin{DoxyCompactList}\small\item\em The commit hash. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{struct_commit_ac94e32c30f3030af6fc14f8249b8c172}{branch}}
+\begin{DoxyCompactList}\small\item\em The branch associated with the commit. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{struct_commit}{Commit}} $>$ \mbox{\hyperlink{struct_commit_a23f4d115f00c0dddaf47aed4fa481fc8}{prev}}
+\begin{DoxyCompactList}\small\item\em Pointer to the previous commit. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_commit_state}{Commit\+State}} $>$ \mbox{\hyperlink{struct_commit_a2000cca4e582b1d46d21b805294c796c}{state}}
+\begin{DoxyCompactList}\small\item\em Pointer to the commit state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a commit in the version control system. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_commit_a3c2f52cc8bf0d9a3f36dfc2d5b371477}\index{Commit@{Commit}!Commit@{Commit}}
+\index{Commit@{Commit}!Commit@{Commit}}
+\doxysubsubsection{\texorpdfstring{Commit()}{Commit()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_commit_a3c2f52cc8bf0d9a3f36dfc2d5b371477} 
+Commit\+::\+Commit (\begin{DoxyParamCaption}\item[{std\+::string}]{msg}{, }\item[{std\+::string}]{h}{, }\item[{std\+::string}]{b}{, }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{struct_commit}{Commit}} $>$}]{p}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor for \doxylink{struct_commit}{Commit}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & The commit message. \\
+\hline
+{\em h} & The commit hash. \\
+\hline
+{\em b} & The branch name. \\
+\hline
+{\em p} & Pointer to the previous commit. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{struct_commit_adc1402dd91236a79ba42133ca5c45b05}\index{Commit@{Commit}!Commit@{Commit}}
+\index{Commit@{Commit}!Commit@{Commit}}
+\doxysubsubsection{\texorpdfstring{Commit()}{Commit()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_commit_adc1402dd91236a79ba42133ca5c45b05} 
+Commit\+::\+Commit (\begin{DoxyParamCaption}\item[{std\+::map$<$ std\+::string, std\+::string $>$ \&}]{meta\+Data}{, }\item[{const std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_file}{File}} $>$ \&}]{commit\+\_\+files}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{struct_commit}{Commit} that initializes from metadata and files. 
+
+Constructor for the \doxylink{struct_commit}{Commit} class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em meta\+Data} & The metadata for the commit. \\
+\hline
+{\em commit\+\_\+files} & The files associated with the commit. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_commit_ac94e32c30f3030af6fc14f8249b8c172}\index{Commit@{Commit}!branch@{branch}}
+\index{branch@{branch}!Commit@{Commit}}
+\doxysubsubsection{\texorpdfstring{branch}{branch}}
+{\footnotesize\ttfamily \label{struct_commit_ac94e32c30f3030af6fc14f8249b8c172} 
+std\+::string Commit\+::branch}
+
+
+
+The branch associated with the commit. 
+
+\Hypertarget{struct_commit_a751a5577a06505bab6cf1a54dd180023}\index{Commit@{Commit}!hash@{hash}}
+\index{hash@{hash}!Commit@{Commit}}
+\doxysubsubsection{\texorpdfstring{hash}{hash}}
+{\footnotesize\ttfamily \label{struct_commit_a751a5577a06505bab6cf1a54dd180023} 
+std\+::string Commit\+::hash}
+
+
+
+The commit hash. 
+
+\Hypertarget{struct_commit_a03965aa22c7ff4bda99adeccca2a23f4}\index{Commit@{Commit}!message@{message}}
+\index{message@{message}!Commit@{Commit}}
+\doxysubsubsection{\texorpdfstring{message}{message}}
+{\footnotesize\ttfamily \label{struct_commit_a03965aa22c7ff4bda99adeccca2a23f4} 
+std\+::string Commit\+::message}
+
+
+
+The commit message. 
+
+\Hypertarget{struct_commit_a23f4d115f00c0dddaf47aed4fa481fc8}\index{Commit@{Commit}!prev@{prev}}
+\index{prev@{prev}!Commit@{Commit}}
+\doxysubsubsection{\texorpdfstring{prev}{prev}}
+{\footnotesize\ttfamily \label{struct_commit_a23f4d115f00c0dddaf47aed4fa481fc8} 
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{struct_commit}{Commit}}$>$ Commit\+::prev}
+
+
+
+Pointer to the previous commit. 
+
+\Hypertarget{struct_commit_a2000cca4e582b1d46d21b805294c796c}\index{Commit@{Commit}!state@{state}}
+\index{state@{state}!Commit@{Commit}}
+\doxysubsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \label{struct_commit_a2000cca4e582b1d46d21b805294c796c} 
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{class_commit_state}{Commit\+State}}$>$ Commit\+::state}
+
+
+
+Pointer to the commit state. 
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/vcs/\mbox{\hyperlink{repository_8hpp}{repository.\+hpp}}\item 
+src/vcs/\mbox{\hyperlink{repository_8cpp}{repository.\+cpp}}\end{DoxyCompactItemize}

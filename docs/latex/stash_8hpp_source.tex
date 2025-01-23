@@ -1,0 +1,27 @@
+\doxysection{stash.\+hpp}
+\hypertarget{stash_8hpp_source}{}\label{stash_8hpp_source}\index{include/stash/stash.hpp@{include/stash/stash.hpp}}
+\mbox{\hyperlink{stash_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ STASH\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ STASH\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_stash_ab3774665676b02a7a875035660810a25}{Stash}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keyword}{static}\ std::filesystem::path\ \mbox{\hyperlink{class_stash_a50d64125f3cd1510e7fb3ea0a9e6c71b}{stash\_path}}\ =\ \textcolor{stringliteral}{"{}./.stash"{}};\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_stash_ac5a72dcac32d8baca4f1ddcb0a71d57f}{isExists}}\ =\ \textcolor{keyword}{false};\ }
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_stash_ab3774665676b02a7a875035660810a25}{Stash}}();}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_stash_ab3774665676b02a7a875035660810a25}{Stash}}\&\ \mbox{\hyperlink{class_stash_a97de9cac526239eefc945ba5986ba199}{getInstance}}();}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_stash_a457efc5c7b0614dfd1495d32d4a6f1e0}{stashExists}}();}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::filesystem::path\&\ \mbox{\hyperlink{class_stash_a5e884ab9f817aab55aa18e8caf14a674}{getStashPath}}();}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ STASH\_HPP}}
+
+\end{DoxyCode}

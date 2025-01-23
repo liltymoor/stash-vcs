@@ -1,37 +1,41 @@
-//
-// Created by Timmie on 21.01.2025.
-//
-
 #include "invoker.hpp"
 #include "../logger/logger.hpp"
-
 #include <unordered_map>
 #include "prepared_commands.hpp"
 
+/**
+ * @brief Default constructor for the CommandInvoker class.
+ */
 CommandInvoker::CommandInvoker() {}
 
-bool CommandInvoker::invoke_command(int argc, char *argv[])
-{
-    if (argc < 2)
-    {
+/**
+ * @brief Invokes a command with the provided arguments.
+ * @param argc The number of arguments.
+ * @param argv The array of arguments.
+ * @return true if the command was successfully invoked, otherwise false.
+ */
+bool CommandInvoker::invoke_command(int argc, char* argv[]) {
+    if (argc < 2) {
         INFO("stash usage example:\t\"stash --help\" to get help");
         return false;
     }
 
     std::string const command_name(argv[1]);
 
-    if (commands.find(command_name) == commands.end())
-    {
+    if (commands.find(command_name) == commands.end()) {
         ERROR("Command not found");
         return false;
     }
-    char **command_args = argc > 2 ? (argv + 2) : nullptr;
+    char** command_args = argc > 2 ? (argv + 2) : nullptr;
     commands[command_name]->execute(argc, command_args);
 
     return true;
 }
 
-void CommandInvoker::init_command(const Command* command)
-{
+/**
+ * @brief Initializes a command in the invoker.
+ * @param command The command to initialize.
+ */
+void CommandInvoker::init_command(const Command* command) {
     commands[command->get_name()] = command;
 }

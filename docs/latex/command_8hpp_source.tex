@@ -1,0 +1,36 @@
+\doxysection{command.\+hpp}
+\hypertarget{command_8hpp_source}{}\label{command_8hpp_source}\index{include/command/command.hpp@{include/command/command.hpp}}
+\mbox{\hyperlink{command_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ COMMAND\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ COMMAND\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{command__args_8hpp}{command\_args.hpp}}"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_command_ad255bc9dd141ffdcb6d5ec677b3f81bf}{Command}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_command_aaac7db0461198bc84c6bb01e64ae82e3}{name}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_command_a138b25860069077ad2a1d0100f4cb60d}{description}};\ }
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{class_command_a9d1af3b9e75ed61826a4891c8db3720d}{action}}(\mbox{\hyperlink{struct_parsed_args}{ParsedArgs}}\ args)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_command_args}{CommandArgs}}*\ \mbox{\hyperlink{class_command_a0f1dfd013e464a855531dcf041a70d76}{expected\_args}};\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_command_ad255bc9dd141ffdcb6d5ec677b3f81bf}{Command}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_command_aaac7db0461198bc84c6bb01e64ae82e3}{name}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_command_a138b25860069077ad2a1d0100f4cb60d}{description}});}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_command_ab552bb3a07fdd1acbfd8ea76e69b2278}{\string~Command}}();}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{class_command_a88123d7bbf5605b5b29156309b8055a3}{execute}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}*\ argv[])\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_command_addaa3c970a31f3babd990ca453538f9b}{get\_name}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_command_a26b55094b53eee75f1802ccf8dcfd18f}{get\_desc}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00060\ \};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

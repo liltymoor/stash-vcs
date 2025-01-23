@@ -1,0 +1,93 @@
+\doxysection{include/command/prepared\+\_\+commands.hpp File Reference}
+\hypertarget{prepared__commands_8hpp}{}\label{prepared__commands_8hpp}\index{include/command/prepared\_commands.hpp@{include/command/prepared\_commands.hpp}}
+{\ttfamily \#include "{}command.\+hpp"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{prepared__commands_8hpp_ab68d79dc697518c39e0e22befdfcbdcb}{DEFINE\+\_\+\+CMND}}(x)
+\begin{DoxyCompactList}\small\item\em Macro for defining a command and its arguments. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{prepared__commands_8hpp_a14f5d1521569bdea2a7f4806cd052a27}{DEFINE\+\_\+\+CMND}} (Init)
+\item 
+\mbox{\hyperlink{prepared__commands_8hpp_a385cac64027daed91d8b84d4ce6518e5}{DEFINE\+\_\+\+CMND}} (Add)
+\item 
+\mbox{\hyperlink{prepared__commands_8hpp_abc90f0b8e92c3bcbfc554031001b13e0}{DEFINE\+\_\+\+CMND}} (\mbox{\hyperlink{struct_commit}{Commit}})
+\item 
+\mbox{\hyperlink{prepared__commands_8hpp_ab6d67d00827159a71834f4ec252cd970}{DEFINE\+\_\+\+CMND}} (Checkout)
+\item 
+\mbox{\hyperlink{prepared__commands_8hpp_a6fee1265690b45d5819ce21128806b43}{DEFINE\+\_\+\+CMND}} (Merge)
+\item 
+\mbox{\hyperlink{prepared__commands_8hpp_ab4f77fc2fe32910e1bb1348670da71b9}{DEFINE\+\_\+\+CMND}} (Revert\+To)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{prepared__commands_8hpp_ab68d79dc697518c39e0e22befdfcbdcb}\index{prepared\_commands.hpp@{prepared\_commands.hpp}!DEFINE\_CMND@{DEFINE\_CMND}}
+\index{DEFINE\_CMND@{DEFINE\_CMND}!prepared\_commands.hpp@{prepared\_commands.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_CMND}{DEFINE\_CMND}}
+{\footnotesize\ttfamily \label{prepared__commands_8hpp_ab68d79dc697518c39e0e22befdfcbdcb} 
+\#define DEFINE\+\_\+\+CMND(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{class\ }x\#\#\mbox{\hyperlink{class_command}{Command}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_command}{Command}}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{public}:\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ x\#\#\mbox{\hyperlink{class_command_ad255bc9dd141ffdcb6d5ec677b3f81bf}{Command}}();\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ action(\mbox{\hyperlink{struct_parsed_args}{ParsedArgs}})\ \textcolor{keyword}{const\ override};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{class\ }x\#\#Args\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_command_args}{CommandArgs}}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{public}:\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ x\#\#Args();\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+Macro for defining a command and its arguments. 
+
+This macro creates a command class and an associated arguments class. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The name of the command. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{prepared__commands_8hpp_a385cac64027daed91d8b84d4ce6518e5}\index{prepared\_commands.hpp@{prepared\_commands.hpp}!DEFINE\_CMND@{DEFINE\_CMND}}
+\index{DEFINE\_CMND@{DEFINE\_CMND}!prepared\_commands.hpp@{prepared\_commands.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_CMND()}{DEFINE\_CMND()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily \label{prepared__commands_8hpp_a385cac64027daed91d8b84d4ce6518e5} 
+DEFINE\+\_\+\+CMND (\begin{DoxyParamCaption}\item[{Add}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{prepared__commands_8hpp_ab6d67d00827159a71834f4ec252cd970}\index{prepared\_commands.hpp@{prepared\_commands.hpp}!DEFINE\_CMND@{DEFINE\_CMND}}
+\index{DEFINE\_CMND@{DEFINE\_CMND}!prepared\_commands.hpp@{prepared\_commands.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_CMND()}{DEFINE\_CMND()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily \label{prepared__commands_8hpp_ab6d67d00827159a71834f4ec252cd970} 
+DEFINE\+\_\+\+CMND (\begin{DoxyParamCaption}\item[{Checkout}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{prepared__commands_8hpp_abc90f0b8e92c3bcbfc554031001b13e0}\index{prepared\_commands.hpp@{prepared\_commands.hpp}!DEFINE\_CMND@{DEFINE\_CMND}}
+\index{DEFINE\_CMND@{DEFINE\_CMND}!prepared\_commands.hpp@{prepared\_commands.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_CMND()}{DEFINE\_CMND()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily \label{prepared__commands_8hpp_abc90f0b8e92c3bcbfc554031001b13e0} 
+DEFINE\+\_\+\+CMND (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_commit}{Commit}}}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{prepared__commands_8hpp_a14f5d1521569bdea2a7f4806cd052a27}\index{prepared\_commands.hpp@{prepared\_commands.hpp}!DEFINE\_CMND@{DEFINE\_CMND}}
+\index{DEFINE\_CMND@{DEFINE\_CMND}!prepared\_commands.hpp@{prepared\_commands.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_CMND()}{DEFINE\_CMND()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily \label{prepared__commands_8hpp_a14f5d1521569bdea2a7f4806cd052a27} 
+DEFINE\+\_\+\+CMND (\begin{DoxyParamCaption}\item[{Init}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{prepared__commands_8hpp_a6fee1265690b45d5819ce21128806b43}\index{prepared\_commands.hpp@{prepared\_commands.hpp}!DEFINE\_CMND@{DEFINE\_CMND}}
+\index{DEFINE\_CMND@{DEFINE\_CMND}!prepared\_commands.hpp@{prepared\_commands.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_CMND()}{DEFINE\_CMND()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily \label{prepared__commands_8hpp_a6fee1265690b45d5819ce21128806b43} 
+DEFINE\+\_\+\+CMND (\begin{DoxyParamCaption}\item[{Merge}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{prepared__commands_8hpp_ab4f77fc2fe32910e1bb1348670da71b9}\index{prepared\_commands.hpp@{prepared\_commands.hpp}!DEFINE\_CMND@{DEFINE\_CMND}}
+\index{DEFINE\_CMND@{DEFINE\_CMND}!prepared\_commands.hpp@{prepared\_commands.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_CMND()}{DEFINE\_CMND()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily \label{prepared__commands_8hpp_ab4f77fc2fe32910e1bb1348670da71b9} 
+DEFINE\+\_\+\+CMND (\begin{DoxyParamCaption}\item[{Revert\+To}]{}{}\end{DoxyParamCaption})}
+

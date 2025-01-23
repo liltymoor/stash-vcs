@@ -1,0 +1,284 @@
+\doxysection{File Class Reference}
+\hypertarget{class_file}{}\label{class_file}\index{File@{File}}
+
+
+Represents a file with its path and content.  
+
+
+
+
+{\ttfamily \#include $<$commit\+\_\+state.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_file_a38506545c1402119b5fef7bcf6289fa9}{File}} ()=default
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_file_ae9c1a21bc02409f57890c6a05ff30b84}{File}} (const std\+::filesystem\+::path \&\mbox{\hyperlink{class_file_ab00d2319f7bd5daa4dc08f613b4e95bd}{filepath}})
+\begin{DoxyCompactList}\small\item\em Constructor that initializes the file with a given path. \end{DoxyCompactList}\item 
+std\+::filesystem\+::path \mbox{\hyperlink{class_file_aec084610b3e9800ab544fe726cfdb0dc}{get\+\_\+path}} () const
+\begin{DoxyCompactList}\small\item\em Retrieves the path of the file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_file_a12840182d951abdb5c82cdcb89de7896}{move}} (const std\+::filesystem\+::path \&to)
+\begin{DoxyCompactList}\small\item\em Moves the file to a new location. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_file_content}{File\+Content}} \mbox{\hyperlink{class_file_a090220ecebf2c1b9e17872d48c95f345}{get\+\_\+content}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the content of the file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::string \mbox{\hyperlink{class_file_ab5ad514fba5b0f2929d29373d2232ac2}{read}} (const std\+::string \&\mbox{\hyperlink{class_file_ab00d2319f7bd5daa4dc08f613b4e95bd}{filepath}})
+\begin{DoxyCompactList}\small\item\em Reads the content of a file from a given path. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_file_a4cba87b442aa190ac79fc4b618856eea}{write}} (const std\+::string \&\mbox{\hyperlink{class_file_ab00d2319f7bd5daa4dc08f613b4e95bd}{filepath}}, const std\+::string \&content)
+\begin{DoxyCompactList}\small\item\em Writes content to a file at a given path. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_file_ac028802ed86716131b295dd915fbfd45}{is\+Regexp}} (const std\+::string \&str)
+\begin{DoxyCompactList}\small\item\em Checks if a string is a regular expression. \end{DoxyCompactList}\item 
+static uint32\+\_\+t \mbox{\hyperlink{class_file_a1a45fa96d73ae3fa7aaaa3419c80946e}{copy\+\_\+files}} (const std\+::string \&source\+\_\+pattern, const std\+::string \&target\+\_\+dir, bool use\+\_\+regex=true)
+\begin{DoxyCompactList}\small\item\em Copies files from a source pattern to a target directory. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_file_a5bb2d3826c058d85fd13527ac6769795}{clean\+\_\+dir}} (const std\+::string \&str)
+\begin{DoxyCompactList}\small\item\em Cleans a directory by removing all files. \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{class_file_a7939d61430604e7cb4fab603298d7dd1}{file\+\_\+time\+\_\+to\+\_\+string}} (const std\+::filesystem\+::file\+\_\+time\+\_\+type \&ft)
+\begin{DoxyCompactList}\small\item\em Converts file time to a string representation. \end{DoxyCompactList}\item 
+static std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_file}{File}} $>$ \mbox{\hyperlink{class_file_a1cf2f98ff7cef586a6bba362723b2d64}{get\+Files\+From\+Dir}} (const std\+::filesystem\+::path \&dir)
+\begin{DoxyCompactList}\small\item\em Retrieves all files from a directory. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::filesystem\+::path \mbox{\hyperlink{class_file_ab00d2319f7bd5daa4dc08f613b4e95bd}{filepath}}
+\begin{DoxyCompactList}\small\item\em The path to the file. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_file_content}{File\+Content}} \mbox{\hyperlink{class_file_ab80c026422739da39eafcfc8e47154ef}{cached\+Content}}
+\begin{DoxyCompactList}\small\item\em Cached content of the file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a file with its path and content. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_file_a38506545c1402119b5fef7bcf6289fa9}\index{File@{File}!File@{File}}
+\index{File@{File}!File@{File}}
+\doxysubsubsection{\texorpdfstring{File()}{File()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_file_a38506545c1402119b5fef7bcf6289fa9} 
+File\+::\+File (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+Default constructor. 
+
+\Hypertarget{class_file_ae9c1a21bc02409f57890c6a05ff30b84}\index{File@{File}!File@{File}}
+\index{File@{File}!File@{File}}
+\doxysubsubsection{\texorpdfstring{File()}{File()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_file_ae9c1a21bc02409f57890c6a05ff30b84} 
+File\+::\+File (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{filepath}{}\end{DoxyParamCaption})}
+
+
+
+Constructor that initializes the file with a given path. 
+
+Constructor for the \doxylink{class_file}{File} class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & The path to the file. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_file_a5bb2d3826c058d85fd13527ac6769795}\index{File@{File}!clean\_dir@{clean\_dir}}
+\index{clean\_dir@{clean\_dir}!File@{File}}
+\doxysubsubsection{\texorpdfstring{clean\_dir()}{clean\_dir()}}
+{\footnotesize\ttfamily \label{class_file_a5bb2d3826c058d85fd13527ac6769795} 
+void File\+::clean\+\_\+dir (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{dir\+\_\+path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Cleans a directory by removing all files. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The path to the directory.\\
+\hline
+{\em dir\+\_\+path} & The path to the directory. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_file_a1a45fa96d73ae3fa7aaaa3419c80946e}\index{File@{File}!copy\_files@{copy\_files}}
+\index{copy\_files@{copy\_files}!File@{File}}
+\doxysubsubsection{\texorpdfstring{copy\_files()}{copy\_files()}}
+{\footnotesize\ttfamily \label{class_file_a1a45fa96d73ae3fa7aaaa3419c80946e} 
+uint32\+\_\+t File\+::copy\+\_\+files (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{source\+\_\+pattern}{, }\item[{const std\+::string \&}]{target\+\_\+dir}{, }\item[{bool}]{use\+\_\+regex}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Copies files from a source pattern to a target directory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source\+\_\+pattern} & The source pattern for files. \\
+\hline
+{\em target\+\_\+dir} & The target directory. \\
+\hline
+{\em use\+\_\+regex} & Whether to use regex for matching files. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of files copied. 
+\end{DoxyReturn}
+\Hypertarget{class_file_a7939d61430604e7cb4fab603298d7dd1}\index{File@{File}!file\_time\_to\_string@{file\_time\_to\_string}}
+\index{file\_time\_to\_string@{file\_time\_to\_string}!File@{File}}
+\doxysubsubsection{\texorpdfstring{file\_time\_to\_string()}{file\_time\_to\_string()}}
+{\footnotesize\ttfamily \label{class_file_a7939d61430604e7cb4fab603298d7dd1} 
+std\+::string File\+::file\+\_\+time\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::file\+\_\+time\+\_\+type \&}]{ft}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Converts file time to a string representation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ft} & The file time to convert. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The string representation of the file time. 
+\end{DoxyReturn}
+\Hypertarget{class_file_a090220ecebf2c1b9e17872d48c95f345}\index{File@{File}!get\_content@{get\_content}}
+\index{get\_content@{get\_content}!File@{File}}
+\doxysubsubsection{\texorpdfstring{get\_content()}{get\_content()}}
+{\footnotesize\ttfamily \label{class_file_a090220ecebf2c1b9e17872d48c95f345} 
+\mbox{\hyperlink{class_file_content}{File\+Content}} File\+::get\+\_\+content (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves the content of the file. 
+
+\begin{DoxyReturn}{Returns}
+The content of the file. 
+\end{DoxyReturn}
+\Hypertarget{class_file_aec084610b3e9800ab544fe726cfdb0dc}\index{File@{File}!get\_path@{get\_path}}
+\index{get\_path@{get\_path}!File@{File}}
+\doxysubsubsection{\texorpdfstring{get\_path()}{get\_path()}}
+{\footnotesize\ttfamily \label{class_file_aec084610b3e9800ab544fe726cfdb0dc} 
+std\+::filesystem\+::path File\+::get\+\_\+path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retrieves the path of the file. 
+
+Returns the path of the file.
+
+\begin{DoxyReturn}{Returns}
+The path of the file. 
+\end{DoxyReturn}
+\Hypertarget{class_file_a1cf2f98ff7cef586a6bba362723b2d64}\index{File@{File}!getFilesFromDir@{getFilesFromDir}}
+\index{getFilesFromDir@{getFilesFromDir}!File@{File}}
+\doxysubsubsection{\texorpdfstring{getFilesFromDir()}{getFilesFromDir()}}
+{\footnotesize\ttfamily \label{class_file_a1cf2f98ff7cef586a6bba362723b2d64} 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_file}{File}} $>$ File\+::get\+Files\+From\+Dir (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{dir}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Retrieves all files from a directory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dir} & The path to the directory. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A map of filenames to \doxylink{class_file}{File} objects. 
+\end{DoxyReturn}
+\Hypertarget{class_file_ac028802ed86716131b295dd915fbfd45}\index{File@{File}!isRegexp@{isRegexp}}
+\index{isRegexp@{isRegexp}!File@{File}}
+\doxysubsubsection{\texorpdfstring{isRegexp()}{isRegexp()}}
+{\footnotesize\ttfamily \label{class_file_ac028802ed86716131b295dd915fbfd45} 
+bool File\+::is\+Regexp (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Checks if a string is a regular expression. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the string is a regular expression, otherwise false. 
+\end{DoxyReturn}
+\Hypertarget{class_file_a12840182d951abdb5c82cdcb89de7896}\index{File@{File}!move@{move}}
+\index{move@{move}!File@{File}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily \label{class_file_a12840182d951abdb5c82cdcb89de7896} 
+void File\+::move (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{to}{}\end{DoxyParamCaption})}
+
+
+
+Moves the file to a new location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em to} & The new path for the file. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_file_ab5ad514fba5b0f2929d29373d2232ac2}\index{File@{File}!read@{read}}
+\index{read@{read}!File@{File}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily \label{class_file_ab5ad514fba5b0f2929d29373d2232ac2} 
+std\+::string File\+::read (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Reads the content of a file from a given path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & The path to the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The content of the file as a string. 
+\end{DoxyReturn}
+\Hypertarget{class_file_a4cba87b442aa190ac79fc4b618856eea}\index{File@{File}!write@{write}}
+\index{write@{write}!File@{File}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily \label{class_file_a4cba87b442aa190ac79fc4b618856eea} 
+void File\+::write (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filepath}{, }\item[{const std\+::string \&}]{content}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Writes content to a file at a given path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & The path to the file. \\
+\hline
+{\em content} & The content to write. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_file_ab80c026422739da39eafcfc8e47154ef}\index{File@{File}!cachedContent@{cachedContent}}
+\index{cachedContent@{cachedContent}!File@{File}}
+\doxysubsubsection{\texorpdfstring{cachedContent}{cachedContent}}
+{\footnotesize\ttfamily \label{class_file_ab80c026422739da39eafcfc8e47154ef} 
+\mbox{\hyperlink{class_file_content}{File\+Content}} File\+::cached\+Content\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Cached content of the file. 
+
+\Hypertarget{class_file_ab00d2319f7bd5daa4dc08f613b4e95bd}\index{File@{File}!filepath@{filepath}}
+\index{filepath@{filepath}!File@{File}}
+\doxysubsubsection{\texorpdfstring{filepath}{filepath}}
+{\footnotesize\ttfamily \label{class_file_ab00d2319f7bd5daa4dc08f613b4e95bd} 
+std\+::filesystem\+::path File\+::filepath\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The path to the file. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/vcs/\mbox{\hyperlink{commit__state_8hpp}{commit\+\_\+state.\+hpp}}\item 
+src/vcs/\mbox{\hyperlink{commit__state_8cpp}{commit\+\_\+state.\+cpp}}\end{DoxyCompactItemize}

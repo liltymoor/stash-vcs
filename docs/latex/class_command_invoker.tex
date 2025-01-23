@@ -1,0 +1,106 @@
+\doxysection{Command\+Invoker Class Reference}
+\hypertarget{class_command_invoker}{}\label{class_command_invoker}\index{CommandInvoker@{CommandInvoker}}
+
+
+Manages and invokes commands.  
+
+
+
+
+{\ttfamily \#include $<$invoker.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_command_invoker_a01c8e970240ac9331d88305d01fa689e}{Command\+Invoker}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor for the \doxylink{class_command_invoker}{Command\+Invoker} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_command_invoker_a8632a0203aad6a36811eb11fb86940b7}{init\+\_\+command}} (const \mbox{\hyperlink{class_command}{Command}} \texorpdfstring{$\ast$}{*}command)
+\begin{DoxyCompactList}\small\item\em Registers a command. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_command_invoker_aa960683da9e498b32d6368ad934d6fc8}{invoke\+\_\+command}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Invokes a command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, const \mbox{\hyperlink{class_command}{Command}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_command_invoker_a71aa3aae538b84403749c6056516e10f}{commands}}
+\begin{DoxyCompactList}\small\item\em Map of registered commands. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages and invokes commands. 
+
+The \doxylink{class_command_invoker}{Command\+Invoker} class is responsible for registering and executing commands. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_command_invoker_a01c8e970240ac9331d88305d01fa689e}\index{CommandInvoker@{CommandInvoker}!CommandInvoker@{CommandInvoker}}
+\index{CommandInvoker@{CommandInvoker}!CommandInvoker@{CommandInvoker}}
+\doxysubsubsection{\texorpdfstring{CommandInvoker()}{CommandInvoker()}}
+{\footnotesize\ttfamily \label{class_command_invoker_a01c8e970240ac9331d88305d01fa689e} 
+Command\+Invoker\+::\+Command\+Invoker (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Default constructor for the \doxylink{class_command_invoker}{Command\+Invoker} class. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_command_invoker_a8632a0203aad6a36811eb11fb86940b7}\index{CommandInvoker@{CommandInvoker}!init\_command@{init\_command}}
+\index{init\_command@{init\_command}!CommandInvoker@{CommandInvoker}}
+\doxysubsubsection{\texorpdfstring{init\_command()}{init\_command()}}
+{\footnotesize\ttfamily \label{class_command_invoker_a8632a0203aad6a36811eb11fb86940b7} 
+void Command\+Invoker\+::init\+\_\+command (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_command}{Command}} \texorpdfstring{$\ast$}{*}}]{command}{}\end{DoxyParamCaption})}
+
+
+
+Registers a command. 
+
+Initializes a command in the invoker.
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & The command to register.\\
+\hline
+{\em command} & The command to initialize. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_command_invoker_aa960683da9e498b32d6368ad934d6fc8}\index{CommandInvoker@{CommandInvoker}!invoke\_command@{invoke\_command}}
+\index{invoke\_command@{invoke\_command}!CommandInvoker@{CommandInvoker}}
+\doxysubsubsection{\texorpdfstring{invoke\_command()}{invoke\_command()}}
+{\footnotesize\ttfamily \label{class_command_invoker_aa960683da9e498b32d6368ad934d6fc8} 
+bool Command\+Invoker\+::invoke\+\_\+command (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Invokes a command. 
+
+Invokes a command with the provided arguments.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The number of arguments. \\
+\hline
+{\em argv} & The array of arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the command was successfully invoked, otherwise false. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_command_invoker_a71aa3aae538b84403749c6056516e10f}\index{CommandInvoker@{CommandInvoker}!commands@{commands}}
+\index{commands@{commands}!CommandInvoker@{CommandInvoker}}
+\doxysubsubsection{\texorpdfstring{commands}{commands}}
+{\footnotesize\ttfamily \label{class_command_invoker_a71aa3aae538b84403749c6056516e10f} 
+std\+::unordered\+\_\+map$<$std\+::string, const \mbox{\hyperlink{class_command}{Command}}\texorpdfstring{$\ast$}{*}$>$ Command\+Invoker\+::commands\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Map of registered commands. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/command/\mbox{\hyperlink{invoker_8hpp}{invoker.\+hpp}}\item 
+src/command/\mbox{\hyperlink{invoker_8cpp}{invoker.\+cpp}}\end{DoxyCompactItemize}

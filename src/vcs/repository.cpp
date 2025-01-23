@@ -1,69 +1,68 @@
-//
-// Created by Timmie on 20.01.2025.
-//
-
 #include "repository.hpp"
-
 #include "metadata.hpp"
 #include "../exception/pers_stack_exc.h"
 #include <variant>
 #include "../logger/logger.hpp"
 
-Commit::Commit(std::map<std::string, std::string>& metaData, const std::unordered_map<std::string, File>& commit_files)
-{
+/**
+ * @brief Constructor for the Commit class.
+ * @param metaData The metadata for the commit.
+ * @param commit_files The files associated with the commit.
+ */
+Commit::Commit(std::map<std::string, std::string>& metaData, const std::unordered_map<std::string, File>& commit_files) {
     message = metaData[META_COMMIT_MSG];
     hash = metaData[META_COMMIT_HASH];
     branch = metaData[META_COMMIT_BRANCH];
 
     prev = nullptr;
 
-    // init commit files
+    // Initialize commit files
     state = std::make_shared<CommitState>();
 
     for (const auto &[filename, file] : commit_files)
         state->addFile(filename, file);
-
 }
 
-PersistenceStack::PersistenceStack()
-{
+/**
+ * @brief Default constructor for the PersistenceStack class.
+ */
+PersistenceStack::PersistenceStack() {}
 
-}
-
-PersistenceStack::PersistenceStack(std::string currentBranch)
-{
-    if (exists(Stash::getStashPath() / META_BRANCH_FOLDER) && !currentBranch.empty())
-    {
-        try
-        {
+/**
+ * @brief Constructor for the PersistenceStack class with a current branch.
+ * @param currentBranch The current branch.
+ */
+PersistenceStack::PersistenceStack(std::string currentBranch) {
+    if (exists(Stash::getStashPath() / META_BRANCH_FOLDER) && !currentBranch.empty()) {
+        try {
             this->currentBranch = currentBranch;
-            for (const auto &entry : std::filesystem::directory_iterator(Stash::getStashPath() / META_BRANCH_FOLDER))
-            {
-                if (entry.is_directory())
-                {
-                    //INFO("Branch: " << entry.path().filename());
+            for (const auto &entry : std::filesystem::directory_iterator(Stash::getStashPath() / META_BRANCH_FOLDER)) {
+                if (entry.is_directory()) {
                     init_branch(entry.path().filename());
                 }
             }
-            // init head after the branches
+            // Initialize head after the branches
             head = branches[currentBranch];
-        }
-        catch (const std::filesystem::filesystem_error &e)
-        {
+        } catch (const std::filesystem::filesystem_error &e) {
             std::__throw_bad_variant_access(e.what());
         }
     }
 }
 
-std::string PersistenceStack::getCurrentBranch() const
-{
+/**
+ * @brief Returns the current branch.
+ * @return The current branch.
+ */
+std::string PersistenceStack::getCurrentBranch() const {
     return currentBranch;
 }
 
-void PersistenceStack::migrateBranch(const std::string &branch_name)
-{
-    if (branches.find(branch_name) == branches.end())
-    {
+/**
+ * @brief Migrates to a new branch.
+ * @param branch_name The name of the branch to migrate to.
+ */
+void PersistenceStack::migrateBranch(const std::string &branch_name) {
+    if (branches.find(branch_name) == branches.end()) {
         throw BranchNotFoundException(branch_name);
     }
 
@@ -71,24 +70,27 @@ void PersistenceStack::migrateBranch(const std::string &branch_name)
     currentBranch = branch_name;
 }
 
-bool PersistenceStack::isValid() const
-{
+/**
+ * @brief Checks if the persistence stack is valid.
+ * @return true if valid, otherwise false.
+ */
+bool PersistenceStack::isValid() const {
     return branches.empty();
 }
 
-void PersistenceStack::stashMeta() const
-{
+/**
+ * @brief Saves metadata to the stash.
+ */
+void PersistenceStack::stashMeta() const {
     std::map<std::string, std::string> metadataBranch;
 
-    if (head == nullptr)
-    {
-        // TODO Unsafe place
+    if (head == nullptr) {
+        // TODO: Unsafe place
         return;
     }
 
     metadataBranch[META_CURRENT_HEAD] = head->hash;
-    if (head->prev != nullptr)
-    {
+    if (head->prev != nullptr) {
         std::map<std::string, std::string> metadataFirstCommit;
         metadataFirstCommit[META_COMMIT_HASH] = head->hash;
         metadataFirstCommit[META_COMMIT_PREV] = head->prev->hash;
@@ -99,8 +101,7 @@ void PersistenceStack::stashMeta() const
                               metadataFirstCommit);
 
         Commit prev = *head->prev;
-        while (prev.prev != nullptr)
-        {
+        while (prev.prev != nullptr) {
             std::map<std::string, std::string> metadataCommit;
             metadataCommit[META_COMMIT_HASH] = prev.hash;
             metadataCommit[META_COMMIT_PREV] = prev.prev->hash;
@@ -120,9 +121,7 @@ void PersistenceStack::stashMeta() const
 
         MetadataHandler::save((Repo::getBranchesPath() / currentBranch / prev.hash / META_FILENAME).c_str(),
                               metadataLastCommit);
-    }
-    else
-    {
+    } else {
         std::map<std::string, std::string> metadataLastCommit;
         metadataLastCommit[META_COMMIT_HASH] = head->hash;
         metadataLastCommit[META_COMMIT_PREV] = "NULL";
@@ -136,46 +135,42 @@ void PersistenceStack::stashMeta() const
     MetadataHandler::save((Repo::getBranchesPath() / currentBranch / META_FILENAME).c_str(), metadataBranch);
 }
 
-void PersistenceStack::move_branch_files(const std::string &branch_name)
-{
-    if (branches.find(branch_name) == branches.end())
-    {
+/**
+ * @brief Moves branch files to a new location.
+ * @param branch_name The name of the branch.
+ */
+void PersistenceStack::move_branch_files(const std::string &branch_name) {
+    if (branches.find(branch_name) == branches.end()) {
         throw BranchNotFoundException(branch_name);
     }
 
-    if (branches[branch_name] == nullptr)
-    {
+    if (branches[branch_name] == nullptr) {
         throw std::runtime_error("Tried to transfer files from branch to core dir, but branch has no commits");
     }
 
     std::shared_ptr<Commit> branchHead = branches[branch_name];
     std::string originBranch = currentBranch;
 
-    // Here we want to delete files that are commited anywhere in Stash
-    // TODO also we want to delete files that are staged
-    for (const auto &entry : std::filesystem::directory_iterator("."))
-    {
+    // Delete files that are committed anywhere in Stash
+    for (const auto &entry : std::filesystem::directory_iterator(".")) {
         if (!entry.is_regular_file()) continue;
 
         // Contains in current branch HEAD
         auto currentBranchFiles = branches[currentBranch]->state->getFiles();
-        if (currentBranchFiles.find(entry.path().filename()) != currentBranchFiles.end())
-        {
+        if (currentBranchFiles.find(entry.path().filename()) != currentBranchFiles.end()) {
             std::filesystem::remove(entry.path());
             continue;
         }
 
         // Contains in next branch HEAD
         auto nextBranchFiles = branches[branch_name]->state->getFiles();
-        if (nextBranchFiles.find(entry.path().filename()) != nextBranchFiles.end())
-        {
+        if (nextBranchFiles.find(entry.path().filename()) != nextBranchFiles.end()) {
             std::filesystem::remove(entry.path());
             continue;
         }
     }
 
-    if (branchHead->branch != currentBranch) // Commit takes its origin from another branch
-    {
+    if (branchHead->branch != currentBranch) { // Commit takes its origin from another branch
         originBranch = branchHead->branch;
     }
 
@@ -183,44 +178,46 @@ void PersistenceStack::move_branch_files(const std::string &branch_name)
     std::filesystem::current_path(Repo::getBranchesPath() / originBranch / branches[branch_name]->hash / META_COMMIT_FILES_FOLDER);
     File::copy_files(".*", path.c_str(), true);
     std::filesystem::current_path(path);
-
 }
 
-std::map<std::string, std::string> RepoSettings::map_settings() const
-{
+/**
+ * @brief Converts the repository settings to a map of key-value pairs.
+ * @return A map of settings.
+ */
+std::map<std::string, std::string> RepoSettings::map_settings() const {
     std::map<std::string, std::string> map;
     map["RepositoryName"] = str_repoName;
     map["StartBranchName"] = str_startBranchName;
     return map;
-};
+}
 
-void PersistenceStack::commit(const std::string &message)
-{
+/**
+ * @brief Creates a new commit with a message.
+ * @param message The commit message.
+ */
+void PersistenceStack::commit(const std::string &message) {
     if (message.empty())
-        throw std::invalid_argument("Message can not be empty");
+        throw std::invalid_argument("Message cannot be empty");
 
-    if (File::getFilesFromDir(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER).empty())
-    {
+    if (File::getFilesFromDir(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER).empty()) {
         throw std::runtime_error("No changes staged");
     }
 
     const auto newCommit = std::make_shared<Commit>(message, generate_hash(message), currentBranch, head);
     create_directories(Repo::getBranchesPath() / currentBranch / newCommit->hash / META_COMMIT_FILES_FOLDER);
 
-    // it could be that head is empty ( fresh branch with no commits )
+    // It could be that head is empty (fresh branch with no commits)
     auto statedFiles = head == nullptr ? std::unordered_map<std::string, File>() : head->state->getFiles();
     auto stagedFiles = File::getFilesFromDir(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER);
 
-    for (const auto &[filename, file] : statedFiles)
-    {
+    for (const auto &[filename, file] : statedFiles) {
         newCommit->state->addFile(filename, file);
         File::copy_files(filename,
                          Repo::getBranchesPath() / currentBranch / newCommit->hash / META_COMMIT_FILES_FOLDER,
                          false);
     }
 
-    for (const auto &[filename, file] : stagedFiles)
-    {
+    for (const auto &[filename, file] : stagedFiles) {
         newCommit->state->addFile(filename, file);
         File::copy_files(filename,
                          Repo::getBranchesPath() / currentBranch / newCommit->hash / META_COMMIT_FILES_FOLDER,
@@ -237,19 +234,21 @@ void PersistenceStack::commit(const std::string &message)
     INFO("New commit HEAD is " << ((head->prev == nullptr) ? "NULL" : head->prev->hash) << "--->" << head->hash);
 }
 
-void PersistenceStack::commit(const Commit &commit)
-{
+/**
+ * @brief Creates a new commit from an existing Commit object.
+ * @param commit The Commit object.
+ */
+void PersistenceStack::commit(const Commit &commit) {
     std::string msg = "Reverted to commit " + commit.hash;
 
     const auto newCommit = std::make_shared<Commit>(msg, generate_hash(msg), currentBranch, head);
     create_directories(Repo::getBranchesPath() / currentBranch / newCommit->hash / META_COMMIT_FILES_FOLDER);
 
-    // it could be that head is empty ( fresh branch with no commits )
+    // It could be that head is empty (fresh branch with no commits)
     auto statedFiles = head == nullptr ? std::unordered_map<std::string, File>() : commit.state->getFiles();
 
-    for (const auto &[filename, file] : statedFiles)
-    {
-        // TODO unsafe place (produces new commit with old paths to data)
+    for (const auto &[filename, file] : statedFiles) {
+        // TODO: Unsafe place (produces new commit with old paths to data)
         newCommit->state->addFile(filename, file);
         File::copy_files(Repo::getBranchesPath() / commit.branch / commit.hash / META_COMMIT_FILES_FOLDER / filename,
                          Repo::getBranchesPath() / newCommit->branch / newCommit->hash / META_COMMIT_FILES_FOLDER,
@@ -264,17 +263,17 @@ void PersistenceStack::commit(const Commit &commit)
     INFO("New commit HEAD is " << ((head->prev == nullptr) ? "NULL" : head->prev->hash) << "--->" << head->hash);
 }
 
-void PersistenceStack::stage(const std::string &files)
-// TODO feature version should decline this way to stage files because it's very heavy
-// Better way is to store meta-data like file_path, update_time and hash (sha1), than the right order to stage will be
-// update_time not equal -> file hash not equal -> than we can mark the file for staging
-{
+/**
+ * @brief Stages files for the next commit.
+ * @param files The files to stage.
+ */
+void PersistenceStack::stage(const std::string &files) {
     if (files.empty())
-        throw std::invalid_argument("Files can not be empty");
+        throw std::invalid_argument("Files cannot be empty");
 
     auto stage_dir = Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER;
 
-    INFO("Already staged :");
+    INFO("Already staged:");
     for (const auto& entry : std::filesystem::directory_iterator(stage_dir)) {
         if (is_regular_file(entry)) {
             INFO(entry.path().filename() << " : " << File::file_time_to_string(entry.last_write_time()));
@@ -283,128 +282,120 @@ void PersistenceStack::stage(const std::string &files)
     INFO("=============");
     uint32_t files_staged = File::copy_files(files, stage_dir, File::isRegexp(files));
 
-    if (files_staged == 0)
-    {
-        INFO("No files to stage where found");
-    }
-    else
-    {
-        INFO("Files staged :" << files_staged);
+    if (files_staged == 0) {
+        INFO("No files to stage were found");
+    } else {
+        INFO("Files staged: " << files_staged);
     }
 }
 
-void PersistenceStack::create_branch(const std::string &branch_name)
-{
-    if (branch_name.empty())
-    {
-        throw std::invalid_argument("Name can not be empty");
+/**
+ * @brief Creates a new branch.
+ * @param branch_name The name of the branch.
+ */
+void PersistenceStack::create_branch(const std::string &branch_name) {
+    if (branch_name.empty()) {
+        throw std::invalid_argument("Name cannot be empty");
     }
 
-    if (branches.find(branch_name) != branches.end())
-    {
+    if (branches.find(branch_name) != branches.end()) {
         throw BranchAlreadyExistsException(branch_name);
     }
 
     branches[branch_name] = head;
-    // TODO Make staged stores not the actual files but their filepaths
+    // TODO: Make staged stores not the actual files but their filepaths
     create_directories(Repo::getBranchesPath() / branch_name / "staged");
     currentBranch = branch_name;
 
     INFO("Branch " << branch_name << " created");
 }
 
-void PersistenceStack::revert_previous()
-{
-    if (head->prev == nullptr)
-    {
+/**
+ * @brief Reverts to the previous commit.
+ */
+void PersistenceStack::revert_previous() {
+    if (head->prev == nullptr) {
         throw NoCommitsLeftException();
     }
 
     head = head->prev;
 }
 
-void PersistenceStack::init_branch(const std::string &branch_name)
-{
-    if (branch_name.empty())
-    {
-        throw std::invalid_argument("Name can not be empty");
+/**
+ * @brief Initializes a new branch.
+ * @param branch_name The name of the branch.
+ */
+void PersistenceStack::init_branch(const std::string &branch_name) {
+    if (branch_name.empty()) {
+        throw std::invalid_argument("Name cannot be empty");
     }
 
-    if (branches.find(branch_name) != branches.end())
-    {
+    if (branches.find(branch_name) != branches.end()) {
         throw BranchAlreadyExistsException(branch_name);
     }
 
-    //TODO init commits state here
+    // TODO: Initialize commits state here
     auto meta = MetadataHandler::load(Repo::getBranchesPath() / branch_name / META_FILENAME);
-    try
-    {
-        for (const auto &entry : std::filesystem::directory_iterator(Repo::getBranchesPath() / branch_name))
-        {
-
-            if (entry.is_directory() && entry.path().filename() != "staged")
-            {
+    try {
+        for (const auto &entry : std::filesystem::directory_iterator(Repo::getBranchesPath() / branch_name)) {
+            if (entry.is_directory() && entry.path().filename() != "staged") {
                 init_commit(entry.path());
             }
         }
         branches[branch_name] = commits[meta[META_CURRENT_HEAD]];
-    }
-    catch (const std::filesystem::filesystem_error &e)
-    {
+    } catch (const std::filesystem::filesystem_error &e) {
         std::__throw_bad_variant_access(e.what());
     }
-
 }
 
-void PersistenceStack::init_commit(const std::filesystem::path &commit_hash)
-{
+/**
+ * @brief Initializes a commit from a given hash.
+ * @param commit_hash The hash of the commit.
+ */
+void PersistenceStack::init_commit(const std::filesystem::path &commit_hash) {
     auto metaCommit = MetadataHandler::load(commit_hash / META_FILENAME);
     std::shared_ptr<Commit> commitPtr = std::make_shared<Commit>(metaCommit, File::getFilesFromDir(commit_hash / META_COMMIT_FILES_FOLDER));
     commits[commitPtr->hash] = commitPtr;
 
     if (metaCommit[META_COMMIT_PREV] == "NULL") return;
 
-    if (commits.find(metaCommit[META_COMMIT_PREV]) != commits.end()) // If previous commit already was initialized
+    if (commits.find(metaCommit[META_COMMIT_PREV]) != commits.end()) { // If previous commit was already initialized
         commitPtr->prev = commits[metaCommit[META_COMMIT_PREV]];
-    else
-    {
+    } else {
         init_commit(Repo::getBranchesPath() / metaCommit[META_COMMIT_BRANCH] / metaCommit[META_COMMIT_PREV]);
         commitPtr->prev = commits[metaCommit[META_COMMIT_PREV]];
     }
 }
 
-// TODO To think of...
-void PersistenceStack::revert_to(const std::string &hash)
-{
+/**
+ * @brief Reverts to a specific commit by hash.
+ * @param hash The hash of the commit to revert to.
+ */
+void PersistenceStack::revert_to(const std::string &hash) {
     if (hash.empty())
         throw std::invalid_argument("Hash cannot be empty");
 
-    if (hash == head->hash)
-    {
+    if (hash == head->hash) {
         ERROR("Can't revert to itself");
         return;
     }
 
-    if (head == nullptr)
-    {
+    if (head == nullptr) {
         ERROR("There are no commits in this branch yet");
         return;
     }
 
     auto commitIter = *head;
 
-    do
-    {
+    do {
         commitIter = *commitIter.prev;
-        if (commitIter.branch != currentBranch) // No way to revert to another branch commit
-        {
+        if (commitIter.branch != currentBranch) { // No way to revert to another branch commit
             ERROR("Can't revert");
             ERROR("Commit " << hash << " not found in current branch (" << currentBranch << ")");
             return;
         }
 
-        if (commitIter.hash == hash)
-        {
+        if (commitIter.hash == hash) {
             // Revert to given commit
             commit(commitIter);
             move_branch_files(currentBranch);
@@ -416,19 +407,18 @@ void PersistenceStack::revert_to(const std::string &hash)
     ERROR("Commit " << hash << " not found in current branch (" << currentBranch << ")");
 }
 
-void PersistenceStack::checkout_branch(const std::string &branch_name)
-{
-    if (branch_name.empty())
-    {
-        throw std::invalid_argument("Name can not be empty");
+/**
+ * @brief Checks out a branch.
+ * @param branch_name The name of the branch.
+ */
+void PersistenceStack::checkout_branch(const std::string &branch_name) {
+    if (branch_name.empty()) {
+        throw std::invalid_argument("Name cannot be empty");
     }
 
-    if (branches.find(branch_name) == branches.end())
-    {
+    if (branches.find(branch_name) == branches.end()) {
         create_branch(branch_name);
-    }
-    else
-    {
+    } else {
         if (currentBranch == branch_name)
             throw std::runtime_error("You can't checkout your current branch (" + branch_name + ")");
         INFO("Checkout branch " << currentBranch << "--->" << branch_name);
@@ -437,11 +427,12 @@ void PersistenceStack::checkout_branch(const std::string &branch_name)
     }
 }
 
-void PersistenceStack::list_branches() const
-{
+/**
+ * @brief Lists all branches.
+ */
+void PersistenceStack::list_branches() const {
     int branchCount = 0;
-    for (const auto &[branchName, head] : branches)
-    {
+    for (const auto &[branchName, head] : branches) {
         branchCount++;
         INFO("Branch " << branchName << " | HEAD " << head->hash);
     }
@@ -449,10 +440,11 @@ void PersistenceStack::list_branches() const
     INFO("Branch count: " << branchCount);
 }
 
-void PersistenceStack::list_commits() const
-{
-    if (head == nullptr)
-    {
+/**
+ * @brief Lists all commits in the current branch.
+ */
+void PersistenceStack::list_commits() const {
+    if (head == nullptr) {
         ERROR("There are no commits in this branch yet");
         return;
     }
@@ -462,14 +454,13 @@ void PersistenceStack::list_commits() const
 
     auto commitIter = *head;
     INFO("HEAD");
-    do
-    {
+    do {
         if (commitIter.prev != nullptr)
             INFO(commitIter.prev->hash << "--->" << commitIter.hash)
         else
             INFO(head->hash)
         INFO("Message: " << commitIter.message);
-        INFO("Files commited:" << commitIter.state->getFiles().size() << std::endl);
+        INFO("Files committed: " << commitIter.state->getFiles().size() << std::endl);
         commitCount++;
         commitIter = *commitIter.prev;
     } while (commitIter.prev != nullptr);
@@ -477,14 +468,15 @@ void PersistenceStack::list_commits() const
     INFO("Commit count: " << commitCount);
 }
 
-
-void PersistenceStack::merge(const std::string &branch_name)
-{
+/**
+ * @brief Merges a branch into the current branch.
+ * @param branch_name The name of the branch to merge.
+ */
+void PersistenceStack::merge(const std::string &branch_name) {
     // Can be merged only if branches have at least 1 shared commit.
     // Maybe not...
 
-    if (branches.find(branch_name) == branches.end())
-    {
+    if (branches.find(branch_name) == branches.end()) {
         throw BranchNotFoundException(branch_name);
     }
 
@@ -516,40 +508,53 @@ void PersistenceStack::merge(const std::string &branch_name)
     // }
 }
 
-std::string PersistenceStack::generate_hash(const std::string &branch_name)
-{
+/**
+ * @brief Generates a hash for a commit message.
+ * @param branch_name The name of the branch.
+ * @return The generated hash.
+ */
+std::string PersistenceStack::generate_hash(const std::string &branch_name) {
     auto timestamp = time(0);
     return std::to_string(std::hash<std::string>{}(branch_name + std::to_string(timestamp)));
 }
 
+/**
+ * @brief Default constructor for the Repo class.
+ */
 Repo::Repo()
-    : repoName("~none")
-{
-    if (exists(Stash::getStashPath() / META_FILENAME))
-    {
+        : repoName("~none") {
+    if (exists(Stash::getStashPath() / META_FILENAME)) {
         std::map<std::string, std::string> metadata = MetadataHandler::load(Stash::getStashPath() / META_FILENAME);
-        // TODO validate metadata
+        // TODO: Validate metadata
         repoName = metadata[META_REPO_NAME];
         branchStack = PersistenceStack(metadata[META_CURRENT_BRANCH]);
     }
 }
 
+/**
+ * @brief Constructor for the Repo class with settings.
+ * @param settings The repository settings.
+ */
 Repo::Repo(const RepoSettings &settings)
-    : repoName(settings.str_repoName)
-{
+        : repoName(settings.str_repoName) {
     branchStack.create_branch(settings.str_startBranchName);
 }
 
-void Repo::initRepository(const RepoSettings &settings)
-{
-    // TODO Validate
+/**
+ * @brief Initializes the repository with settings.
+ * @param settings The repository settings.
+ */
+void Repo::initRepository(const RepoSettings &settings) {
+    // TODO: Validate
     this->repoName = settings.str_repoName;
     this->branchStack = PersistenceStack();
     branchStack.create_branch(settings.str_startBranchName);
 }
 
-void Repo::stashMeta() const
-{
+/**
+ * @brief Saves metadata to the stash.
+ */
+void Repo::stashMeta() const {
     std::map<std::string, std::string> metadata;
     metadata[META_REPO_NAME] = repoName;
     metadata[META_CURRENT_BRANCH] = branchStack.getCurrentBranch();
@@ -559,32 +564,47 @@ void Repo::stashMeta() const
     branchStack.stashMeta();
 }
 
-void Repo::stashMeta(const RepoSettings &settings)
-{
+/**
+ * @brief Saves metadata to the stash with settings.
+ * @param settings The repository settings.
+ */
+void Repo::stashMeta(const RepoSettings &settings) {
     MetadataHandler::save((Stash::getStashPath() / META_FILENAME).c_str(), settings.map_settings());
     branchStack.stashMeta();
 }
 
-PersistenceStack &Repo::getRepoStack()
-{
+/**
+ * @brief Returns the persistence stack for the repository.
+ * @return Reference to the persistence stack.
+ */
+PersistenceStack &Repo::getRepoStack() {
     return this->branchStack;
 }
 
-Repo &Repo::getInstance()
-{
+/**
+ * @brief Returns the singleton instance of the repository.
+ * @return Reference to the repository instance.
+ */
+Repo &Repo::getInstance() {
     if (!Stash::stashExists())
         throw std::runtime_error("Stash does not exist. You should initialize it with command \"stash init\"");
     static Repo stashRepository = Repo();
     return stashRepository;
 }
 
-std::filesystem::path Repo::getBranchesPath()
-{
+/**
+ * @brief Returns the path to the branches folder.
+ * @return The path to the branches folder.
+ */
+std::filesystem::path Repo::getBranchesPath() {
     return branchesPath;
 }
 
-bool Repo::IsEmpty()
-{
+/**
+ * @brief Checks if the repository is empty.
+ * @return true if the repository is empty, otherwise false.
+ */
+bool Repo::IsEmpty() {
     Repo stashRepository = Repo::getInstance();
     return stashRepository.branchStack.isValid();
 }

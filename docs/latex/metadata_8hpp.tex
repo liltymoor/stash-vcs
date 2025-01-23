@@ -1,0 +1,63 @@
+\doxysection{include/vcs/metadata.hpp File Reference}
+\hypertarget{metadata_8hpp}{}\label{metadata_8hpp}\index{include/vcs/metadata.hpp@{include/vcs/metadata.hpp}}
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_metadata_handler}{Metadata\+Handler}}
+\begin{DoxyCompactList}\small\item\em Handles saving and loading metadata from files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{metadata_8hpp_a2e3b640ea47c5e8b9242a9ebf51f95e1}{META\+\_\+\+START\+\_\+\+MARKER}}~\textquotesingle{}\mbox{[}\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Start marker for metadata blocks. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{metadata_8hpp_afb7a92c4ddeb851a1e047cb3658b8bae}{META\+\_\+\+END\+\_\+\+MARKER}}~\textquotesingle{}\mbox{]}\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em End marker for metadata blocks. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{metadata_8hpp_a634bd5958c3536be04d983d82c987e74}{META\+\_\+\+DATA\+\_\+\+SEPARATOR}}~"{}="{}
+\begin{DoxyCompactList}\small\item\em Separator for key-\/value pairs in metadata. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{metadata_8hpp_aa581bc93f1d337da835e00c53b6b9bc3}{META\+\_\+\+BLOCK\+\_\+\+SEPARATOR}}~"{}\textbackslash{}n\textbackslash{}n"{}
+\begin{DoxyCompactList}\small\item\em Separator between metadata blocks. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{metadata_8hpp_aa581bc93f1d337da835e00c53b6b9bc3}\index{metadata.hpp@{metadata.hpp}!META\_BLOCK\_SEPARATOR@{META\_BLOCK\_SEPARATOR}}
+\index{META\_BLOCK\_SEPARATOR@{META\_BLOCK\_SEPARATOR}!metadata.hpp@{metadata.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_BLOCK\_SEPARATOR}{META\_BLOCK\_SEPARATOR}}
+{\footnotesize\ttfamily \label{metadata_8hpp_aa581bc93f1d337da835e00c53b6b9bc3} 
+\#define META\+\_\+\+BLOCK\+\_\+\+SEPARATOR~"{}\textbackslash{}n\textbackslash{}n"{}}
+
+
+
+Separator between metadata blocks. 
+
+\Hypertarget{metadata_8hpp_a634bd5958c3536be04d983d82c987e74}\index{metadata.hpp@{metadata.hpp}!META\_DATA\_SEPARATOR@{META\_DATA\_SEPARATOR}}
+\index{META\_DATA\_SEPARATOR@{META\_DATA\_SEPARATOR}!metadata.hpp@{metadata.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_DATA\_SEPARATOR}{META\_DATA\_SEPARATOR}}
+{\footnotesize\ttfamily \label{metadata_8hpp_a634bd5958c3536be04d983d82c987e74} 
+\#define META\+\_\+\+DATA\+\_\+\+SEPARATOR~"{}="{}}
+
+
+
+Separator for key-\/value pairs in metadata. 
+
+\Hypertarget{metadata_8hpp_afb7a92c4ddeb851a1e047cb3658b8bae}\index{metadata.hpp@{metadata.hpp}!META\_END\_MARKER@{META\_END\_MARKER}}
+\index{META\_END\_MARKER@{META\_END\_MARKER}!metadata.hpp@{metadata.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_END\_MARKER}{META\_END\_MARKER}}
+{\footnotesize\ttfamily \label{metadata_8hpp_afb7a92c4ddeb851a1e047cb3658b8bae} 
+\#define META\+\_\+\+END\+\_\+\+MARKER~\textquotesingle{}\mbox{]}\textquotesingle{}}
+
+
+
+End marker for metadata blocks. 
+
+\Hypertarget{metadata_8hpp_a2e3b640ea47c5e8b9242a9ebf51f95e1}\index{metadata.hpp@{metadata.hpp}!META\_START\_MARKER@{META\_START\_MARKER}}
+\index{META\_START\_MARKER@{META\_START\_MARKER}!metadata.hpp@{metadata.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_START\_MARKER}{META\_START\_MARKER}}
+{\footnotesize\ttfamily \label{metadata_8hpp_a2e3b640ea47c5e8b9242a9ebf51f95e1} 
+\#define META\+\_\+\+START\+\_\+\+MARKER~\textquotesingle{}\mbox{[}\textquotesingle{}}
+
+
+
+Start marker for metadata blocks. 
+

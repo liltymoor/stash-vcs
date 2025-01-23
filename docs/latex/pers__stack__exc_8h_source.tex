@@ -1,0 +1,36 @@
+\doxysection{pers\+\_\+stack\+\_\+exc.\+h}
+\hypertarget{pers__stack__exc_8h_source}{}\label{pers__stack__exc_8h_source}\index{include/exception/pers\_stack\_exc.h@{include/exception/pers\_stack\_exc.h}}
+\mbox{\hyperlink{pers__stack__exc_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ ITMO\_VCS\_PERS\_STACK\_EXC\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ ITMO\_VCS\_PERS\_STACK\_EXC\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_branch_already_exists_exception_af5a9fcef49dd710d10879287743df174}{BranchAlreadyExistsException}}\ :\ \textcolor{keyword}{public}\ std::invalid\_argument\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_branch_already_exists_exception_af5a9fcef49dd710d10879287743df174}{BranchAlreadyExistsException}}(\textcolor{keyword}{const}\ std::string\ \&branch\_name)}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ :\ std::invalid\_argument(\textcolor{stringliteral}{"{}Branch\ with\ name\ "{}}\ +\ branch\_name\ +\ \textcolor{stringliteral}{"{}\ already\ exists"{}})\ \{\}}
+\DoxyCodeLine{00019\ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_branch_not_found_exception_a4c0610be440e48937b09ead1bb058fbe}{BranchNotFoundException}}\ :\ \textcolor{keyword}{public}\ std::invalid\_argument\ \{}
+\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_branch_not_found_exception_a4c0610be440e48937b09ead1bb058fbe}{BranchNotFoundException}}(\textcolor{keyword}{const}\ std::string\ \&branch\_name)}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ :\ std::invalid\_argument(\textcolor{stringliteral}{"{}Branch\ with\ name\ "{}}\ +\ branch\_name\ +\ \textcolor{stringliteral}{"{}\ not\ found"{}})\ \{\}}
+\DoxyCodeLine{00033\ \};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_commit_not_found_exception_acba9d9ec1b704e7e0bf030625beea7ea}{CommitNotFoundException}}\ :\ \textcolor{keyword}{public}\ std::out\_of\_range\ \{}
+\DoxyCodeLine{00040\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_commit_not_found_exception_acba9d9ec1b704e7e0bf030625beea7ea}{CommitNotFoundException}}(\textcolor{keyword}{const}\ std::string\ \&hash)}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ :\ std::out\_of\_range(\textcolor{stringliteral}{"{}Commit\ with\ hash\ "{}}\ +\ hash\ +\ \textcolor{stringliteral}{"{}\ not\ found"{}})\ \{\}}
+\DoxyCodeLine{00047\ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_no_commits_left_exception_a9e40c3e728b950da3d7538cc7eb08a9a}{NoCommitsLeftException}}\ :\ \textcolor{keyword}{public}\ std::out\_of\_range\ \{}
+\DoxyCodeLine{00054\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{class_no_commits_left_exception_a9e40c3e728b950da3d7538cc7eb08a9a}{NoCommitsLeftException}}()\ :\ std::out\_of\_range(\textcolor{stringliteral}{"{}No\ commits\ back\ left"{}})\ \{\}}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ITMO\_VCS\_PERS\_STACK\_EXC\_H}}
+
+\end{DoxyCode}

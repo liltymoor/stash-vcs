@@ -1,0 +1,237 @@
+\doxysection{Repo Class Reference}
+\hypertarget{class_repo}{}\label{class_repo}\index{Repo@{Repo}}
+
+
+Represents a repository in the version control system.  
+
+
+
+
+{\ttfamily \#include $<$repository.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_repo_a5bd090209fe655cd52c69aad3a96d599}{init\+Repository}} (const \mbox{\hyperlink{struct_repo_settings}{Repo\+Settings}} \&settings)
+\begin{DoxyCompactList}\small\item\em Initializes the repository with settings. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_repo_a39dd5f0d52b3479199499505d23136b1}{stash\+Meta}} (const \mbox{\hyperlink{struct_repo_settings}{Repo\+Settings}} \&settings)
+\begin{DoxyCompactList}\small\item\em Saves metadata to the stash. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_repo_ab58e8c5ef0a0fc5c48782596e49793ce}{stash\+Meta}} () const
+\begin{DoxyCompactList}\small\item\em Saves metadata to the stash. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_persistence_stack}{Persistence\+Stack}} \& \mbox{\hyperlink{class_repo_ac9b106d35cc0ce81f1f572d9a227b388}{get\+Repo\+Stack}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the persistence stack for the repository. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_repo}{Repo}} \& \mbox{\hyperlink{class_repo_a68bef566fac41e60d05dee8b94dfe652}{get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the singleton instance of the repository. \end{DoxyCompactList}\item 
+static std\+::filesystem\+::path \mbox{\hyperlink{class_repo_a43bc77efc85bc816201e2d7eccb9210d}{get\+Branches\+Path}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the path to the branches folder. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_repo_aafcc6a344f88daf599d08b9df3146380}{Is\+Empty}} ()
+\begin{DoxyCompactList}\small\item\em Checks if the repository is empty. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_repo_ae435617778368d1c7b1049af0a15e47a}{Repo}} ()
+\begin{DoxyCompactList}\small\item\em Private constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_repo_ac16f5aecd66b526d92aabb3a21fa1416}{Repo}} (const \mbox{\hyperlink{struct_repo_settings}{Repo\+Settings}} \&settings)
+\begin{DoxyCompactList}\small\item\em Constructor that initializes the repository with settings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{class_repo_aac751c5077fb49f147b9f2d5cf867b1e}{repo\+Name}}
+\begin{DoxyCompactList}\small\item\em The name of the repository. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_persistence_stack}{Persistence\+Stack}} \mbox{\hyperlink{class_repo_a1d4edd9c77e005e4ab46671815e0d5a9}{branch\+Stack}}
+\begin{DoxyCompactList}\small\item\em The persistence stack for branches. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_repo}{Repo}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_repo_a721c043bc71a67ce9d1d2e77831f9c2e}{stash\+Repository}}
+\begin{DoxyCompactList}\small\item\em Pointer to the singleton repository instance. \end{DoxyCompactList}\item 
+static const std\+::filesystem\+::path \mbox{\hyperlink{class_repo_adb549d3fafc4eed372618df13c39b7e6}{branches\+Path}} = \mbox{\hyperlink{class_stash_a5e884ab9f817aab55aa18e8caf14a674}{Stash\+::get\+Stash\+Path}}() / "{}branches"{}
+\begin{DoxyCompactList}\small\item\em Path to the branches folder. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a repository in the version control system. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_repo_ae435617778368d1c7b1049af0a15e47a}\index{Repo@{Repo}!Repo@{Repo}}
+\index{Repo@{Repo}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{Repo()}{Repo()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_repo_ae435617778368d1c7b1049af0a15e47a} 
+Repo\+::\+Repo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Private constructor. 
+
+Default constructor for the \doxylink{class_repo}{Repo} class. \Hypertarget{class_repo_ac16f5aecd66b526d92aabb3a21fa1416}\index{Repo@{Repo}!Repo@{Repo}}
+\index{Repo@{Repo}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{Repo()}{Repo()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_repo_ac16f5aecd66b526d92aabb3a21fa1416} 
+Repo\+::\+Repo (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_repo_settings}{Repo\+Settings}} \&}]{settings}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [private]}}
+
+
+
+Constructor that initializes the repository with settings. 
+
+Constructor for the \doxylink{class_repo}{Repo} class with settings.
+
+
+\begin{DoxyParams}{Parameters}
+{\em settings} & The repository settings. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_repo_a43bc77efc85bc816201e2d7eccb9210d}\index{Repo@{Repo}!getBranchesPath@{getBranchesPath}}
+\index{getBranchesPath@{getBranchesPath}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{getBranchesPath()}{getBranchesPath()}}
+{\footnotesize\ttfamily \label{class_repo_a43bc77efc85bc816201e2d7eccb9210d} 
+std\+::filesystem\+::path Repo\+::get\+Branches\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Retrieves the path to the branches folder. 
+
+Returns the path to the branches folder.
+
+\begin{DoxyReturn}{Returns}
+The path to the branches folder. 
+\end{DoxyReturn}
+\Hypertarget{class_repo_a68bef566fac41e60d05dee8b94dfe652}\index{Repo@{Repo}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily \label{class_repo_a68bef566fac41e60d05dee8b94dfe652} 
+\mbox{\hyperlink{class_repo}{Repo}} \& Repo\+::get\+Instance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Retrieves the singleton instance of the repository. 
+
+Returns the singleton instance of the repository.
+
+\begin{DoxyReturn}{Returns}
+Reference to the repository instance. 
+\end{DoxyReturn}
+\Hypertarget{class_repo_ac9b106d35cc0ce81f1f572d9a227b388}\index{Repo@{Repo}!getRepoStack@{getRepoStack}}
+\index{getRepoStack@{getRepoStack}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{getRepoStack()}{getRepoStack()}}
+{\footnotesize\ttfamily \label{class_repo_ac9b106d35cc0ce81f1f572d9a227b388} 
+\mbox{\hyperlink{class_persistence_stack}{Persistence\+Stack}} \& Repo\+::get\+Repo\+Stack (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves the persistence stack for the repository. 
+
+Returns the persistence stack for the repository.
+
+\begin{DoxyReturn}{Returns}
+Reference to the persistence stack. 
+\end{DoxyReturn}
+\Hypertarget{class_repo_a5bd090209fe655cd52c69aad3a96d599}\index{Repo@{Repo}!initRepository@{initRepository}}
+\index{initRepository@{initRepository}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{initRepository()}{initRepository()}}
+{\footnotesize\ttfamily \label{class_repo_a5bd090209fe655cd52c69aad3a96d599} 
+void Repo\+::init\+Repository (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_repo_settings}{Repo\+Settings}} \&}]{settings}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the repository with settings. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em settings} & The repository settings. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_repo_aafcc6a344f88daf599d08b9df3146380}\index{Repo@{Repo}!IsEmpty@{IsEmpty}}
+\index{IsEmpty@{IsEmpty}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{IsEmpty()}{IsEmpty()}}
+{\footnotesize\ttfamily \label{class_repo_aafcc6a344f88daf599d08b9df3146380} 
+bool Repo\+::\+Is\+Empty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Checks if the repository is empty. 
+
+\begin{DoxyReturn}{Returns}
+true if the repository is empty, otherwise false. 
+\end{DoxyReturn}
+\Hypertarget{class_repo_ab58e8c5ef0a0fc5c48782596e49793ce}\index{Repo@{Repo}!stashMeta@{stashMeta}}
+\index{stashMeta@{stashMeta}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{stashMeta()}{stashMeta()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_repo_ab58e8c5ef0a0fc5c48782596e49793ce} 
+void Repo\+::stash\+Meta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Saves metadata to the stash. 
+
+\Hypertarget{class_repo_a39dd5f0d52b3479199499505d23136b1}\index{Repo@{Repo}!stashMeta@{stashMeta}}
+\index{stashMeta@{stashMeta}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{stashMeta()}{stashMeta()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_repo_a39dd5f0d52b3479199499505d23136b1} 
+void Repo\+::stash\+Meta (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_repo_settings}{Repo\+Settings}} \&}]{settings}{}\end{DoxyParamCaption})}
+
+
+
+Saves metadata to the stash. 
+
+Saves metadata to the stash with settings.
+
+
+\begin{DoxyParams}{Parameters}
+{\em settings} & The repository settings. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_repo_adb549d3fafc4eed372618df13c39b7e6}\index{Repo@{Repo}!branchesPath@{branchesPath}}
+\index{branchesPath@{branchesPath}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{branchesPath}{branchesPath}}
+{\footnotesize\ttfamily \label{class_repo_adb549d3fafc4eed372618df13c39b7e6} 
+const std\+::filesystem\+::path Repo\+::branches\+Path = \mbox{\hyperlink{class_stash_a5e884ab9f817aab55aa18e8caf14a674}{Stash\+::get\+Stash\+Path}}() / "{}branches"{}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Path to the branches folder. 
+
+\Hypertarget{class_repo_a1d4edd9c77e005e4ab46671815e0d5a9}\index{Repo@{Repo}!branchStack@{branchStack}}
+\index{branchStack@{branchStack}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{branchStack}{branchStack}}
+{\footnotesize\ttfamily \label{class_repo_a1d4edd9c77e005e4ab46671815e0d5a9} 
+\mbox{\hyperlink{class_persistence_stack}{Persistence\+Stack}} Repo\+::branch\+Stack\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The persistence stack for branches. 
+
+\Hypertarget{class_repo_aac751c5077fb49f147b9f2d5cf867b1e}\index{Repo@{Repo}!repoName@{repoName}}
+\index{repoName@{repoName}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{repoName}{repoName}}
+{\footnotesize\ttfamily \label{class_repo_aac751c5077fb49f147b9f2d5cf867b1e} 
+std\+::string Repo\+::repo\+Name\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The name of the repository. 
+
+\Hypertarget{class_repo_a721c043bc71a67ce9d1d2e77831f9c2e}\index{Repo@{Repo}!stashRepository@{stashRepository}}
+\index{stashRepository@{stashRepository}!Repo@{Repo}}
+\doxysubsubsection{\texorpdfstring{stashRepository}{stashRepository}}
+{\footnotesize\ttfamily \label{class_repo_a721c043bc71a67ce9d1d2e77831f9c2e} 
+\mbox{\hyperlink{class_repo}{Repo}}\texorpdfstring{$\ast$}{*} Repo\+::stash\+Repository\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Pointer to the singleton repository instance. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/vcs/\mbox{\hyperlink{repository_8hpp}{repository.\+hpp}}\item 
+src/vcs/\mbox{\hyperlink{repository_8cpp}{repository.\+cpp}}\end{DoxyCompactItemize}

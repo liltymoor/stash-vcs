@@ -5,24 +5,31 @@
 #include "commit_state.hpp"
 #include "repository.hpp"
 #include "../logger/logger.hpp"
-
 #include <filesystem>
 #include <regex>
 
 namespace fs = std::filesystem;
 
+/**
+ * @brief Constructor for the File class.
+ * @param filepath The path to the file.
+ */
 File::File(const std::filesystem::path &filepath)
-    : filepath(filepath)
-{
-}
+        : filepath(filepath) {}
 
-std::filesystem::path File::get_path() const
-{
+/**
+ * @brief Returns the path of the file.
+ * @return The path of the file.
+ */
+std::filesystem::path File::get_path() const {
     return filepath;
 }
 
-void File::move(const std::filesystem::path &to)
-{
+/**
+ * @brief Moves the file to a new location.
+ * @param to The new path for the file.
+ */
+void File::move(const std::filesystem::path &to) {
     if (!exists(filepath)) {
         throw std::runtime_error("Source file does not exist: " + filepath.string());
     }
@@ -43,7 +50,7 @@ void File::move(const std::filesystem::path &to)
     } catch (const std::filesystem::filesystem_error& e) {
         if (e.code() == std::errc::cross_device_link) {
             copy(filepath, target_path,
-                std::filesystem::copy_options::overwrite_existing
+                 std::filesystem::copy_options::overwrite_existing
             );
             std::filesystem::remove(filepath);
             filepath = target_path;
@@ -53,13 +60,21 @@ void File::move(const std::filesystem::path &to)
     }
 }
 
-FileContent File::get_content()
-{
+/**
+ * @brief Retrieves the content of the file.
+ * @return The content of the file.
+ */
+FileContent File::get_content() {
     if (cachedContent.isEmpty())
         cachedContent = FileContent(filepath);
     return cachedContent;
 }
 
+/**
+ * @brief Reads the content of a file from a given path.
+ * @param filepath The path to the file.
+ * @return The content of the file as a string.
+ */
 std::string File::read(const std::string &filepath) {
     std::ifstream file(filepath);
     if (!file.is_open()) {
@@ -70,6 +85,11 @@ std::string File::read(const std::string &filepath) {
     return content.str();
 }
 
+/**
+ * @brief Writes content to a file at a given path.
+ * @param filepath The path to the file.
+ * @param content The content to write.
+ */
 void File::write(const std::string &filepath, const std::string &content) {
     std::ofstream file(filepath);
     if (!file.is_open()) {
@@ -78,14 +98,24 @@ void File::write(const std::string &filepath, const std::string &content) {
     file << content;
 }
 
-bool File::isRegexp(const std::string &str)
-{
+/**
+ * @brief Checks if a string is a regular expression.
+ * @param str The string to check.
+ * @return true if the string is a regular expression, otherwise false.
+ */
+bool File::isRegexp(const std::string &str) {
     const std::string regex_chars = ".*+?[]()|{}^$\\";
     return str.find_first_of(regex_chars) != std::string::npos;
 }
 
-uint32_t File::copy_files(const std::string &source_pattern, const std::string &target_dir, bool use_regex)
-{
+/**
+ * @brief Copies files from a source pattern to a target directory.
+ * @param source_pattern The source pattern for files.
+ * @param target_dir The target directory.
+ * @param use_regex Whether to use regex for matching files.
+ * @return The number of files copied.
+ */
+uint32_t File::copy_files(const std::string &source_pattern, const std::string &target_dir, bool use_regex) {
     try {
         fs::create_directories(target_dir);
 
@@ -107,9 +137,7 @@ uint32_t File::copy_files(const std::string &source_pattern, const std::string &
             fs::path source_path = current_dir / source_pattern;
             if (fs::exists(source_path)) {
                 files_to_move.push_back(source_path);
-            }
-            else
-            {
+            } else {
                 WARN("File not found");
             }
         }
@@ -127,14 +155,17 @@ uint32_t File::copy_files(const std::string &source_pattern, const std::string &
         return file_counter;
 
     } catch (const std::exception& ex) {
-        ERROR("Error while transfering files: ");
+        ERROR("Error while transferring files: ");
         ERROR(ex.what());
         return 0;
     }
 }
 
-void File::clean_dir(const std::string &dir_path)
-{
+/**
+ * @brief Cleans a directory by removing all files.
+ * @param dir_path The path to the directory.
+ */
+void File::clean_dir(const std::string &dir_path) {
     fs::path directory(dir_path);
 
     if (!fs::exists(directory)) {
@@ -145,24 +176,27 @@ void File::clean_dir(const std::string &dir_path)
         throw std::invalid_argument("Path is not a directory: " + dir_path);
     }
 
-
     std::error_code ec;
     for (const auto& entry : fs::directory_iterator(directory)) {
         fs::remove_all(entry.path(), ec);
 
         if (ec) {
             throw std::runtime_error(
-                "Failed to remove " + entry.path().string() +
-                ": " + ec.message()
+                    "Failed to remove " + entry.path().string() +
+                    ": " + ec.message()
             );
         }
     }
 }
 
-std::string File::file_time_to_string(const std::filesystem::file_time_type &ft)
-{
+/**
+ * @brief Converts file time to a string representation.
+ * @param ft The file time to convert.
+ * @return The string representation of the file time.
+ */
+std::string File::file_time_to_string(const std::filesystem::file_time_type &ft) {
     auto sctp = std::chrono::time_point_cast<std::chrono::system_clock::duration>(
-        ft - fs::file_time_type::clock::now() + std::chrono::system_clock::now()
+            ft - fs::file_time_type::clock::now() + std::chrono::system_clock::now()
     );
 
     std::time_t tt = std::chrono::system_clock::to_time_t(sctp);
@@ -172,8 +206,12 @@ std::string File::file_time_to_string(const std::filesystem::file_time_type &ft)
     return ss.str();
 }
 
-std::unordered_map<std::string, File> File::getFilesFromDir(const std::filesystem::path &dir)
-{
+/**
+ * @brief Retrieves all files from a directory.
+ * @param dir The path to the directory.
+ * @return A map of filenames to File objects.
+ */
+std::unordered_map<std::string, File> File::getFilesFromDir(const std::filesystem::path &dir) {
     std::unordered_map<std::string, File> files;
     if (!exists(dir)) {
         throw std::runtime_error("Directory does not exist: " + dir.string());
@@ -198,23 +236,38 @@ std::unordered_map<std::string, File> File::getFilesFromDir(const std::filesyste
     return files;
 }
 
+/**
+ * @brief Constructor for the FileContent class.
+ * @param lines A map of line numbers to their content.
+ */
 FileContent::FileContent(const std::map<int, std::string> &lines) {
     for (const auto &[lineNumber, line]: lines) {
         addLine(lineNumber, line);
     }
 }
 
-FileContent::FileContent(const std::filesystem::path& filePath)
-{
+/**
+ * @brief Constructor for the FileContent class that reads from a file.
+ * @param filePath The path to the file.
+ */
+FileContent::FileContent(const std::filesystem::path& filePath) {
     readFromFile(filePath);
 }
 
+/**
+ * @brief Adds a line to the file content.
+ * @param lineNumber The line number.
+ * @param line The content of the line.
+ */
 void FileContent::addLine(int lineNumber, const std::string &line) {
     lines[lineNumber] = line;
 }
 
-void FileContent::readFromFile(const std::filesystem::path& filePath)
-{
+/**
+ * @brief Reads file content from a given path.
+ * @param filePath The path to the file.
+ */
+void FileContent::readFromFile(const std::filesystem::path& filePath) {
     std::ifstream file(filePath);
     if (!file.is_open()) {
         throw std::runtime_error("Failed to open file: " + filePath.string());
@@ -227,6 +280,11 @@ void FileContent::readFromFile(const std::filesystem::path& filePath)
     }
 }
 
+/**
+ * @brief Retrieves the content of a specific line.
+ * @param lineNumber The line number to retrieve.
+ * @return The content of the specified line.
+ */
 std::string FileContent::getLine(int lineNumber) const {
     auto it = lines.find(lineNumber);
     if (it != lines.end()) {
@@ -235,30 +293,51 @@ std::string FileContent::getLine(int lineNumber) const {
     return "";
 }
 
+/**
+ * @brief Retrieves all lines of the file.
+ * @return A map of line numbers to their content.
+ */
 const std::map<int, std::string> &FileContent::getAllLines() const {
     return lines;
 }
 
+/**
+ * @brief Retrieves the full content of the file as a single string.
+ * @return The full content of the file.
+ */
 std::string FileContent::getFullContent() const {
     std::string content;
     for (const auto &[lineNumber, line]: lines) {
         content += line + "\n";
     }
     if (!content.empty()) {
-        content.pop_back(); // Убираем последний символ новой строки
+        content.pop_back(); // Remove the last newline character
     }
     return content;
 }
 
-bool FileContent::isEmpty() const
-{
+/**
+ * @brief Checks if the file content is empty.
+ * @return true if the file content is empty, otherwise false.
+ */
+bool FileContent::isEmpty() const {
     return lines.empty();
 }
 
+/**
+ * @brief Adds a file to the commit state.
+ * @param filename The name of the file.
+ * @param content The File object representing the file.
+ */
 void CommitState::addFile(const std::string &filename, const File &content) {
     files[filename] = content;
 }
 
+/**
+ * @brief Retrieves the content of a file in the commit state.
+ * @param filename The name of the file.
+ * @return The content of the file.
+ */
 FileContent CommitState::getFileContent(const std::string &filename) {
     auto it = files.find(filename);
     if (it != files.end()) {
@@ -267,10 +346,19 @@ FileContent CommitState::getFileContent(const std::string &filename) {
     return FileContent{};
 }
 
+/**
+ * @brief Retrieves all files in the commit state.
+ * @return A map of filenames to File objects.
+ */
 const std::unordered_map<std::string, File> &CommitState::getFiles() {
     return files;
 }
 
+/**
+ * @brief Computes the difference between two commits.
+ * @param commit1 The first commit.
+ * @param commit2 The second commit.
+ */
 void CommitUtils::diff(const Commit &commit1, const Commit &commit2) {
     auto files1 = commit1.state->getFiles();
     auto files2 = commit2.state->getFiles();

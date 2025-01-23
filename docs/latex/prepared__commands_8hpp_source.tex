@@ -1,0 +1,31 @@
+\doxysection{prepared\+\_\+commands.\+hpp}
+\hypertarget{prepared__commands_8hpp_source}{}\label{prepared__commands_8hpp_source}\index{include/command/prepared\_commands.hpp@{include/command/prepared\_commands.hpp}}
+\mbox{\hyperlink{prepared__commands_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ PREPARED\_COMMANDS\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ PREPARED\_COMMANDS\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{command_8hpp}{command.hpp}}"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ DEFINE\_CMND(x)\ \(\backslash\)}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\ \ \ \ class\ x\#\#Command\ :\ public\ Command\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\ \ \ \ public:\ \(\backslash\)}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ x\#\#Command();\ \(\backslash\)}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ void*\ action(ParsedArgs)\ const\ override;\ \(\backslash\)}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\ \ \ \ \};\ \(\backslash\)}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\ \ \ \ class\ x\#\#Args\ :\ public\ CommandArgs\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\ \ \ \ public:\ \(\backslash\)}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ x\#\#Args();\ \(\backslash\)}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{comment}{//\ Define\ specific\ commands}}
+\DoxyCodeLine{00025\ \mbox{\hyperlink{prepared__commands_8hpp_ab68d79dc697518c39e0e22befdfcbdcb}{DEFINE\_CMND}}(Init);}
+\DoxyCodeLine{00026\ \mbox{\hyperlink{prepared__commands_8hpp_ab68d79dc697518c39e0e22befdfcbdcb}{DEFINE\_CMND}}(Add);}
+\DoxyCodeLine{00027\ \mbox{\hyperlink{prepared__commands_8hpp_ab68d79dc697518c39e0e22befdfcbdcb}{DEFINE\_CMND}}(\mbox{\hyperlink{struct_commit}{Commit}});}
+\DoxyCodeLine{00028\ \mbox{\hyperlink{prepared__commands_8hpp_ab68d79dc697518c39e0e22befdfcbdcb}{DEFINE\_CMND}}(Checkout);}
+\DoxyCodeLine{00029\ \mbox{\hyperlink{prepared__commands_8hpp_ab68d79dc697518c39e0e22befdfcbdcb}{DEFINE\_CMND}}(Merge);}
+\DoxyCodeLine{00030\ \mbox{\hyperlink{prepared__commands_8hpp_ab68d79dc697518c39e0e22befdfcbdcb}{DEFINE\_CMND}}(RevertTo);}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ PREPARED\_COMMANDS\_HPP}}
+
+\end{DoxyCode}

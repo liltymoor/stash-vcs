@@ -1,0 +1,65 @@
+\doxysection{Metadata\+Handler Class Reference}
+\hypertarget{class_metadata_handler}{}\label{class_metadata_handler}\index{MetadataHandler@{MetadataHandler}}
+
+
+Handles saving and loading metadata from files.  
+
+
+
+
+{\ttfamily \#include $<$metadata.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_metadata_handler_af355d3e0bf32ccd6a1b425a0569fcd30}{save}} (const std\+::string \&filepath, const std\+::map$<$ std\+::string, std\+::string $>$ \&data)
+\begin{DoxyCompactList}\small\item\em Saves metadata to a file. \end{DoxyCompactList}\item 
+static std\+::map$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{class_metadata_handler_ad0fe31e9202ba01dad0e7f695f3c1181}{load}} (const std\+::string \&filepath)
+\begin{DoxyCompactList}\small\item\em Loads metadata from a file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Handles saving and loading metadata from files. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_metadata_handler_ad0fe31e9202ba01dad0e7f695f3c1181}\index{MetadataHandler@{MetadataHandler}!load@{load}}
+\index{load@{load}!MetadataHandler@{MetadataHandler}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{class_metadata_handler_ad0fe31e9202ba01dad0e7f695f3c1181} 
+std\+::map$<$ std\+::string, std\+::string $>$ Metadata\+Handler\+::load (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Loads metadata from a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & The path to the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A map of key-\/value pairs representing the metadata. 
+\end{DoxyReturn}
+\Hypertarget{class_metadata_handler_af355d3e0bf32ccd6a1b425a0569fcd30}\index{MetadataHandler@{MetadataHandler}!save@{save}}
+\index{save@{save}!MetadataHandler@{MetadataHandler}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{class_metadata_handler_af355d3e0bf32ccd6a1b425a0569fcd30} 
+void Metadata\+Handler\+::save (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filepath}{, }\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Saves metadata to a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & The path to the file. \\
+\hline
+{\em data} & The metadata to save. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/vcs/\mbox{\hyperlink{metadata_8hpp}{metadata.\+hpp}}\item 
+src/vcs/\mbox{\hyperlink{metadata_8cpp}{metadata.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,171 @@
+\doxysection{include/vcs/repository.hpp File Reference}
+\hypertarget{repository_8hpp}{}\label{repository_8hpp}\index{include/vcs/repository.hpp@{include/vcs/repository.hpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include "{}commit\+\_\+state.\+hpp"{}}\newline
+{\ttfamily \#include "{}stash.\+hpp"{}}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_commit}{Commit}}
+\begin{DoxyCompactList}\small\item\em Represents a commit in the version control system. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_persistence_stack}{Persistence\+Stack}}
+\begin{DoxyCompactList}\small\item\em Manages the persistence stack for commits and branches. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_repo_settings}{Repo\+Settings}}
+\begin{DoxyCompactList}\small\item\em Represents settings for a repository. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_repo}{Repo}}
+\begin{DoxyCompactList}\small\item\em Represents a repository in the version control system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{repository_8hpp_a217fb476829bc9b3ecdaf583262b3b1c}{META\+\_\+\+FILENAME}}~"{}metadata"{}
+\begin{DoxyCompactList}\small\item\em Filename for metadata. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_a0f28d8192d52f4d345414ddf5a3ca272}{META\+\_\+\+STAGE\+\_\+\+FOLDER}}~"{}staged"{}
+\begin{DoxyCompactList}\small\item\em Folder for staged files. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_a8d0f000dfe2ce7aad7a2a1269f38b7de}{META\+\_\+\+BRANCH\+\_\+\+FOLDER}}~"{}branches"{}
+\begin{DoxyCompactList}\small\item\em Folder for branches. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_ad183ceb32c32a2dfcea18d38b4b857e6}{META\+\_\+\+COMMIT\+\_\+\+FILES\+\_\+\+FOLDER}}~"{}files"{}
+\begin{DoxyCompactList}\small\item\em Folder for commit files. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_ab144801794ff2e53a468c8bb74b7abb3}{META\+\_\+\+REPO\+\_\+\+NAME}}~"{}Repo\+Name"{}
+\begin{DoxyCompactList}\small\item\em Metadata key for repository name. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_a0a124cff21b00eca58aa6ba8b531e3e7}{META\+\_\+\+CURRENT\+\_\+\+BRANCH}}~"{}Current\+Branch"{}
+\begin{DoxyCompactList}\small\item\em Metadata key for current branch. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_ac8ce95ef3d6e65d50f79bb12dd9f1701}{META\+\_\+\+CURRENT\+\_\+\+HEAD}}~"{}Current\+Head"{}
+\begin{DoxyCompactList}\small\item\em Metadata key for current head commit. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_a64f94510664daa8dc122e5d241c72e54}{META\+\_\+\+REPO\+\_\+\+CORE\+\_\+\+BRANCH}}~"{}Repo\+Start\+Branch"{}
+\begin{DoxyCompactList}\small\item\em Metadata key for the core branch. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_a5b31fe4702e0616e4f608c25b5224c3b}{META\+\_\+\+COMMIT\+\_\+\+MSG}}~"{}Commit\+Message"{}
+\begin{DoxyCompactList}\small\item\em Metadata key for commit message. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_a33c935c183c444bf153f0d9f4c87ef33}{META\+\_\+\+COMMIT\+\_\+\+PREV}}~"{}Prev\+Commit"{}
+\begin{DoxyCompactList}\small\item\em Metadata key for previous commit. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_adf2d585bff701b6d54900c4d84d078eb}{META\+\_\+\+COMMIT\+\_\+\+HASH}}~"{}Commit\+Hash"{}
+\begin{DoxyCompactList}\small\item\em Metadata key for commit hash. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{repository_8hpp_a8dfec367e0ff70fdbfeaba03dbbacc46}{META\+\_\+\+COMMIT\+\_\+\+BRANCH}}~"{}Commit\+Branch"{}
+\begin{DoxyCompactList}\small\item\em Metadata key for commit branch. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{repository_8hpp_a8d0f000dfe2ce7aad7a2a1269f38b7de}\index{repository.hpp@{repository.hpp}!META\_BRANCH\_FOLDER@{META\_BRANCH\_FOLDER}}
+\index{META\_BRANCH\_FOLDER@{META\_BRANCH\_FOLDER}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_BRANCH\_FOLDER}{META\_BRANCH\_FOLDER}}
+{\footnotesize\ttfamily \label{repository_8hpp_a8d0f000dfe2ce7aad7a2a1269f38b7de} 
+\#define META\+\_\+\+BRANCH\+\_\+\+FOLDER~"{}branches"{}}
+
+
+
+Folder for branches. 
+
+\Hypertarget{repository_8hpp_a8dfec367e0ff70fdbfeaba03dbbacc46}\index{repository.hpp@{repository.hpp}!META\_COMMIT\_BRANCH@{META\_COMMIT\_BRANCH}}
+\index{META\_COMMIT\_BRANCH@{META\_COMMIT\_BRANCH}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_COMMIT\_BRANCH}{META\_COMMIT\_BRANCH}}
+{\footnotesize\ttfamily \label{repository_8hpp_a8dfec367e0ff70fdbfeaba03dbbacc46} 
+\#define META\+\_\+\+COMMIT\+\_\+\+BRANCH~"{}Commit\+Branch"{}}
+
+
+
+Metadata key for commit branch. 
+
+\Hypertarget{repository_8hpp_ad183ceb32c32a2dfcea18d38b4b857e6}\index{repository.hpp@{repository.hpp}!META\_COMMIT\_FILES\_FOLDER@{META\_COMMIT\_FILES\_FOLDER}}
+\index{META\_COMMIT\_FILES\_FOLDER@{META\_COMMIT\_FILES\_FOLDER}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_COMMIT\_FILES\_FOLDER}{META\_COMMIT\_FILES\_FOLDER}}
+{\footnotesize\ttfamily \label{repository_8hpp_ad183ceb32c32a2dfcea18d38b4b857e6} 
+\#define META\+\_\+\+COMMIT\+\_\+\+FILES\+\_\+\+FOLDER~"{}files"{}}
+
+
+
+Folder for commit files. 
+
+\Hypertarget{repository_8hpp_adf2d585bff701b6d54900c4d84d078eb}\index{repository.hpp@{repository.hpp}!META\_COMMIT\_HASH@{META\_COMMIT\_HASH}}
+\index{META\_COMMIT\_HASH@{META\_COMMIT\_HASH}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_COMMIT\_HASH}{META\_COMMIT\_HASH}}
+{\footnotesize\ttfamily \label{repository_8hpp_adf2d585bff701b6d54900c4d84d078eb} 
+\#define META\+\_\+\+COMMIT\+\_\+\+HASH~"{}Commit\+Hash"{}}
+
+
+
+Metadata key for commit hash. 
+
+\Hypertarget{repository_8hpp_a5b31fe4702e0616e4f608c25b5224c3b}\index{repository.hpp@{repository.hpp}!META\_COMMIT\_MSG@{META\_COMMIT\_MSG}}
+\index{META\_COMMIT\_MSG@{META\_COMMIT\_MSG}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_COMMIT\_MSG}{META\_COMMIT\_MSG}}
+{\footnotesize\ttfamily \label{repository_8hpp_a5b31fe4702e0616e4f608c25b5224c3b} 
+\#define META\+\_\+\+COMMIT\+\_\+\+MSG~"{}Commit\+Message"{}}
+
+
+
+Metadata key for commit message. 
+
+\Hypertarget{repository_8hpp_a33c935c183c444bf153f0d9f4c87ef33}\index{repository.hpp@{repository.hpp}!META\_COMMIT\_PREV@{META\_COMMIT\_PREV}}
+\index{META\_COMMIT\_PREV@{META\_COMMIT\_PREV}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_COMMIT\_PREV}{META\_COMMIT\_PREV}}
+{\footnotesize\ttfamily \label{repository_8hpp_a33c935c183c444bf153f0d9f4c87ef33} 
+\#define META\+\_\+\+COMMIT\+\_\+\+PREV~"{}Prev\+Commit"{}}
+
+
+
+Metadata key for previous commit. 
+
+\Hypertarget{repository_8hpp_a0a124cff21b00eca58aa6ba8b531e3e7}\index{repository.hpp@{repository.hpp}!META\_CURRENT\_BRANCH@{META\_CURRENT\_BRANCH}}
+\index{META\_CURRENT\_BRANCH@{META\_CURRENT\_BRANCH}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_CURRENT\_BRANCH}{META\_CURRENT\_BRANCH}}
+{\footnotesize\ttfamily \label{repository_8hpp_a0a124cff21b00eca58aa6ba8b531e3e7} 
+\#define META\+\_\+\+CURRENT\+\_\+\+BRANCH~"{}Current\+Branch"{}}
+
+
+
+Metadata key for current branch. 
+
+\Hypertarget{repository_8hpp_ac8ce95ef3d6e65d50f79bb12dd9f1701}\index{repository.hpp@{repository.hpp}!META\_CURRENT\_HEAD@{META\_CURRENT\_HEAD}}
+\index{META\_CURRENT\_HEAD@{META\_CURRENT\_HEAD}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_CURRENT\_HEAD}{META\_CURRENT\_HEAD}}
+{\footnotesize\ttfamily \label{repository_8hpp_ac8ce95ef3d6e65d50f79bb12dd9f1701} 
+\#define META\+\_\+\+CURRENT\+\_\+\+HEAD~"{}Current\+Head"{}}
+
+
+
+Metadata key for current head commit. 
+
+\Hypertarget{repository_8hpp_a217fb476829bc9b3ecdaf583262b3b1c}\index{repository.hpp@{repository.hpp}!META\_FILENAME@{META\_FILENAME}}
+\index{META\_FILENAME@{META\_FILENAME}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_FILENAME}{META\_FILENAME}}
+{\footnotesize\ttfamily \label{repository_8hpp_a217fb476829bc9b3ecdaf583262b3b1c} 
+\#define META\+\_\+\+FILENAME~"{}metadata"{}}
+
+
+
+Filename for metadata. 
+
+\Hypertarget{repository_8hpp_a64f94510664daa8dc122e5d241c72e54}\index{repository.hpp@{repository.hpp}!META\_REPO\_CORE\_BRANCH@{META\_REPO\_CORE\_BRANCH}}
+\index{META\_REPO\_CORE\_BRANCH@{META\_REPO\_CORE\_BRANCH}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_REPO\_CORE\_BRANCH}{META\_REPO\_CORE\_BRANCH}}
+{\footnotesize\ttfamily \label{repository_8hpp_a64f94510664daa8dc122e5d241c72e54} 
+\#define META\+\_\+\+REPO\+\_\+\+CORE\+\_\+\+BRANCH~"{}Repo\+Start\+Branch"{}}
+
+
+
+Metadata key for the core branch. 
+
+\Hypertarget{repository_8hpp_ab144801794ff2e53a468c8bb74b7abb3}\index{repository.hpp@{repository.hpp}!META\_REPO\_NAME@{META\_REPO\_NAME}}
+\index{META\_REPO\_NAME@{META\_REPO\_NAME}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_REPO\_NAME}{META\_REPO\_NAME}}
+{\footnotesize\ttfamily \label{repository_8hpp_ab144801794ff2e53a468c8bb74b7abb3} 
+\#define META\+\_\+\+REPO\+\_\+\+NAME~"{}Repo\+Name"{}}
+
+
+
+Metadata key for repository name. 
+
+\Hypertarget{repository_8hpp_a0f28d8192d52f4d345414ddf5a3ca272}\index{repository.hpp@{repository.hpp}!META\_STAGE\_FOLDER@{META\_STAGE\_FOLDER}}
+\index{META\_STAGE\_FOLDER@{META\_STAGE\_FOLDER}!repository.hpp@{repository.hpp}}
+\doxysubsubsection{\texorpdfstring{META\_STAGE\_FOLDER}{META\_STAGE\_FOLDER}}
+{\footnotesize\ttfamily \label{repository_8hpp_a0f28d8192d52f4d345414ddf5a3ca272} 
+\#define META\+\_\+\+STAGE\+\_\+\+FOLDER~"{}staged"{}}
+
+
+
+Folder for staged files. 
+

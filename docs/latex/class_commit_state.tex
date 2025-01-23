@@ -1,0 +1,102 @@
+\doxysection{Commit\+State Class Reference}
+\hypertarget{class_commit_state}{}\label{class_commit_state}\index{CommitState@{CommitState}}
+
+
+Represents the state of files in a commit.  
+
+
+
+
+{\ttfamily \#include $<$commit\+\_\+state.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_commit_state_a9b2efbefa1230cb749cadb7250a762ee}{add\+File}} (const std\+::string \&filename, const \mbox{\hyperlink{class_file}{File}} \&file)
+\begin{DoxyCompactList}\small\item\em Adds a file to the commit state. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_file_content}{File\+Content}} \mbox{\hyperlink{class_commit_state_a114cbeaec8d92491d05eded2ee6ec7e1}{get\+File\+Content}} (const std\+::string \&filename)
+\begin{DoxyCompactList}\small\item\em Retrieves the content of a file in the commit state. \end{DoxyCompactList}\item 
+const std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_file}{File}} $>$ \& \mbox{\hyperlink{class_commit_state_a2918e13cc8bcaa3f175a94f622217d14}{get\+Files}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves all files in the commit state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_file}{File}} $>$ \mbox{\hyperlink{class_commit_state_a6dbd1a702c0291289ea5cd4a656af6db}{files}}
+\begin{DoxyCompactList}\small\item\em Map of filenames to \doxylink{class_file}{File} objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents the state of files in a commit. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_commit_state_a9b2efbefa1230cb749cadb7250a762ee}\index{CommitState@{CommitState}!addFile@{addFile}}
+\index{addFile@{addFile}!CommitState@{CommitState}}
+\doxysubsubsection{\texorpdfstring{addFile()}{addFile()}}
+{\footnotesize\ttfamily \label{class_commit_state_a9b2efbefa1230cb749cadb7250a762ee} 
+void Commit\+State\+::add\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename}{, }\item[{const \mbox{\hyperlink{class_file}{File}} \&}]{content}{}\end{DoxyParamCaption})}
+
+
+
+Adds a file to the commit state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The name of the file. \\
+\hline
+{\em file} & The \doxylink{class_file}{File} object representing the file.\\
+\hline
+{\em filename} & The name of the file. \\
+\hline
+{\em content} & The \doxylink{class_file}{File} object representing the file. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_commit_state_a114cbeaec8d92491d05eded2ee6ec7e1}\index{CommitState@{CommitState}!getFileContent@{getFileContent}}
+\index{getFileContent@{getFileContent}!CommitState@{CommitState}}
+\doxysubsubsection{\texorpdfstring{getFileContent()}{getFileContent()}}
+{\footnotesize\ttfamily \label{class_commit_state_a114cbeaec8d92491d05eded2ee6ec7e1} 
+\mbox{\hyperlink{class_file_content}{File\+Content}} Commit\+State\+::get\+File\+Content (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves the content of a file in the commit state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The content of the file. 
+\end{DoxyReturn}
+\Hypertarget{class_commit_state_a2918e13cc8bcaa3f175a94f622217d14}\index{CommitState@{CommitState}!getFiles@{getFiles}}
+\index{getFiles@{getFiles}!CommitState@{CommitState}}
+\doxysubsubsection{\texorpdfstring{getFiles()}{getFiles()}}
+{\footnotesize\ttfamily \label{class_commit_state_a2918e13cc8bcaa3f175a94f622217d14} 
+const std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_file}{File}} $>$ \& Commit\+State\+::get\+Files (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves all files in the commit state. 
+
+\begin{DoxyReturn}{Returns}
+A map of filenames to \doxylink{class_file}{File} objects. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_commit_state_a6dbd1a702c0291289ea5cd4a656af6db}\index{CommitState@{CommitState}!files@{files}}
+\index{files@{files}!CommitState@{CommitState}}
+\doxysubsubsection{\texorpdfstring{files}{files}}
+{\footnotesize\ttfamily \label{class_commit_state_a6dbd1a702c0291289ea5cd4a656af6db} 
+std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{class_file}{File}}$>$ Commit\+State\+::files\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Map of filenames to \doxylink{class_file}{File} objects. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/vcs/\mbox{\hyperlink{commit__state_8hpp}{commit\+\_\+state.\+hpp}}\item 
+src/vcs/\mbox{\hyperlink{commit__state_8cpp}{commit\+\_\+state.\+cpp}}\end{DoxyCompactItemize}

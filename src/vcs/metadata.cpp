@@ -5,9 +5,14 @@
 #include <stdexcept>
 #include <algorithm>
 
+/**
+ * @brief Saves metadata to a file.
+ * @param filepath The path to the file.
+ * @param data The metadata to save.
+ */
 void MetadataHandler::save(
-    const std::string& filepath,
-    const std::map<std::string, std::string>& data
+        const std::string& filepath,
+        const std::map<std::string, std::string>& data
 ) {
     std::map<std::string, std::string> all_data;
 
@@ -27,8 +32,13 @@ void MetadataHandler::save(
     }
 }
 
+/**
+ * @brief Loads metadata from a file.
+ * @param filepath The path to the file.
+ * @return A map of key-value pairs representing the metadata.
+ */
 std::map<std::string, std::string> MetadataHandler::load(
-    const std::string& filepath
+        const std::string& filepath
 ) {
     std::map<std::string, std::string> data;
     std::ifstream file(filepath);

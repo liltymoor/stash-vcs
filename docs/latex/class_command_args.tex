@@ -1,0 +1,112 @@
+\doxysection{Command\+Args Class Reference}
+\hypertarget{class_command_args}{}\label{class_command_args}\index{CommandArgs@{CommandArgs}}
+
+
+Represents a collection of expected command arguments.  
+
+
+
+
+{\ttfamily \#include $<$command\+\_\+args.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_command_args_a35597219abd5f941cf3d6ffbe9f62a04}{Command\+Args}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor for the \doxylink{class_command_args}{Command\+Args} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_command_args_a8c3edeed19c040ece374034881dd177c}{Command\+Args}} (std\+::vector$<$ \mbox{\hyperlink{class_arg}{Arg}} \texorpdfstring{$\ast$}{*} $>$ args)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_command_args}{Command\+Args} class with arguments. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{struct_parsed_args}{Parsed\+Args}} \mbox{\hyperlink{class_command_args_a6ecc94751d2e4a0fe598fc991fef057a}{parse\+Args}} (const std\+::vector$<$ std\+::string $>$ args) const
+\begin{DoxyCompactList}\small\item\em Parses the provided arguments. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_command_args_a2e4f73fc1ebfd586525049a34421218b}{\texorpdfstring{$\sim$}{\string~}\+Command\+Args}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \doxylink{class_command_args}{Command\+Args} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_arg}{Arg}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_command_args_a93adf7778b3ec0fbcb4075580288300b}{expected\+\_\+args}}
+\begin{DoxyCompactList}\small\item\em List of expected arguments. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a collection of expected command arguments. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_command_args_a35597219abd5f941cf3d6ffbe9f62a04}\index{CommandArgs@{CommandArgs}!CommandArgs@{CommandArgs}}
+\index{CommandArgs@{CommandArgs}!CommandArgs@{CommandArgs}}
+\doxysubsubsection{\texorpdfstring{CommandArgs()}{CommandArgs()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_command_args_a35597219abd5f941cf3d6ffbe9f62a04} 
+Command\+Args\+::\+Command\+Args (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Default constructor for the \doxylink{class_command_args}{Command\+Args} class. 
+
+\Hypertarget{class_command_args_a8c3edeed19c040ece374034881dd177c}\index{CommandArgs@{CommandArgs}!CommandArgs@{CommandArgs}}
+\index{CommandArgs@{CommandArgs}!CommandArgs@{CommandArgs}}
+\doxysubsubsection{\texorpdfstring{CommandArgs()}{CommandArgs()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_command_args_a8c3edeed19c040ece374034881dd177c} 
+Command\+Args\+::\+Command\+Args (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_arg}{Arg}} \texorpdfstring{$\ast$}{*} $>$}]{args}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_command_args}{Command\+Args} class with arguments. 
+
+Constructor for the \doxylink{class_command_args}{Command\+Args} class with additional arguments.
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & List of expected arguments.\\
+\hline
+{\em args} & A list of additional arguments. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_command_args_a2e4f73fc1ebfd586525049a34421218b}\index{CommandArgs@{CommandArgs}!````~CommandArgs@{\texorpdfstring{$\sim$}{\string~}CommandArgs}}
+\index{````~CommandArgs@{\texorpdfstring{$\sim$}{\string~}CommandArgs}!CommandArgs@{CommandArgs}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}CommandArgs()}{\string~CommandArgs()}}
+{\footnotesize\ttfamily \label{class_command_args_a2e4f73fc1ebfd586525049a34421218b} 
+Command\+Args\+::\texorpdfstring{$\sim$}{\string~}\+Command\+Args (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Destructor for the \doxylink{class_command_args}{Command\+Args} class. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_command_args_a6ecc94751d2e4a0fe598fc991fef057a}\index{CommandArgs@{CommandArgs}!parseArgs@{parseArgs}}
+\index{parseArgs@{parseArgs}!CommandArgs@{CommandArgs}}
+\doxysubsubsection{\texorpdfstring{parseArgs()}{parseArgs()}}
+{\footnotesize\ttfamily \label{class_command_args_a6ecc94751d2e4a0fe598fc991fef057a} 
+\mbox{\hyperlink{struct_parsed_args}{Parsed\+Args}} Command\+Args\+::parse\+Args (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::string $>$}]{args}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Parses the provided arguments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & The arguments to parse. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \doxylink{struct_parsed_args}{Parsed\+Args} object containing the parsed arguments. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_command_args_a93adf7778b3ec0fbcb4075580288300b}\index{CommandArgs@{CommandArgs}!expected\_args@{expected\_args}}
+\index{expected\_args@{expected\_args}!CommandArgs@{CommandArgs}}
+\doxysubsubsection{\texorpdfstring{expected\_args}{expected\_args}}
+{\footnotesize\ttfamily \label{class_command_args_a93adf7778b3ec0fbcb4075580288300b} 
+std\+::vector$<$\mbox{\hyperlink{class_arg}{Arg}}\texorpdfstring{$\ast$}{*}$>$ Command\+Args\+::expected\+\_\+args\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+List of expected arguments. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/command/\mbox{\hyperlink{command__args_8hpp}{command\+\_\+args.\+hpp}}\item 
+src/command/\mbox{\hyperlink{command__args_8cpp}{command\+\_\+args.\+cpp}}\end{DoxyCompactItemize}
