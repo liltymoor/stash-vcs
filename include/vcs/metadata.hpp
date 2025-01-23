@@ -11,7 +11,7 @@
 // Константы формата
 #define META_START_MARKER    '['
 #define META_END_MARKER      ']'
-#define META_DATA_SEPARATOR  "\n"
+#define META_DATA_SEPARATOR  "="
 #define META_BLOCK_SEPARATOR "\n\n"
 
 class MetadataHandler {

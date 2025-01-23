@@ -105,6 +105,14 @@ void *CommitCommand::action(ParsedArgs args) const
         return nullptr;
     }
 
+    if (args.hasArg("message"))
+    {
+        // TODO verify value
+        //if (args.getArgValue("message").empty())
+        INFO("Commiting...")
+        Repo::getInstance().getRepoStack().commit(args.getArgValue("message"));
+    }
+
     return nullptr;
 }
 

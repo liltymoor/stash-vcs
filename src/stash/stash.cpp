@@ -35,7 +35,7 @@ Stash::Stash() {
 
         INFO("Stash created");
 
-        bool b_isSubCreated = create_directory(stash_path / BRANCHES_FOLDER_NAME);
+        bool b_isSubCreated = create_directory(stash_path / META_BRANCH_FOLDER);
         if (!b_isSubCreated)
         {
             ERROR("Can't create stash directory");
