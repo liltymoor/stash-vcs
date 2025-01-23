@@ -4,9 +4,6 @@
 The project is developed in C++ using CMake for building and Doxygen for documentation.
 
 ---
-You can find documentation [here](https://fr2eof.github.io/stash-vcs-docs/html/files.html)
-
----
 
 ## Key Features ⚙️
 
@@ -53,20 +50,13 @@ You can find documentation [here](https://fr2eof.github.io/stash-vcs-docs/html/f
 
 ## Documentation 📚
 
-Project documentation is available at:  
-[STASH VCS Documentation](https://liltymoor.github.io/stash-vcs/)
-
----
-
-## Screenshots 🖼️
-
-![Example Usage](https://via.placeholder.com/600x400)
+Project documentation is available [here](https://fr2eof.github.io/stash-vcs-docs/html/files.html)
 
 ---
 
 ## Demo Video 🎥
 
-[![Demo](https://via.placeholder.com/600x400)](https://youtu.be/your-video-link)
+[![Maybe I will place the video here in future](https://via.placeholder.com/600x400)](https://youtu.be/your-video-link)
 
 ---
 
@@ -76,7 +66,7 @@ Project documentation is available at:
 - **Improved Branching:** Support for advanced branching strategies.
 - **Conflict Resolution:** Tools for resolving merge conflicts.
 - **Remote Repositories:** Support for remote repository synchronization.
-- **User Interface:** A graphical interface for easier interaction.
+- **User Interface:** A graphical interface for easier interaction. (??)
 
 ---
 
