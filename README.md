@@ -9,9 +9,8 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 
 - **Branch Management:** Create, switch, and delete branches.
 - **Commit Changes:** Track and save changes in the repository. *(soon)*
-- **Branch Merging:** Combine changes from different branches. *(soon)*
-- **Revert Changes:** Roll back to previous versions of files. *(soon)*
-- **Logging:** View the history of changes. *(soon)*
+- **Revert Changes:** Roll back to previous versions of files.
+- **Logging:** View the history of changes.
 
 ---
 
@@ -45,14 +44,6 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 - Create a new commit:
   ```bash
   ./stash commit -m "..."
-  ```
-- Create a new branch:
-  ```bash
-  ./stash branch ...
-  ```
-- Merge branches:
-  ```bash
-  ./stash merge <branch_name> (merging current->specified)
   ```
 
 ---
