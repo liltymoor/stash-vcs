@@ -84,7 +84,7 @@ bool File::isRegexp(const std::string &str)
     return str.find_first_of(regex_chars) != std::string::npos;
 }
 
-void File::copy_files(const std::string &source_pattern, const std::string &target_dir, bool use_regex)
+uint32_t File::copy_files(const std::string &source_pattern, const std::string &target_dir, bool use_regex)
 {
     try {
         fs::create_directories(target_dir);
@@ -114,7 +114,7 @@ void File::copy_files(const std::string &source_pattern, const std::string &targ
             }
         }
 
-
+        uint32_t file_counter = 0;
         for (const auto& file : files_to_move) {
             fs::path target_path = fs::path(target_dir) / file.filename();
 
@@ -122,11 +122,14 @@ void File::copy_files(const std::string &source_pattern, const std::string &targ
                 fs::remove(target_path);
             }
             copy(file, target_path);
+            file_counter++;
         }
+        return file_counter;
 
     } catch (const std::exception& ex) {
         ERROR("Error while transfering files: ");
         ERROR(ex.what());
+        return 0;
     }
 }
 
@@ -154,6 +157,19 @@ void File::clean_dir(const std::string &dir_path)
             );
         }
     }
+}
+
+std::string File::file_time_to_string(const std::filesystem::file_time_type &ft)
+{
+    auto sctp = std::chrono::time_point_cast<std::chrono::system_clock::duration>(
+        ft - fs::file_time_type::clock::now() + std::chrono::system_clock::now()
+    );
+
+    std::time_t tt = std::chrono::system_clock::to_time_t(sctp);
+
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&tt), "%Y-%m-%d %H:%M:%S");
+    return ss.str();
 }
 
 std::unordered_map<std::string, File> File::getFilesFromDir(const std::filesystem::path &dir)

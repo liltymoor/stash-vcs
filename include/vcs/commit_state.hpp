@@ -48,8 +48,9 @@ public:
     static void write(const std::string &filepath, const std::string &content);
 
     static bool isRegexp(const std::string &str);
-    static void copy_files(const std::string& source_pattern, const std::string& target_dir, bool use_regex = true);
+    static uint32_t copy_files(const std::string& source_pattern, const std::string& target_dir, bool use_regex = true);
     static void clean_dir(const std::string &str);
+    static std::string file_time_to_string(const std::filesystem::file_time_type& ft);
     static std::unordered_map<std::string, File> getFilesFromDir(const std::filesystem::path& dir);
 };
 

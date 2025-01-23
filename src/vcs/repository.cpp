@@ -13,6 +13,7 @@ Commit::Commit(std::map<std::string, std::string>& metaData, const std::unordere
 {
     message = metaData[META_COMMIT_MSG];
     hash = metaData[META_COMMIT_HASH];
+    branch = metaData[META_COMMIT_BRANCH];
 
     prev = nullptr;
 
@@ -33,9 +34,9 @@ PersistenceStack::PersistenceStack(std::string currentBranch)
 {
     if (exists(Stash::getStashPath() / META_BRANCH_FOLDER) && !currentBranch.empty())
     {
-        this->currentBranch = currentBranch;
         try
         {
+            this->currentBranch = currentBranch;
             for (const auto &entry : std::filesystem::directory_iterator(Stash::getStashPath() / META_BRANCH_FOLDER))
             {
                 if (entry.is_directory())
@@ -90,6 +91,7 @@ void PersistenceStack::stashMeta() const
         metadataFirstCommit[META_COMMIT_HASH] = head->hash;
         metadataFirstCommit[META_COMMIT_PREV] = head->prev->hash;
         metadataFirstCommit[META_COMMIT_MSG] = head->message;
+        metadataFirstCommit[META_COMMIT_BRANCH] = head->branch;
 
         MetadataHandler::save((Repo::getBranchesPath() / currentBranch / head->hash / META_FILENAME).c_str(),
                               metadataFirstCommit);
@@ -101,6 +103,7 @@ void PersistenceStack::stashMeta() const
             metadataCommit[META_COMMIT_HASH] = prev.hash;
             metadataCommit[META_COMMIT_PREV] = prev.prev->hash;
             metadataCommit[META_COMMIT_MSG] = prev.message;
+            metadataCommit[META_COMMIT_BRANCH] = prev.branch;
 
             MetadataHandler::save((Repo::getBranchesPath() / currentBranch / prev.hash / META_FILENAME).c_str(),
                                   metadataCommit);
@@ -111,6 +114,7 @@ void PersistenceStack::stashMeta() const
         metadataLastCommit[META_COMMIT_HASH] = prev.hash;
         metadataLastCommit[META_COMMIT_PREV] = "NULL";
         metadataLastCommit[META_COMMIT_MSG] = prev.message;
+        metadataLastCommit[META_COMMIT_BRANCH] = prev.branch;
 
         MetadataHandler::save((Repo::getBranchesPath() / currentBranch / prev.hash / META_FILENAME).c_str(),
                               metadataLastCommit);
@@ -121,12 +125,63 @@ void PersistenceStack::stashMeta() const
         metadataLastCommit[META_COMMIT_HASH] = head->hash;
         metadataLastCommit[META_COMMIT_PREV] = "NULL";
         metadataLastCommit[META_COMMIT_MSG] = head->message;
+        metadataLastCommit[META_COMMIT_BRANCH] = head->branch;
 
         MetadataHandler::save((Repo::getBranchesPath() / currentBranch / head->hash / META_FILENAME).c_str(),
                               metadataLastCommit);
     }
 
     MetadataHandler::save((Repo::getBranchesPath() / currentBranch / META_FILENAME).c_str(), metadataBranch);
+}
+
+void PersistenceStack::move_branch_files(const std::string &branch_name)
+{
+    if (branches.find(branch_name) == branches.end())
+    {
+        throw BranchNotFoundException(branch_name);
+    }
+
+    if (branches[branch_name] == nullptr)
+    {
+        throw std::runtime_error("Tried to transfer files from branch to core dir, but branch has no commits");
+    }
+
+    std::shared_ptr<Commit> branchHead = branches[branch_name];
+    std::string originBranch = currentBranch;
+
+    // Here we want to delete files that are commited anywhere in Stash
+    // TODO also we want to delete files that are staged
+    for (const auto &entry : std::filesystem::directory_iterator("."))
+    {
+        if (!entry.is_regular_file()) continue;
+
+        // Contains in current branch HEAD
+        auto currentBranchFiles = branches[currentBranch]->state->getFiles();
+        if (currentBranchFiles.find(entry.path().filename()) != currentBranchFiles.end())
+        {
+            std::filesystem::remove(entry.path());
+            continue;
+        }
+
+        // Contains in next branch HEAD
+        auto nextBranchFiles = branches[branch_name]->state->getFiles();
+        if (nextBranchFiles.find(entry.path().filename()) != nextBranchFiles.end())
+        {
+            std::filesystem::remove(entry.path());
+            continue;
+        }
+    }
+
+    if (branchHead->branch != currentBranch) // Commit takes its origin from another branch
+    {
+        originBranch = branchHead->branch;
+    }
+
+    auto path = std::filesystem::current_path();
+    std::filesystem::current_path(Repo::getBranchesPath() / originBranch / branches[branch_name]->hash / META_COMMIT_FILES_FOLDER);
+    File::copy_files(".*", path.c_str(), true);
+    std::filesystem::current_path(path);
+
 }
 
 std::map<std::string, std::string> RepoSettings::map_settings() const
@@ -147,7 +202,7 @@ void PersistenceStack::commit(const std::string &message)
         throw std::runtime_error("No changes staged");
     }
 
-    const auto newCommit = std::make_shared<Commit>(message, generate_hash(message), head);
+    const auto newCommit = std::make_shared<Commit>(message, generate_hash(message), currentBranch, head);
     create_directories(Repo::getBranchesPath() / currentBranch / newCommit->hash / META_COMMIT_FILES_FOLDER);
 
     // it could be that head is empty ( fresh branch with no commits )
@@ -175,7 +230,9 @@ void PersistenceStack::commit(const std::string &message)
     head = newCommit;
     branches[currentBranch] = head;
 
-    stashMeta();
+    INFO("Commited " << stagedFiles.size() << " files");
+
+    INFO("New commit HEAD is " << ((head->prev == nullptr) ? "NULL" : head->prev->hash) << "--->" << head->hash);
 }
 
 void PersistenceStack::stage(const std::string &files)
@@ -191,11 +248,20 @@ void PersistenceStack::stage(const std::string &files)
     INFO("Already staged :");
     for (const auto& entry : std::filesystem::directory_iterator(stage_dir)) {
         if (is_regular_file(entry)) {
-            INFO(entry.path().filename() << " : " << entry.last_write_time())
+            INFO(entry.path().filename() << " : " << File::file_time_to_string(entry.last_write_time()));
         }
     }
+    INFO("=============");
+    uint32_t files_staged = File::copy_files(files, stage_dir, File::isRegexp(files));
 
-    File::copy_files(files, stage_dir, File::isRegexp(files));
+    if (files_staged == 0)
+    {
+        INFO("No files to stage where found");
+    }
+    else
+    {
+        INFO("Files staged :" << files_staged);
+    }
 }
 
 void PersistenceStack::create_branch(const std::string &branch_name)
@@ -215,7 +281,7 @@ void PersistenceStack::create_branch(const std::string &branch_name)
     create_directories(Repo::getBranchesPath() / branch_name / "staged");
     currentBranch = branch_name;
 
-    stashMeta();
+    INFO("Branch " << branch_name << "created");
 }
 
 void PersistenceStack::revert_previous()
@@ -249,7 +315,6 @@ void PersistenceStack::init_branch(const std::string &branch_name)
 
             if (entry.is_directory() && entry.path().filename() != "staged")
             {
-                //INFO("Commit: " << entry.path().filename());
                 init_commit(entry.path());
             }
         }
@@ -275,7 +340,7 @@ void PersistenceStack::init_commit(const std::filesystem::path &commit_hash)
         commitPtr->prev = commits[metaCommit[META_COMMIT_PREV]];
     else
     {
-        init_commit(Repo::getBranchesPath() / currentBranch / metaCommit[META_COMMIT_PREV]);
+        init_commit(Repo::getBranchesPath() / metaCommit[META_COMMIT_BRANCH] / metaCommit[META_COMMIT_PREV]);
         commitPtr->prev = commits[metaCommit[META_COMMIT_PREV]];
     }
 }
@@ -288,9 +353,23 @@ void PersistenceStack::init_commit(const std::filesystem::path &commit_hash)
 
 void PersistenceStack::checkout_branch(const std::string &branch_name)
 {
-    migrateBranch(branch_name);
+    if (branch_name.empty())
+    {
+        throw std::invalid_argument("Name can not be empty");
+    }
 
-    stashMeta();
+    if (branches.find(branch_name) == branches.end())
+    {
+        create_branch(branch_name);
+    }
+    else
+    {
+        if (currentBranch == branch_name)
+            throw std::runtime_error("You can't checkout your current branch (" + branch_name + ")");
+        INFO("Checkout branch " << currentBranch << "--->" << branch_name);
+        move_branch_files(branch_name);
+        migrateBranch(branch_name);
+    }
 }
 
 void PersistenceStack::merge(const std::string &branch_name)
@@ -370,11 +449,14 @@ void Repo::stashMeta() const
     metadata[META_CURRENT_BRANCH] = branchStack.getCurrentBranch();
 
     MetadataHandler::save((Stash::getStashPath() / META_FILENAME).c_str(), metadata);
+
+    branchStack.stashMeta();
 }
 
 void Repo::stashMeta(const RepoSettings &settings)
 {
     MetadataHandler::save((Stash::getStashPath() / META_FILENAME).c_str(), settings.map_settings());
+    branchStack.stashMeta();
 }
 
 PersistenceStack &Repo::getRepoStack()

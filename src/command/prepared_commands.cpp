@@ -66,9 +66,14 @@ void *AddCommand::action(ParsedArgs args) const
     if (args.hasArg("files"))
     {
         std::string value = args.getArgValue("files");
+        if (value == "*")
+        {
+            value = "^[^\\.].*";
+        }
         // TODO verify value
 
         Repo::getInstance().getRepoStack().stage(value);
+        Repo::getInstance().stashMeta();
     }
 
     return nullptr;
@@ -111,6 +116,7 @@ void *CommitCommand::action(ParsedArgs args) const
         //if (args.getArgValue("message").empty())
         INFO("Commiting...")
         Repo::getInstance().getRepoStack().commit(args.getArgValue("message"));
+        Repo::getInstance().stashMeta();
     }
 
     return nullptr;
@@ -145,6 +151,14 @@ void *CheckoutCommand::action(ParsedArgs args) const
     {
         INFO(get_desc());
         return nullptr;
+    }
+
+    if (args.hasArg("branch"))
+    {
+        std::string value = args.getArgValue("branch");
+
+        Repo::getInstance().getRepoStack().checkout_branch(value);
+        Repo::getInstance().stashMeta();
     }
 
     return nullptr;

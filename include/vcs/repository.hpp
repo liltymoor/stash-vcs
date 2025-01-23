@@ -25,16 +25,20 @@
 #define META_COMMIT_MSG "CommitMessage"
 #define META_COMMIT_PREV "PrevCommit"
 #define META_COMMIT_HASH "CommitHash"
+#define META_COMMIT_BRANCH "CommitBranch"
 
 struct Commit {
     std::string message;
     std::string hash;
+    std::string branch;
+
     std::shared_ptr<Commit> prev;
     std::shared_ptr<CommitState> state;
 
-    Commit(std::string msg, std::string h, std::shared_ptr<Commit> p = nullptr)
+    Commit(std::string msg, std::string h, std::string b, std::shared_ptr<Commit> p = nullptr)
             : message(std::move(msg)),
               hash(std::move(h)),
+              branch(b),
               prev(std::move(p)),
               state(std::make_shared<CommitState>())
     {
@@ -52,6 +56,7 @@ private:
     std::unordered_map<std::string, std::shared_ptr<Commit>> commits; // <hash, commit>
 
     std::string generate_hash(const std::string& message);
+    void move_branch_files(const std::string &branch_name);
 
 public:
     PersistenceStack();
@@ -72,8 +77,8 @@ public:
     void merge(const std::string& branch_name);
 
     bool isValid() const;
-    void log() const;
     void stashMeta() const;
+    void log() const;
 };
 
 
