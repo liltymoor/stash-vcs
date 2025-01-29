@@ -41,9 +41,21 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 ## Usage 🖥️
 
 ### Example Commands
+- Stage files (You also may use regex instead -f "<regex>"):
+  ```bash
+  ./stash add -f "..."
+  ```
 - Create a new commit:
   ```bash
   ./stash commit -m "..."
+  ```
+- Checkout (create or migrate) to new branch:
+  ```bash
+  ./stash checkout -b branch_name
+  ```
+- Revert to commit (specify hash with -h):
+  ```bash
+  ./stash revert_to -h 12312... 
   ```
 
 ---
@@ -56,7 +68,7 @@ Project documentation is available [here](https://fr2eof.github.io/stash-vcs-doc
 
 ## Demo Video 🎥
 
-[![Maybe I will place the video here in future](https://via.placeholder.com/600x400)](https://youtu.be/your-video-link)
+[![Maybe I will place the video here in future](https://via.placeholder.com/600x400)](https://github.com/liltymoor/stash-vcs/)
 
 ---
 
