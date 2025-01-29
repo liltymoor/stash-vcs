@@ -8,7 +8,7 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 ## Key Features ⚙️
 
 - **Branch Management:** Create, switch, and delete branches.
-- **Commit Changes:** Track and save changes in the repository. *(soon)*
+- **Commit Changes:** Track and save changes in the repository.
 - **Revert Changes:** Roll back to previous versions of files.
 - **Logging:** View the history of changes.
 
