@@ -110,13 +110,13 @@ public:
      * @brief Creates a new commit with a message.
      * @param message The commit message.
      */
-    void commit(const std::string& message);
+    void commit(const std::string& message, const bool& verbose = false);
 
     /**
      * @brief Creates a new commit from an existing Commit object.
      * @param commit The Commit object.
      */
-    void commit(const Commit &commit);
+    void commit(const Commit &commit, const bool& verbose = false);
 
     /**
      * @brief Stages files for the next commit.

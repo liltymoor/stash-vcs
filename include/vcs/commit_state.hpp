@@ -11,6 +11,8 @@
 #include <stdexcept>
 #include <filesystem>
 
+#include "state_diff.hpp"
+
 /**
  * @class FileContent
  * @brief Represents the content of a file, including its lines and full content.
@@ -209,7 +211,7 @@ public:
      * @param commit1 The first commit.
      * @param commit2 The second commit.
      */
-    static void diff(const Commit &commit1, const Commit &commit2);
+    static DiffResult diff(const std::shared_ptr<Commit> commit1, const std::shared_ptr<Commit> commit2);
 };
 
 #endif // ITMO_VCS_COMMITSTATE_H

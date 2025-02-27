@@ -359,39 +359,60 @@ const std::unordered_map<std::string, File> &CommitState::getFiles() {
  * @param commit1 The first commit.
  * @param commit2 The second commit.
  */
-void CommitUtils::diff(const Commit &commit1, const Commit &commit2) {
-    auto files1 = commit1.state->getFiles();
-    auto files2 = commit2.state->getFiles();
+DiffResult CommitUtils::diff(const std::shared_ptr<Commit> commit1, const std::shared_ptr<Commit> commit2) {
+    DiffResult result;
+    auto files1 = commit1->state->getFiles();
+    auto files2 = commit2->state->getFiles();
 
-    for (auto &[filename, file1]: files1) {
-        auto it = files2.find(filename);
-        if (it == files2.end()) {
-            INFO("File deleted: " << filename);
+    // checking files from commit1
+    for (auto& [filename, file1] : files1) {
+        FileDiff fileDiff;
+        const auto& content1 = file1.get_content();
+        const auto& lines1 = content1.getAllLines();
+
+        if (files2.count(filename)) {
+            // file exists in first and second commit
+            const auto& content2 = files2.at(filename).get_content();
+            const auto& lines2 = content2.getAllLines();
+
+            // checking line changes
+            for (const auto& [num, line1] : lines1) {
+                if (!lines2.count(num)) {
+                    fileDiff.changes.push_back({LineDiff::REMOVED, line1, num});
+                } else if (lines2.at(num) != line1) {
+                    fileDiff.changes.push_back({LineDiff::MODIFIED, line1, num});
+                    fileDiff.hasConflicts = true;
+                }
+            }
+
+            // checking new lines
+            for (const auto& [num, line2] : lines2) {
+                if (!lines1.count(num)) {
+                    fileDiff.changes.push_back({LineDiff::ADDED, line2, num});
+                }
+            }
         } else {
-            auto &file2 = it->second;
-            const auto &lines1 = file1.get_content().getAllLines();
-            const auto &lines2 = file2.get_content().getAllLines();
-
-            for (const auto &[lineNumber, line1]: lines1) {
-                auto lineIt = lines2.find(lineNumber);
-                if (lineIt == lines2.end()) {
-                    INFO("Line " << lineNumber << " deleted in file: " << filename);
-                } else if (lineIt->second != line1) {
-                    INFO("Line " << lineNumber << " modified in file: " << filename);
-                }
+            // in case the file was deleted in second commit
+            for (const auto& [num, line] : lines1) {
+                fileDiff.changes.push_back({LineDiff::REMOVED, line, num});
             }
+            fileDiff.hasConflicts = true;
+        }
+        
+        result[filename] = fileDiff;
+    }
 
-            for (const auto &[lineNumber, line2]: lines2) {
-                if (lines1.find(lineNumber) == lines1.end()) {
-                    INFO("Line " << lineNumber << " added in file: " << filename);
-                }
+    // new commit files checked
+    for (auto& [filename, file2] : files2) {
+        if (!files1.count(filename)) {
+            FileDiff fileDiff;
+            const auto& content2 = file2.get_content();
+            for (const auto& [num, line] : content2.getAllLines()) {
+                fileDiff.changes.push_back({LineDiff::ADDED, line, num});
             }
+            result[filename] = fileDiff;
         }
     }
 
-    for (const auto &[filename, content2]: files2) {
-        if (files1.find(filename) == files1.end()) {
-            INFO("File added: " << filename);
-        }
-    }
+    return result;
 }

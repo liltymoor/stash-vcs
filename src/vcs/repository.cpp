@@ -195,7 +195,7 @@ std::map<std::string, std::string> RepoSettings::map_settings() const {
  * @brief Creates a new commit with a message.
  * @param message The commit message.
  */
-void PersistenceStack::commit(const std::string &message) {
+void PersistenceStack::commit(const std::string &message, const bool& verbose) {
     if (message.empty())
         throw std::invalid_argument("Message cannot be empty");
 
@@ -224,10 +224,25 @@ void PersistenceStack::commit(const std::string &message) {
                          false);
     }
 
-    File::clean_dir(Repo::getBranchesPath() / getCurrentBranch() / META_STAGE_FOLDER);
-
     head = newCommit;
     branches[currentBranch] = head;
+
+    if (verbose) {
+        INFO("Commit details")
+        auto changes = CommitUtils::diff(newCommit->prev, newCommit);
+        for (auto it = changes.begin(); it != changes.end(); it++) {
+            auto change = *it;
+
+            auto filename = change.first;
+            auto filediff = change.second;
+
+            INFO("");
+            INFO("Filename: " << filename);
+            filediff.print();
+        }
+
+
+        File::clean_dir(Repo::getBranchesPath() / getCurrentBranch() / META_STAGE_FOLDER);    }
 
     INFO("Commited " << stagedFiles.size() << " files");
 
@@ -238,7 +253,7 @@ void PersistenceStack::commit(const std::string &message) {
  * @brief Creates a new commit from an existing Commit object.
  * @param commit The Commit object.
  */
-void PersistenceStack::commit(const Commit &commit) {
+void PersistenceStack::commit(const Commit &commit, const bool& verbose) {
     std::string msg = "Reverted to commit " + commit.hash;
 
     const auto newCommit = std::make_shared<Commit>(msg, generate_hash(msg), currentBranch, head);
@@ -257,6 +272,21 @@ void PersistenceStack::commit(const Commit &commit) {
 
     head = newCommit;
     branches[currentBranch] = head;
+
+    if (verbose) {
+        INFO("Commit details")
+        auto changes = CommitUtils::diff(newCommit, newCommit->prev);
+        for (auto it = changes.begin(); it != changes.end(); it++) {
+            auto change = *it;
+
+            auto filename = change.first;
+            auto filediff = change.second;
+
+            INFO("");
+            INFO("Filename: " << filename);
+            filediff.print();
+        }
+    }
 
     INFO("Commited " << statedFiles.size() << " files");
 

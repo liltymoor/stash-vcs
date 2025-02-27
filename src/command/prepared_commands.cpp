@@ -101,7 +101,8 @@ CommitCommand::CommitCommand()
  * @return A pointer to the result of the action.
  */
 void* CommitCommand::action(ParsedArgs args) const {
-    if (args.hasArg("verbose"))
+    const bool verbosedCommand = args.hasArg("verbose");
+    if (verbosedCommand)
         INFO("Commit command");
 
     if (args.hasArg("description")) {
@@ -112,7 +113,9 @@ void* CommitCommand::action(ParsedArgs args) const {
     if (args.hasArg("message")) {
         // TODO: Verify value
         INFO("Commiting...")
-        Repo::getInstance().getRepoStack().commit(args.getArgValue("message"));
+        auto msg = args.getArgValue("message");
+        
+        Repo::getInstance().getRepoStack().commit(msg, verbosedCommand);
         Repo::getInstance().stashMeta();
     }
 
