@@ -2,8 +2,10 @@
 #include "commit_state.hpp"
 #include "metadata.hpp"
 #include "../exception/pers_stack_exc.h"
+#include <filesystem>
 #include <fstream>
 #include <string>
+#include <unordered_map>
 #include <variant>
 #include "../logger/logger.hpp"
 #include "state_diff.hpp"
@@ -221,6 +223,18 @@ void PersistenceStack::commit(const std::string &message, const bool& verbose) {
     auto statedFiles = head == nullptr ? std::unordered_map<std::string, File>() : head->state->getFiles();
     auto stagedFiles = File::getFilesFromDir(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER);
 
+    for (auto it = stagedFiles.begin(); it != stagedFiles.end();) { 
+        std::filesystem::path filepath(it->first);
+        if (filepath.extension() == ".deleted") {
+            std::string statedFilename = filepath.stem().string();
+            statedFiles.erase(statedFilename);
+            it = stagedFiles.erase(it);
+        }
+        else {
+            it++;
+        }
+    }
+
     for (const auto &[filename, file] : statedFiles) {
         newCommit->state->addFile(filename, file);
         File::copy_files(filename,
@@ -253,7 +267,9 @@ void PersistenceStack::commit(const std::string &message, const bool& verbose) {
         }
 
 
-        File::clean_dir(Repo::getBranchesPath() / getCurrentBranch() / META_STAGE_FOLDER);    }
+    }
+
+    File::clean_dir(Repo::getBranchesPath() / getCurrentBranch() / META_STAGE_FOLDER);
 
     INFO("Commited " << stagedFiles.size() << " files");
 
@@ -579,9 +595,12 @@ void PersistenceStack::merge(const std::string &branch_name) {
 
 void PersistenceStack::status() {
     INFO("Current branch: " << currentBranch);
-    INFO("HEAD is: " << head->hash);
+
+    if (head) {
+        INFO("HEAD is: " << head->hash);
+    }
     
-    if (head->prev != nullptr) {
+    if (head && head->prev) {
         INFO("Previous commit is: " << head->prev->hash);
     }
 

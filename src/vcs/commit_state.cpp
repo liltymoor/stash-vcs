@@ -380,8 +380,8 @@ const std::unordered_map<std::string, File> &CommitState::getFiles() {
  */
 DiffResult CommitUtils::diff(const std::shared_ptr<Commit> commit1, const std::shared_ptr<Commit> commit2) {
     DiffResult result;
-    auto files1 = commit1->state->getFiles();
-    auto files2 = commit2->state->getFiles();
+    auto files1 = commit1 ? commit1->state->getFiles() : std::unordered_map<std::string, File>{};
+    auto files2 = commit2 ? commit2->state->getFiles() : std::unordered_map<std::string, File>{};
 
     // checking files from commit1
     for (auto& [filename, file1] : files1) {
