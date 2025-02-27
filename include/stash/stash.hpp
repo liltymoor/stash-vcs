@@ -12,6 +12,7 @@
  */
 class Stash {
 private:
+    inline const static std::filesystem::path user_dir_path = ".";
     inline const static std::filesystem::path stash_path = "./.stash"; ///< Path to the stash directory.
     inline static bool isExists = false; ///< Flag indicating whether the stash exists.
 
@@ -38,6 +39,7 @@ public:
      * @return The path to the stash directory.
      */
     static const std::filesystem::path& getStashPath();
+    static const std::filesystem::path& getUserPath();
 };
 
 #endif // STASH_HPP

@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+#include "logger.hpp"
+
 #ifndef _COLORS_
 #define _COLORS_
 
@@ -41,6 +43,7 @@ struct LineDiff {
 struct FileDiff {
     std::vector<LineDiff> changes;
     bool hasConflicts = false;
+    bool wasDeleted = false;
 
     void print(const int limit = 0) const;
 };

@@ -397,6 +397,7 @@ DiffResult CommitUtils::diff(const std::shared_ptr<Commit> commit1, const std::s
                 fileDiff.changes.push_back({LineDiff::REMOVED, line, num});
             }
             fileDiff.hasConflicts = true;
+            fileDiff.wasDeleted = true;
         }
         
         result[filename] = fileDiff;

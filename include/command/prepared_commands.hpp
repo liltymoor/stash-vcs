@@ -28,5 +28,6 @@ DEFINE_CMND(Commit);
 DEFINE_CMND(Checkout);
 DEFINE_CMND(Merge);
 DEFINE_CMND(RevertTo);
+DEFINE_CMND(Status);
 
 #endif // PREPARED_COMMANDS_HPP

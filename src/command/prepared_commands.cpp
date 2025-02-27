@@ -1,4 +1,5 @@
 #include "prepared_commands.hpp"
+#include "command_args.hpp"
 #include "stash.hpp"
 #include "repository.hpp"
 #include "../logger/logger.hpp"
@@ -273,4 +274,40 @@ RevertToArgs::RevertToArgs()
                                     "Argument to specify hash, you want to revert to (current->specified)",
                                     true,
                                     true));
+}
+
+/**
+ * @brief Constructor for the RevertToCommand class.
+ */
+ StatusCommand::StatusCommand()
+ : Command("status", "Shows current branch status. (e.g. modified files)") {
+    expected_args = new StatusArgs();
+}
+
+/**
+* @brief The action performed by the Status.
+* @param args The parsed arguments.
+* @return A pointer to the result of the action.
+*/
+void* StatusCommand::action(ParsedArgs args) const {
+    if (args.hasArg("verbose"))
+        INFO("Status command");
+
+    if (args.hasArg("description")) {
+        INFO(get_desc());
+        return nullptr;
+    }
+
+    Repo::getInstance().getRepoStack().status();
+
+    return nullptr;
+}
+
+/**
+* @brief Constructor for the RevertToArgs class.
+*/
+StatusArgs::StatusArgs()
+ : CommandArgs() // Init default args like verbose or description
+{
+
 }

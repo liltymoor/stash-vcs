@@ -26,6 +26,8 @@
 #define META_COMMIT_HASH "CommitHash" ///< Metadata key for commit hash.
 #define META_COMMIT_BRANCH "CommitBranch" ///< Metadata key for commit branch.
 
+#define META_STAGE_FILES_TO_UNTRACK "Files2Untrack" ///< Metadata key for files being marked as untracked
+
 /**
  * @struct Commit
  * @brief Represents a commit in the version control system.
@@ -58,6 +60,8 @@ struct Commit {
      * @param commit_files The files associated with the commit.
      */
     Commit(std::map<std::string, std::string>& metaData, const std::unordered_map<std::string, File>& commit_files);
+
+    void set_commit_files(const std::unordered_map<std::string, File>& commit_files);
 };
 
 /**
@@ -164,6 +168,11 @@ public:
      * @param branch_name The name of the branch to merge.
      */
     void merge(const std::string& branch_name);
+
+        /**
+     * @brief Shows current branch status.
+     */
+     void status();
 
     /**
      * @brief Lists all branches.

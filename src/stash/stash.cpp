@@ -1,5 +1,6 @@
 #include "./stash.hpp"
 #include "metadata.hpp"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include "../vcs/repository.hpp"
@@ -92,4 +93,8 @@ bool Stash::stashExists() {
  */
 const std::filesystem::path& Stash::getStashPath() {
     return stash_path;
+}
+
+const std::filesystem::path& Stash::getUserPath() {
+    return user_dir_path;
 }

@@ -13,16 +13,20 @@ std::string LineDiff::toString() const {
 
 void FileDiff::print(const int limit) const {
     if (changes.size() == 0) {
-        std::cout << "No changes" << std::endl;
+        INFO("No changes");
         return;
     }
 
-    std::cout << "Changes:" << std::endl;
+    if (wasDeleted) {
+        INFO(FRED(std::string("File deleted")));
+        return;
+    }
+
     for (const auto& change : changes) {
         if (limit && change.lineNumber > limit) {
-            std::cout << "... (truncated)" << std::endl;
+            INFO("... (truncated)");
             break;
         }
-        std::cout << change.lineNumber << ": " << change.toString() << std::endl;
+        INFO(change.lineNumber << ": " << change.toString());
     }
 }

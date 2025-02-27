@@ -1,8 +1,11 @@
 #include "repository.hpp"
+#include "commit_state.hpp"
 #include "metadata.hpp"
 #include "../exception/pers_stack_exc.h"
+#include <string>
 #include <variant>
 #include "../logger/logger.hpp"
+#include "state_diff.hpp"
 
 /**
  * @brief Constructor for the Commit class.
@@ -21,6 +24,13 @@ Commit::Commit(std::map<std::string, std::string>& metaData, const std::unordere
 
     for (const auto &[filename, file] : commit_files)
         state->addFile(filename, file);
+}
+
+void Commit::set_commit_files(const std::unordered_map<std::string, File>& commit_files) {
+    for (const auto &[filename, file] : commit_files){
+        if (filename == "stash") continue;
+        state->addFile(filename, file);
+    }
 }
 
 /**
@@ -302,6 +312,12 @@ void PersistenceStack::stage(const std::string &files) {
         throw std::invalid_argument("Files cannot be empty");
 
     auto stage_dir = Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER;
+    auto user_dir_path = Stash::getUserPath(); 
+
+    auto currentState = std::make_shared<Commit>(std::string(), generate_hash(std::string()), currentBranch, head);
+    currentState->set_commit_files(File::getFilesFromDir(user_dir_path));
+
+    DiffResult changes = CommitUtils::diff(head, currentState);
 
     INFO("Already staged:");
     for (const auto& entry : std::filesystem::directory_iterator(stage_dir)) {
@@ -536,6 +552,31 @@ void PersistenceStack::merge(const std::string &branch_name) {
     // {
     //     throw std::runtime_error("Branches have no common commit and cannot be merged");
     // }
+}
+
+void PersistenceStack::status() {
+    INFO("Current branch: " << currentBranch);
+    INFO("HEAD is: " << head->hash);
+    
+    if (head->prev != nullptr) {
+        INFO("Previous commit is: " << head->prev->hash);
+    }
+
+    auto newCommit = std::make_shared<Commit>(std::string(), generate_hash(std::string()), currentBranch, head);
+    newCommit->set_commit_files(File::getFilesFromDir(Stash::getUserPath()));
+
+    auto changes = CommitUtils::diff(head, newCommit);
+
+    INFO("Changes:")
+    for (auto change : changes) {
+        auto filename = change.first;
+        auto filediff = change.second;
+
+        INFO("");
+        INFO("Filename: " << filename);
+        
+        filediff.print(20);
+    }
 }
 
 /**
