@@ -2,6 +2,7 @@
 #include "commit_state.hpp"
 #include "metadata.hpp"
 #include "../exception/pers_stack_exc.h"
+#include <fstream>
 #include <string>
 #include <variant>
 #include "../logger/logger.hpp"
@@ -307,32 +308,54 @@ void PersistenceStack::commit(const Commit &commit, const bool& verbose) {
  * @brief Stages files for the next commit.
  * @param files The files to stage.
  */
-void PersistenceStack::stage(const std::string &files) {
+void PersistenceStack::stage(const std::string &files, const bool& verbose) {
     if (files.empty())
         throw std::invalid_argument("Files cannot be empty");
 
+    const bool isRegexp = File::isRegexp(files);
+    
     auto stage_dir = Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER;
-    auto user_dir_path = Stash::getUserPath(); 
+    auto user_dir = Stash::getUserPath(); 
 
     auto currentState = std::make_shared<Commit>(std::string(), generate_hash(std::string()), currentBranch, head);
-    currentState->set_commit_files(File::getFilesFromDir(user_dir_path));
+    currentState->set_commit_files(File::getFilesFromDir(user_dir));
 
     DiffResult changes = CommitUtils::diff(head, currentState);
 
-    INFO("Already staged:");
-    for (const auto& entry : std::filesystem::directory_iterator(stage_dir)) {
-        if (is_regular_file(entry)) {
-            INFO(entry.path().filename() << " : " << File::file_time_to_string(entry.last_write_time()));
+    uint32_t staged_count = 0;
+
+    for (const auto [filename, file_changes] : changes) {
+        if (File::matchesPattern(filename, files, isRegexp)) {
+            staged_count += stageFile(filename, file_changes);
         }
     }
-    INFO("=============");
-    uint32_t files_staged = File::copy_files(files, stage_dir, File::isRegexp(files));
 
-    if (files_staged == 0) {
+    if (verbose) {
+        INFO("Staged:");
+        for (const auto& entry : std::filesystem::directory_iterator(stage_dir)) {
+            if (is_regular_file(entry)) {
+                INFO(entry.path().filename() << " : " << File::file_time_to_string(entry.last_write_time()));
+            }
+        }
+        INFO("=============");
+    }
+    
+    if (staged_count == 0) {
         INFO("No files to stage were found");
     } else {
-        INFO("Files staged: " << files_staged);
+        INFO("Files staged: " << staged_count);
     }
+}
+
+uint32_t PersistenceStack::stageFile(const std::string& filename,  const FileDiff changes) {
+    auto stage_dir = Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER;
+
+    if (changes.wasDeleted) {
+        std::ofstream(stage_dir / (filename + ".deleted")).close();
+        return 1;
+    }
+
+    return File::copy_files(filename, stage_dir, false);
 }
 
 /**

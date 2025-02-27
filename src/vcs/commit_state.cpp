@@ -109,6 +109,25 @@ bool File::isRegexp(const std::string &str) {
 }
 
 /**
+ * @brief Compares filename with pattern.
+ * @param filename Filename to compare.
+ * @param pattern The actual pattern.
+ * @param isRegexp Whether to use regex for comparing files.
+ * @return Matches or not.
+ */
+bool File::matchesPattern(const std::string& filename, const std::string& pattern, const bool& isRegexp) {
+    if (isRegexp) {
+        try {
+            std::regex re(pattern);
+            return std::regex_match(filename, re);
+        } catch (const std::regex_error&) {
+            return false;
+        }
+    }
+    return filename == pattern;
+}
+
+/**
  * @brief Copies files from a source pattern to a target directory.
  * @param source_pattern The source pattern for files.
  * @param target_dir The target directory.

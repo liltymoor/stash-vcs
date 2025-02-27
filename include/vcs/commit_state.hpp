@@ -134,6 +134,8 @@ public:
      */
     static bool isRegexp(const std::string &str);
 
+    static bool matchesPattern(const std::string& filename, const std::string& pattern, const bool& isRegexp);
+
     /**
      * @brief Copies files from a source pattern to a target directory.
      * @param source_pattern The source pattern for files.

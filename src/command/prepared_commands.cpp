@@ -54,7 +54,9 @@ AddCommand::AddCommand()
  * @return A pointer to the result of the action.
  */
 void* AddCommand::action(ParsedArgs args) const {
-    if (args.hasArg("verbose"))
+
+    const bool verbose = args.hasArg("verbose"); 
+    if (verbose)
         INFO("Add command");
 
     if (args.hasArg("description")) {
@@ -69,7 +71,7 @@ void* AddCommand::action(ParsedArgs args) const {
         }
         // TODO: Verify value
 
-        Repo::getInstance().getRepoStack().stage(value);
+        Repo::getInstance().getRepoStack().stage(value, verbose);
         Repo::getInstance().stashMeta();
     }
 

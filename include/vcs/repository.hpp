@@ -8,6 +8,7 @@
 #include <utility>
 #include "commit_state.hpp"
 #include "stash.hpp"
+#include "state_diff.hpp"
 #include <filesystem>
 
 // Metadata constants
@@ -126,7 +127,15 @@ public:
      * @brief Stages files for the next commit.
      * @param files The files to stage.
      */
-    void stage(const std::string& files);
+    void stage(const std::string& files, const bool& verbose = false);
+
+    /**
+     * @brief Stages file for the next commit.
+     * @param filename The file to stage.
+     * @param changes File changes to stage.
+     * @return Files staged count (1 by default)
+     */
+     uint32_t stageFile(const std::string& filename,  const FileDiff changes);
 
     /**
      * @brief Reverts to the previous commit.
