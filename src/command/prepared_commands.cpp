@@ -1,5 +1,6 @@
 #include "prepared_commands.hpp"
 #include "command_args.hpp"
+#include "invoker.hpp"
 #include "stash.hpp"
 #include "repository.hpp"
 #include "../logger/logger.hpp"
@@ -22,7 +23,7 @@ void* InitCommand::action(ParsedArgs args) const {
         INFO("Init command");
 
     if (args.hasArg("description")) {
-        INFO(get_desc());
+        print_desc();
         return nullptr;
     }
 
@@ -60,7 +61,7 @@ void* AddCommand::action(ParsedArgs args) const {
         INFO("Add command");
 
     if (args.hasArg("description")) {
-        INFO(get_desc());
+        print_desc();
         return nullptr;
     }
 
@@ -109,7 +110,7 @@ void* CommitCommand::action(ParsedArgs args) const {
         INFO("Commit command");
 
     if (args.hasArg("description")) {
-        INFO(get_desc());
+        print_desc();
         return nullptr;
     }
 
@@ -163,7 +164,7 @@ void* CheckoutCommand::action(ParsedArgs args) const {
         INFO("Checkout command");
 
     if (args.hasArg("description")) {
-        INFO(get_desc());
+        print_desc();
         return nullptr;
     }
 
@@ -217,7 +218,7 @@ void* MergeCommand::action(ParsedArgs args) const {
         INFO("Merge command");
 
     if (args.hasArg("description")) {
-        INFO(get_desc());
+        print_desc();
         return nullptr;
     }
 
@@ -260,7 +261,7 @@ void* RevertToCommand::action(ParsedArgs args) const {
         INFO("Revert To command");
 
     if (args.hasArg("description")) {
-        INFO(get_desc());
+        print_desc();
         return nullptr;
     }
 
@@ -303,7 +304,7 @@ void* StatusCommand::action(ParsedArgs args) const {
         INFO("Status command");
 
     if (args.hasArg("description")) {
-        INFO(get_desc());
+        print_desc();
         return nullptr;
     }
 
@@ -316,6 +317,42 @@ void* StatusCommand::action(ParsedArgs args) const {
 * @brief Constructor for the RevertToArgs class.
 */
 StatusArgs::StatusArgs()
+ : CommandArgs() // Init default args like verbose or description
+{
+
+}
+
+/**
+ * @brief Constructor for the RevertToCommand class.
+ */
+ HelpCommand::HelpCommand()
+ : Command("help", "Shows description for all the commands") {
+    expected_args = new HelpArgs();
+}
+
+/**
+* @brief The action performed by the Status.
+* @param args The parsed arguments.
+* @return A pointer to the result of the action.
+*/
+void* HelpCommand::action(ParsedArgs args) const {
+    if (args.hasArg("verbose"))
+        INFO("Status command");
+
+    if (args.hasArg("description")) {
+        print_desc();
+        return nullptr;
+    }
+
+    CommandInvoker::getInstance()->print_desc();
+
+    return nullptr;
+}
+
+/**
+* @brief Constructor for the RevertToArgs class.
+*/
+HelpArgs::HelpArgs()
  : CommandArgs() // Init default args like verbose or description
 {
 

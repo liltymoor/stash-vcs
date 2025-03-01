@@ -57,6 +57,8 @@ public:
      * @return The description of the command.
      */
     const char* get_desc() const;
+
+    void print_desc() const;
 };
 
 #endif

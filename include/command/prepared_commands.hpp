@@ -29,5 +29,6 @@ DEFINE_CMND(Checkout);
 DEFINE_CMND(Merge);
 DEFINE_CMND(RevertTo);
 DEFINE_CMND(Status);
+DEFINE_CMND(Help);
 
 #endif // PREPARED_COMMANDS_HPP

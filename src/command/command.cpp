@@ -1,4 +1,5 @@
 #include "command.hpp"
+#include "logger.hpp"
 
 /**
  * @brief Constructor for the Command class.
@@ -70,4 +71,12 @@ const char* Command::get_name() const {
  */
 const char* Command::get_desc() const {
     return this->description;
+}
+
+void Command::print_desc() const {
+    INFO(this->description);
+    INFO("");
+    for (const auto arg: expected_args->get_expected_args()) {
+        INFO(std::string("[-") + arg->getName()[0] + std::string(" | --") + arg->getName() + std::string("] : ") + arg->getDescription());
+    }
 }

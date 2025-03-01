@@ -3,6 +3,7 @@
 
 #include "command.hpp"
 #include <iostream>
+#include <memory>
 
 /**
  * @class CommandInvoker
@@ -12,11 +13,16 @@
  */
 class CommandInvoker {
 private:
+    static std::shared_ptr<CommandInvoker> invoker;
     std::unordered_map<std::string, const Command*> commands; ///< Map of registered commands.
 
 public:
     /// Default constructor for the CommandInvoker class.
     CommandInvoker();
+
+    ~CommandInvoker();
+
+    static std::shared_ptr<CommandInvoker> getInstance();
 
     /**
      * @brief Registers a command.
@@ -31,6 +37,8 @@ public:
      * @return true if the command was successfully invoked, otherwise false.
      */
     bool invoke_command(int argc, char* argv[]);
+
+    void print_desc() const;
 };
 
 #endif // INVOKER_HPP

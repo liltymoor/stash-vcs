@@ -147,6 +147,10 @@ CommandArgs::~CommandArgs() {
     }
 }
 
+std::vector<Arg*> CommandArgs::get_expected_args() const {
+    return expected_args;
+}
+
 /**
  * @brief Parses the provided arguments.
  * @param args The arguments to parse.

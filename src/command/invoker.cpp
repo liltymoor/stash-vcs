@@ -1,12 +1,16 @@
 #include "invoker.hpp"
 #include "../logger/logger.hpp"
+#include <memory>
 #include <unordered_map>
+#include "command.hpp"
 #include "prepared_commands.hpp"
 
 /**
  * @brief Default constructor for the CommandInvoker class.
  */
 CommandInvoker::CommandInvoker() {}
+
+std::shared_ptr<CommandInvoker> CommandInvoker::invoker = std::make_shared<CommandInvoker>(CommandInvoker());
 
 /**
  * @brief Invokes a command with the provided arguments.
@@ -39,3 +43,18 @@ bool CommandInvoker::invoke_command(int argc, char* argv[]) {
 void CommandInvoker::init_command(const Command* command) {
     commands[command->get_name()] = command;
 }
+
+void CommandInvoker::print_desc() const {
+    INFO(commands.size());
+    for (const auto&[name, command]: commands) {
+        INFO(name + " " + command->get_desc());
+    }
+};
+
+CommandInvoker::~CommandInvoker() {
+    INFO("-Invoker");
+}
+
+std::shared_ptr<CommandInvoker> CommandInvoker::getInstance() {
+    return invoker;
+};

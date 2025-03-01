@@ -144,6 +144,8 @@ public:
      */
     virtual ParsedArgs parseArgs(const std::vector<std::string> args) const;
 
+    std::vector<Arg*> get_expected_args() const;
+
     /// Destructor for the CommandArgs class.
     virtual ~CommandArgs();
 };
