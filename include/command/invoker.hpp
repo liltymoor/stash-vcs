@@ -20,8 +20,6 @@ public:
     /// Default constructor for the CommandInvoker class.
     CommandInvoker();
 
-    ~CommandInvoker();
-
     static std::shared_ptr<CommandInvoker> getInstance();
 
     /**

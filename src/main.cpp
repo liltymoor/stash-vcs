@@ -35,7 +35,6 @@ int main(int argc, char *argv[])
     invoker->init_command(&helpCommand);
 
     if (!invoker->invoke_command(argc, argv)) ERROR("Command failed. Check output above to see more detailed info.");
-    INFO("DONE");
 }
 
 /*

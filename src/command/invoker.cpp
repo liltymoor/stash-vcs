@@ -45,15 +45,10 @@ void CommandInvoker::init_command(const Command* command) {
 }
 
 void CommandInvoker::print_desc() const {
-    INFO(commands.size());
     for (const auto&[name, command]: commands) {
-        INFO(name + " " + command->get_desc());
+        INFO(name + " - " + command->get_desc());
     }
 };
-
-CommandInvoker::~CommandInvoker() {
-    INFO("-Invoker");
-}
 
 std::shared_ptr<CommandInvoker> CommandInvoker::getInstance() {
     return invoker;
