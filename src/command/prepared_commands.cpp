@@ -212,13 +212,20 @@ MergeCommand::MergeCommand()
  * @return A pointer to the result of the action.
  */
 void* MergeCommand::action(ParsedArgs args) const {
-    if (args.hasArg("verbose"))
+    bool verbose = args.hasArg("verbose"); 
+    if (verbose)
         INFO("Merge command");
 
     if (args.hasArg("description")) {
         INFO(get_desc());
         return nullptr;
     }
+
+    if (args.hasArg("branch")) {
+        std::string branchToMerge = args.getArgValue("branch");
+        Repo::getInstance().getRepoStack().merge(branchToMerge, verbose);
+        Repo::getInstance().stashMeta();
+    }    
 
     return nullptr;
 }

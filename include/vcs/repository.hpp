@@ -130,6 +130,12 @@ public:
     void stage(const std::string& files, const bool& verbose = false);
 
     /**
+     * @brief Stages files for the next commit.
+     * @param files The files to stage.
+     */
+     void stageCommit(std::shared_ptr<Commit> commit, const bool& verbose = false);
+
+    /**
      * @brief Stages file for the next commit.
      * @param filename The file to stage.
      * @param changes File changes to stage.
@@ -176,7 +182,7 @@ public:
      * @brief Merges a branch into the current branch.
      * @param branch_name The name of the branch to merge.
      */
-    void merge(const std::string& branch_name);
+    void merge(const std::string& branch_name, const bool& verbose = false);
 
         /**
      * @brief Shows current branch status.

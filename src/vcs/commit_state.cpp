@@ -5,8 +5,11 @@
 #include "commit_state.hpp"
 #include "repository.hpp"
 #include "../logger/logger.hpp"
+#include "state_diff.hpp"
 #include <filesystem>
 #include <regex>
+#include <stdexcept>
+#include <unordered_set>
 
 namespace fs = std::filesystem;
 
@@ -16,6 +19,7 @@ namespace fs = std::filesystem;
  */
 File::File(const std::filesystem::path &filepath)
         : filepath(filepath) {}
+
 
 /**
  * @brief Returns the path of the file.
@@ -34,30 +38,34 @@ void File::move(const std::filesystem::path &to) {
         throw std::runtime_error("Source file does not exist: " + filepath.string());
     }
 
+    std::filesystem::create_directories(to);
+
     std::filesystem::path target_path = to;
     if (is_directory(to)) {
         target_path /= filepath.filename();
     }
 
     try {
-        if (exists(target_path)) {
-            std::filesystem::remove(target_path);
-        }
-
-        std::filesystem::rename(filepath, target_path);
         filepath = target_path;
-
+        flush();
     } catch (const std::filesystem::filesystem_error& e) {
-        if (e.code() == std::errc::cross_device_link) {
-            copy(filepath, target_path,
-                 std::filesystem::copy_options::overwrite_existing
-            );
-            std::filesystem::remove(filepath);
-            filepath = target_path;
-        } else {
-            throw;
-        }
+        throw std::runtime_error(e);
     }
+}
+
+void File::applyFileChanges(const FileDiff& diff) {
+    // TODO check if files that we apply diff to are the same file
+    if (diff.wasDeleted) { // file was deleted
+        // TODO implement
+        return;
+    }
+
+    if (!diff.changes.size()) { // no changes to the file
+        return;
+    }
+
+    this->cachedContent.applyContentChanges(diff.changes);
+    flush();
 }
 
 /**
@@ -86,16 +94,22 @@ std::string File::read(const std::string &filepath) {
 }
 
 /**
- * @brief Writes content to a file at a given path.
- * @param filepath The path to the file.
- * @param content The content to write.
+ * @brief Flushes content to a file at a given path.
  */
-void File::write(const std::string &filepath, const std::string &content) {
-    std::ofstream file(filepath);
+void File::flush() {
+    std::ofstream file(this->filepath);
     if (!file.is_open()) {
-        throw std::runtime_error("Failed to open file: " + filepath);
+        throw std::runtime_error("Failed to open file: " + filepath.string());
     }
-    file << content;
+
+    FileContent cache = get_content();
+    std::map<int, std::string> content = cache.getAllLines();
+
+    for (const auto &[lineNumber, lineContent] : content) {
+        if (lineContent.empty()) continue;
+        file << lineContent << std::endl;
+    }
+    file.close();
 }
 
 /**
@@ -151,6 +165,12 @@ uint32_t File::copy_files(const std::string &source_pattern, const std::string &
                         files_to_move.push_back(entry.path());
                     }
                 }
+            }
+        } else if (std::filesystem::is_directory(source_pattern)) {
+
+            for (const auto &entry : std::filesystem::directory_iterator(source_pattern)) {
+                // TODO make it go through graph in deep
+                files_to_move.push_back(entry.path());
             }
         } else {
             fs::path source_path = current_dir / source_pattern;
@@ -259,10 +279,9 @@ std::unordered_map<std::string, File> File::getFilesFromDir(const std::filesyste
  * @brief Constructor for the FileContent class.
  * @param lines A map of line numbers to their content.
  */
-FileContent::FileContent(const std::map<int, std::string> &lines) {
-    for (const auto &[lineNumber, line]: lines) {
-        addLine(lineNumber, line);
-    }
+FileContent::FileContent(const std::map<int, std::string> &lines) 
+: lines(lines.begin(), lines.end())
+{
 }
 
 /**
@@ -335,6 +354,22 @@ std::string FileContent::getFullContent() const {
     return content;
 }
 
+
+uint32_t FileContent::applyContentChanges(const std::vector<LineDiff>& diff) {
+    uint32_t lineChangedCounter = 0;
+    for (const LineDiff& line : diff) {
+        if (line.type == LineDiff::ADDED || line.type == LineDiff::MODIFIED) {
+            lines[line.lineNumber] = line.content;
+        }
+        else {
+            lines[line.lineNumber] = std::string();
+        }
+        lineChangedCounter++;
+    }
+
+    return lineChangedCounter;
+}
+
 /**
  * @brief Checks if the file content is empty.
  * @return true if the file content is empty, otherwise false.
@@ -378,51 +413,51 @@ const std::unordered_map<std::string, File> &CommitState::getFiles() {
  * @param commit1 The first commit.
  * @param commit2 The second commit.
  */
-DiffResult CommitUtils::diff(const std::shared_ptr<Commit> commit1, const std::shared_ptr<Commit> commit2) {
+ DiffResult CommitUtils::diff(const std::shared_ptr<Commit> commit1, const std::shared_ptr<Commit> commit2) {
     DiffResult result;
     auto files1 = commit1 ? commit1->state->getFiles() : std::unordered_map<std::string, File>{};
     auto files2 = commit2 ? commit2->state->getFiles() : std::unordered_map<std::string, File>{};
 
-    // checking files from commit1
     for (auto& [filename, file1] : files1) {
         FileDiff fileDiff;
         const auto& content1 = file1.get_content();
         const auto& lines1 = content1.getAllLines();
 
         if (files2.count(filename)) {
-            // file exists in first and second commit
             const auto& content2 = files2.at(filename).get_content();
             const auto& lines2 = content2.getAllLines();
 
-            // checking line changes
+            // looking for changes
             for (const auto& [num, line1] : lines1) {
                 if (!lines2.count(num)) {
                     fileDiff.changes.push_back({LineDiff::REMOVED, line1, num});
                 } else if (lines2.at(num) != line1) {
-                    fileDiff.changes.push_back({LineDiff::MODIFIED, line1, num});
-                    fileDiff.hasConflicts = true;
+                    fileDiff.changes.push_back({LineDiff::MODIFIED, lines2.at(num), num});
+                    fileDiff.hasConflicts = true; // ya uzhe 3ABblJI za4em dobavlyal eto 
                 }
             }
 
-            // checking new lines
             for (const auto& [num, line2] : lines2) {
                 if (!lines1.count(num)) {
                     fileDiff.changes.push_back({LineDiff::ADDED, line2, num});
                 }
             }
         } else {
-            // in case the file was deleted in second commit
+            // file has been deleted in commit2
             for (const auto& [num, line] : lines1) {
                 fileDiff.changes.push_back({LineDiff::REMOVED, line, num});
             }
             fileDiff.hasConflicts = true;
             fileDiff.wasDeleted = true;
         }
-        
-        result[filename] = fileDiff;
+
+        // filtering not changed files
+        if (!fileDiff.changes.empty() || fileDiff.hasConflicts || fileDiff.wasDeleted) {
+            result[filename] = fileDiff;
+        }
     }
 
-    // new commit files checked
+    // checking for new files in commit2
     for (auto& [filename, file2] : files2) {
         if (!files1.count(filename)) {
             FileDiff fileDiff;

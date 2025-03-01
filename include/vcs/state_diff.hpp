@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <unordered_set>
 #include <vector>
 #include <string>
 
@@ -37,6 +38,7 @@ struct LineDiff {
     std::string content;
     int lineNumber;
 
+    bool operator== (const LineDiff& diff) const;
     std::string toString() const;
 };
 
@@ -46,6 +48,8 @@ struct FileDiff {
     bool wasDeleted = false;
 
     void print(const int limit = 0) const;
+    
+    static std::vector<std::pair<LineDiff, LineDiff>> intersection(const FileDiff& fileChanges_a, const FileDiff& fileChanges_b);
 };
 
 using DiffResult = std::map<std::string, FileDiff>;

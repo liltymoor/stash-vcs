@@ -4,8 +4,10 @@
 #include "../exception/pers_stack_exc.h"
 #include <filesystem>
 #include <fstream>
+#include <stdexcept>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <variant>
 #include "../logger/logger.hpp"
 #include "state_diff.hpp"
@@ -235,16 +237,16 @@ void PersistenceStack::commit(const std::string &message, const bool& verbose) {
         }
     }
 
-    for (const auto &[filename, file] : statedFiles) {
+    for (auto &[filename, file] : statedFiles) {
         newCommit->state->addFile(filename, file);
-        File::copy_files(filename,
+        File::copy_files(Repo::getBranchesPath() / head->branch / head->hash / META_COMMIT_FILES_FOLDER / filename,
                          Repo::getBranchesPath() / currentBranch / newCommit->hash / META_COMMIT_FILES_FOLDER,
                          false);
     }
 
     for (const auto &[filename, file] : stagedFiles) {
         newCommit->state->addFile(filename, file);
-        File::copy_files(filename,
+        File::copy_files((Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER / filename).string(),
                          Repo::getBranchesPath() / currentBranch / newCommit->hash / META_COMMIT_FILES_FOLDER,
                          false);
     }
@@ -265,8 +267,6 @@ void PersistenceStack::commit(const std::string &message, const bool& verbose) {
             INFO("Filename: " << filename);
             filediff.print();
         }
-
-
     }
 
     File::clean_dir(Repo::getBranchesPath() / getCurrentBranch() / META_STAGE_FOLDER);
@@ -312,6 +312,7 @@ void PersistenceStack::commit(const Commit &commit, const bool& verbose) {
             INFO("");
             INFO("Filename: " << filename);
             filediff.print();
+            INFO("");
         }
     }
 
@@ -361,6 +362,56 @@ void PersistenceStack::stage(const std::string &files, const bool& verbose) {
     } else {
         INFO("Files staged: " << staged_count);
     }
+}
+
+void PersistenceStack::stageCommit(std::shared_ptr<Commit> commitPtr, const bool& verbose) {
+    // check if stage folder is empty ( no file changes being tracked )
+    if (!std::filesystem::is_empty(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER)) {
+        WARN("You have files being tracked (check your stage)");
+        WARN("Would you like to delete/overwrite/keep them?")
+        
+        std::cout << "[delete|overwrite|keep]: ";
+        std::string action;
+        std::cin >> action;
+        std::cout << std::endl;
+
+        if (action == "delete") {
+            if (verbose) INFO("Deleting current stage");
+            File::clean_dir(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER);
+            File::copy_files(
+                Repo::getBranchesPath() / currentBranch / commitPtr->hash / META_COMMIT_FILES_FOLDER,
+                Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER,
+                false
+            );
+            return;
+        }
+
+        if (action == "overwrite") {
+            if (verbose) INFO("Overwriting current stage");
+            File::copy_files(
+                Repo::getBranchesPath() / currentBranch / commitPtr->hash / META_COMMIT_FILES_FOLDER,
+                Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER,
+                false
+            );
+            return;
+        }
+
+        if (action == "keep") {
+            INFO("Keeping changes");
+            return;
+        }
+
+        ERROR("Error occured while reading user answer");
+        INFO("Keeping changes");
+        return;
+    }
+
+    if (verbose) INFO("Staging common ancestor " + commitPtr->hash);
+    File::copy_files(
+        Repo::getBranchesPath() / currentBranch / commitPtr->hash / META_COMMIT_FILES_FOLDER,
+        Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER, 
+        false
+    );
 }
 
 uint32_t PersistenceStack::stageFile(const std::string& filename,  const FileDiff changes) {
@@ -554,44 +605,155 @@ void PersistenceStack::list_commits() const {
 }
 
 /**
+ * @brief Function finds first shared between two commits (branches).
+ * @param a Left branch.
+ * @param b Right branch.
+ * @return Shared commit pointer. 
+ */
+std::shared_ptr<Commit> findLowestCommonAncestor(
+    std::shared_ptr<Commit> a, 
+    std::shared_ptr<Commit> b
+) {
+    std::unordered_set<std::string> visited;
+
+    if (a->branch == b->branch) {
+        // both are the same branch
+        return a;
+    }
+
+    while (a) {
+        visited.insert(a->hash);
+        a = a->prev;
+    }
+    
+    while (b) {
+        if (visited.count(b->hash)) {
+            return b;
+        }
+        b = b->prev;
+    }
+    
+    return nullptr;
+}
+
+
+/**
  * @brief Merges a branch into the current branch.
  * @param branch_name The name of the branch to merge.
  */
-void PersistenceStack::merge(const std::string &branch_name) {
+void PersistenceStack::merge(const std::string &branch_name, const bool& verbose) {
     // Can be merged only if branches have at least 1 shared commit.
-    // Maybe not...
 
     if (branches.find(branch_name) == branches.end()) {
         throw BranchNotFoundException(branch_name);
     }
+    
+    if (currentBranch == branch_name) {
+        throw std::runtime_error("You can't merge branch into itself.");
+    }
 
-    // auto targetBranch = branches[branch_name];
-    // auto currentBranch = head;
-    //
-    // bool b_sharedCommitExists = false;
-    // std::shared_ptr<Commit> targetCommit = targetBranch;
-    // std::shared_ptr<Commit> currentCommit = currentBranch;
-    //
-    // while (targetCommit != nullptr && currentCommit != nullptr)
-    // {
-    //     if (targetCommit == currentCommit)
-    //     {
-    //         b_sharedCommitExists = true;
-    //         break;
+    auto targetBranchCommit = branches[branch_name];
+    auto currentBranchCommit = head;
+    
+    std::shared_ptr<Commit> sharedCommit = findLowestCommonAncestor(targetBranchCommit, currentBranchCommit);
+    
+    if (!sharedCommit)
+        throw std::runtime_error("Branches have no common commit and cannot be merged");
+    
+    std::vector<std::string> conflictExpectedFiles;
+    
+    DiffResult targetChanges = CommitUtils::diff(sharedCommit, targetBranchCommit);
+    DiffResult currentChanges = CommitUtils::diff(sharedCommit, currentBranchCommit);
+
+    stageCommit(sharedCommit, verbose);
+
+    auto  sharedCommitFiles = File::getFilesFromDir(
+        Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER
+    );
+
+    for (const auto &[filename, changes] : targetChanges) { // changes from target branch
+        if (currentChanges.count(filename)) {
+            // two branches made changes to the same file
+            auto conflicts = FileDiff::intersection(changes, currentChanges[filename]);
+            if (conflicts.size()) { // file changes has conflicts
+
+                continue;
+            }
+        }
+
+        if (sharedCommitFiles.count(filename)) { // changes was done to file that we have in common
+            sharedCommitFiles[filename].applyFileChanges(changes);
+        }
+        else { // changes are done to new file (we can just create it)
+            auto newFile = File(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER / filename);
+            newFile.applyFileChanges(changes);
+            sharedCommitFiles[filename] = newFile;
+        }
+    }
+
+    // Доработать (тут ошибки)
+    for (const auto &[filename, changes] : currentChanges) { // changes from current checkouted branch
+        if (sharedCommitFiles.count(filename)) { // changes was done to file that we have in common
+            sharedCommitFiles[filename].applyFileChanges(changes);
+        }
+        else { // changes are done to new file (we can just create it)
+            auto newFile = File(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER / filename);
+            newFile.applyFileChanges(changes);
+        }
+    }
+
+    commit("Merge " + branch_name + " into " + currentBranch, verbose);
+    move_branch_files(currentBranch);
+
+    // for (const auto &[filename, changes] : targetChanges) {
+    //     if (currentChanges.count(filename)) {
+    //         // two branches made changes to the same file
+    //         auto conflicts = FileDiff::intersection(changes, currentChanges[filename]);
+    //         if (conflicts.size()) { // file changes has conflicts
+
+    //         }
+    //         else { // feel free to merge both changes// TODO Implement
+    //             // todo now just need to apply changes to the File (while committing file will flush it changes to the dest)                
+    //             // stage special commit
+
+    //             // apply changes to stage
+
+    //             for (auto &[filename, file] : sharedCommitFiles) {
+    //                 if (targetChanges.count(filename)) {
+    //                     file.applyFileChanges(targetChanges[filename]);
+    //                     targetChanges.erase(filename);
+    //                     continue;
+    //                 }
+
+    //                 if (currentChanges.count(filename)) {
+    //                     file.applyFileChanges(currentChanges[filename]);
+    //                     currentChanges.erase(filename);
+    //                     continue;
+    //                 }
+    //             }
+
+    //             // applying remaining changes
+    //             // theese changes are targeted on files that wasn't created in LCA
+                
+    //             for (auto &[filename, changes] : targetChanges) {
+    //                 auto newFile = File(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER / filename);
+    //                 newFile.applyFileChanges(changes);
+    //             }
+
+    //             for (auto &[filename, changes] : currentChanges) {
+    //                 auto newFile = File(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER / filename);
+    //                 newFile.applyFileChanges(changes);
+    //             }
+
+    //             commit("Merge " + branch_name + " into " + currentBranch, verbose);
+    //         }
     //     }
-    //     targetCommit = targetCommit->prev;
-    //     currentCommit = currentCommit->prev;
     // }
-    //
-    // if (b_sharedCommitExists)
-    // {
-    //     // Merge
-    // }
-    // else
-    // {
-    //     throw std::runtime_error("Branches have no common commit and cannot be merged");
-    // }
+
+
 }
+
+
 
 void PersistenceStack::status() {
     INFO("Current branch: " << currentBranch);

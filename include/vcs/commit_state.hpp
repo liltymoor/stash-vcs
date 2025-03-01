@@ -53,6 +53,8 @@ public:
      */
     std::string getFullContent() const;
 
+    uint32_t applyContentChanges(const std::vector<LineDiff>& diff);
+
     /**
      * @brief Checks if the file content is empty.
      * @return true if the file content is empty, otherwise false.
@@ -107,6 +109,15 @@ public:
      */
     void move(const std::filesystem::path& to);
 
+    void applyFileChanges(const FileDiff& diff);
+
+    /**
+     * @brief Flushes content to a file at a given path.
+     * @param filepath The path to the file.
+     * @param content The content to write.
+     */
+     void flush();
+
     /**
      * @brief Retrieves the content of the file.
      * @return The content of the file.
@@ -121,19 +132,19 @@ public:
     static std::string read(const std::string &filepath);
 
     /**
-     * @brief Writes content to a file at a given path.
-     * @param filepath The path to the file.
-     * @param content The content to write.
-     */
-    static void write(const std::string &filepath, const std::string &content);
-
-    /**
      * @brief Checks if a string is a regular expression.
      * @param str The string to check.
      * @return true if the string is a regular expression, otherwise false.
      */
     static bool isRegexp(const std::string &str);
 
+    /**
+     * @brief Checks if filename matches pattern.
+     * @param filename The filename to check.
+     * @param pattern The pattern filename can matches.
+     * @param isRegexp If pattern is regexp.
+     * @return true if the filename matches the regexp or simple filename pattern, otherwise false.
+     */
     static bool matchesPattern(const std::string& filename, const std::string& pattern, const bool& isRegexp);
 
     /**
