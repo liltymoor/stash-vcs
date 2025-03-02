@@ -604,6 +604,8 @@ void PersistenceStack::list_commits() const {
     INFO("Commit count: " << commitCount);
 }
 
+
+
 /**
  * @brief Function finds first shared between two commits (branches).
  * @param a Left branch.
@@ -634,6 +636,52 @@ std::shared_ptr<Commit> findLowestCommonAncestor(
     }
     
     return nullptr;
+}
+
+
+FileDiff resolveFileConflict(const FileConflict& fileConflicts, File& file) {
+    std::map<int, std::string> content = file.get_content().getAllLines();
+    FileDiff resolvedDiff;
+    resolvedDiff.filename = file.get_path().filename();
+    int resolveLinesPreviewCount = 3;
+    WARN("Merge conflict found | file: " + file.get_path().filename().string() + "\n");
+    for (const LineConflict& conflict: fileConflicts.linesConflicts) {
+        int conflictLine = conflict.changes1.lineNumber;
+
+        for (int line = conflictLine - resolveLinesPreviewCount; line < conflictLine; ++line) {
+            if (content.count(line)) {
+                INFO(std::to_string(line) + " | " + content.at(line));
+            }
+        }
+
+        INFO("-------------- " + fileConflicts.leftBranchName);
+        INFO(std::to_string(conflictLine) + " | " + conflict.changes1.toString());
+        INFO("-------------- " + fileConflicts.rightBranchName);
+        INFO(std::to_string(conflictLine) + " | " + conflict.changes2.toString());
+        INFO("--------------")
+
+        for (int line = conflictLine + 1; line <= conflictLine + resolveLinesPreviewCount; ++line) {
+            if (content.count(line)) {
+                INFO(std::to_string(line) + " | " + content.at(line));
+            }
+        }
+
+        int option = 0;
+        while (option != 1 && option != 2) {
+            INFO("Choose an option:");
+            std::cout << "\t1)" << fileConflicts.leftBranchName << " 2)" << fileConflicts.rightBranchName << std::endl;
+            std::cin >> option;
+            std::cout << std::endl << std::endl;
+        }
+
+        if (option == 1)
+            resolvedDiff.changes.push_back(conflict.changes1);
+        else
+            resolvedDiff.changes.push_back(conflict.changes2);
+        INFO("Resolved\n");
+    }
+
+    return resolvedDiff;
 }
 
 
@@ -672,15 +720,6 @@ void PersistenceStack::merge(const std::string &branch_name, const bool& verbose
     );
 
     for (const auto &[filename, changes] : targetChanges) { // changes from target branch
-        if (currentChanges.count(filename)) {
-            // two branches made changes to the same file
-            auto conflicts = FileDiff::intersection(changes, currentChanges[filename]);
-            if (conflicts.size()) { // file changes has conflicts
-
-                continue;
-            }
-        }
-
         if (sharedCommitFiles.count(filename)) { // changes was done to file that we have in common
             sharedCommitFiles[filename].applyFileChanges(changes);
         }
@@ -700,57 +739,19 @@ void PersistenceStack::merge(const std::string &branch_name, const bool& verbose
             auto newFile = File(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER / filename);
             newFile.applyFileChanges(changes);
         }
+
+        if (targetChanges.count(filename)) {
+            // two branches made changes to the same file
+            auto conflict = FileDiff::intersection(changes, targetChanges[filename]);
+            if (conflict.linesConflicts.size()) { // file changes has conflicts
+                auto resolvedChanges = resolveFileConflict(conflict, sharedCommitFiles[filename]);
+                sharedCommitFiles[filename].applyFileChanges(resolvedChanges);
+            }
+        }
     }
 
     commit("Merge " + branch_name + " into " + currentBranch, verbose);
     move_branch_files(currentBranch);
-
-    // for (const auto &[filename, changes] : targetChanges) {
-    //     if (currentChanges.count(filename)) {
-    //         // two branches made changes to the same file
-    //         auto conflicts = FileDiff::intersection(changes, currentChanges[filename]);
-    //         if (conflicts.size()) { // file changes has conflicts
-
-    //         }
-    //         else { // feel free to merge both changes// TODO Implement
-    //             // todo now just need to apply changes to the File (while committing file will flush it changes to the dest)                
-    //             // stage special commit
-
-    //             // apply changes to stage
-
-    //             for (auto &[filename, file] : sharedCommitFiles) {
-    //                 if (targetChanges.count(filename)) {
-    //                     file.applyFileChanges(targetChanges[filename]);
-    //                     targetChanges.erase(filename);
-    //                     continue;
-    //                 }
-
-    //                 if (currentChanges.count(filename)) {
-    //                     file.applyFileChanges(currentChanges[filename]);
-    //                     currentChanges.erase(filename);
-    //                     continue;
-    //                 }
-    //             }
-
-    //             // applying remaining changes
-    //             // theese changes are targeted on files that wasn't created in LCA
-                
-    //             for (auto &[filename, changes] : targetChanges) {
-    //                 auto newFile = File(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER / filename);
-    //                 newFile.applyFileChanges(changes);
-    //             }
-
-    //             for (auto &[filename, changes] : currentChanges) {
-    //                 auto newFile = File(Repo::getBranchesPath() / currentBranch / META_STAGE_FOLDER / filename);
-    //                 newFile.applyFileChanges(changes);
-    //             }
-
-    //             commit("Merge " + branch_name + " into " + currentBranch, verbose);
-    //         }
-    //     }
-    // }
-
-
 }
 
 

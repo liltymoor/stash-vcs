@@ -35,17 +35,17 @@ void FileDiff::print(const int limit) const {
     }
 }
 
-std::vector<std::pair<LineDiff, LineDiff>> FileDiff::intersection(const FileDiff &fileChanges_a, const FileDiff &fileChanges_b) {
-    std::vector<std::pair<LineDiff, LineDiff>> conflicts;
+FileConflict FileDiff::intersection(const FileDiff &fileChanges_a, const FileDiff &fileChanges_b) {
+    std::vector<LineConflict> conflicts;
 
     for (const LineDiff& lineChanges: fileChanges_a.changes) {
         auto it = std::find(fileChanges_b.changes.begin(), fileChanges_b.changes.end(), lineChanges);
         if (it != fileChanges_b.changes.end()) {
-            conflicts.emplace_back(lineChanges, *it);
+            conflicts.push_back({fileChanges_a.filename, lineChanges, *it});
         }
     }
 
-    return conflicts;
+    return {conflicts, fileChanges_a.branchName, fileChanges_b.branchName};
 }
 
 

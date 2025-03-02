@@ -4,7 +4,9 @@
 #include <vector>
 #include <string>
 
+#include "commit_state.hpp"
 #include "logger.hpp"
+
 
 #ifndef _COLORS_
 #define _COLORS_
@@ -32,6 +34,8 @@
 
 #endif  /* _COLORS_ */
 
+#ifndef _CONFLICT_STRUCTS_
+#define _CONFLICT_STRUCTS_
 struct LineDiff {
     enum ChangeType { ADDED, REMOVED, MODIFIED };
     ChangeType type;
@@ -42,14 +46,28 @@ struct LineDiff {
     std::string toString() const;
 };
 
+struct LineConflict {
+    std::string filename;
+    LineDiff changes1, changes2;
+};
+
+struct FileConflict {
+    std::vector<LineConflict> linesConflicts;
+    std::string leftBranchName, rightBranchName;
+};
+
 struct FileDiff {
+    std::string filename;
+    std::string branchName;
     std::vector<LineDiff> changes;
     bool hasConflicts = false;
     bool wasDeleted = false;
 
     void print(const int limit = 0) const;
     
-    static std::vector<std::pair<LineDiff, LineDiff>> intersection(const FileDiff& fileChanges_a, const FileDiff& fileChanges_b);
+    static FileConflict intersection(const FileDiff& fileChanges_a, const FileDiff& fileChanges_b);
 };
 
 using DiffResult = std::map<std::string, FileDiff>;
+
+#endif

@@ -420,6 +420,8 @@ const std::unordered_map<std::string, File> &CommitState::getFiles() {
 
     for (auto& [filename, file1] : files1) {
         FileDiff fileDiff;
+        fileDiff.filename = file1.get_path().filename();
+        fileDiff.branchName = commit2->branch;
         const auto& content1 = file1.get_content();
         const auto& lines1 = content1.getAllLines();
 
@@ -461,6 +463,8 @@ const std::unordered_map<std::string, File> &CommitState::getFiles() {
     for (auto& [filename, file2] : files2) {
         if (!files1.count(filename)) {
             FileDiff fileDiff;
+            fileDiff.filename = file2.get_path().filename();
+            fileDiff.branchName = commit2->branch;
             const auto& content2 = file2.get_content();
             for (const auto& [num, line] : content2.getAllLines()) {
                 fileDiff.changes.push_back({LineDiff::ADDED, line, num});

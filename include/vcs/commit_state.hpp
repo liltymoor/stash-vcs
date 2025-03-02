@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ITMO_VCS_COMMITSTATE_H
 #define ITMO_VCS_COMMITSTATE_H
 
@@ -12,6 +13,10 @@
 #include <filesystem>
 
 #include "state_diff.hpp"
+
+struct LineDiff;
+struct FileDiff;
+using DiffResult = std::map<std::string, FileDiff>;
 
 /**
  * @class FileContent
