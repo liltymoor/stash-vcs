@@ -669,7 +669,7 @@ FileDiff resolveFileConflict(const FileConflict& fileConflicts, File& file) {
         int option = 0;
         while (option != 1 && option != 2) {
             INFO("Choose an option:");
-            INFO("1)" << fileConflicts.leftBranchName << " 2)" << fileConflicts.rightBranchName << std::endl;
+            INFO("1)" << fileConflicts.leftBranchName << " 2)" << fileConflicts.rightBranchName << std::endl);
             std::cin >> option;
             std::cout << std::endl;
         }
