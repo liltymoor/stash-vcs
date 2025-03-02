@@ -8,6 +8,7 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 ## Key Features ⚙️
 
 - **Branch Management:** Create, switch, and delete branches.
+- **Merging Changes:** Merge your different branch progress.
 - **Commit Changes:** Track and save changes in the repository.
 - **Revert Changes:** Roll back to previous versions of files.
 - **Logging:** View the history of changes.
@@ -39,7 +40,7 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 ---
 
 ## Usage 🖥️
-
+All stash commands can be provided with -d / --description key to see what do they do.
 ### Example Commands
 - Stage files (You also may use regex instead -f "<regex>"):
   ```bash
@@ -56,6 +57,14 @@ The project is developed in C++ using CMake for building and Doxygen for documen
 - Revert to commit (specify hash with -h):
   ```bash
   ./stash revert_to -h 12312... 
+  ```
+-- Help (specify hash with -h):
+  ```bash
+  ./stash help
+  ```
+-- Merge (specify branch with -b):
+  ```bash
+  ./stash merge -b branch_name
   ```
 
 ---
@@ -76,7 +85,7 @@ Project documentation is available [here](https://fr2eof.github.io/stash-vcs-doc
 
 ### Planned Features
 - **Improved Branching:** Support for advanced branching strategies.
-- **Conflict Resolution:** Tools for resolving merge conflicts.
+- ~~**Conflict Resolution:** Tools for resolving merge conflicts.~~
 - **Remote Repositories:** Support for remote repository synchronization.
 - **User Interface:** A graphical interface for easier interaction. (??)
 
