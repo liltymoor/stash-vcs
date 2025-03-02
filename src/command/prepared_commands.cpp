@@ -20,7 +20,7 @@ InitCommand::InitCommand()
  */
 void* InitCommand::action(ParsedArgs args) const {
     if (args.hasArg("verbose"))
-        INFO("Init command");
+        INFO("Init command\n");
 
     if (args.hasArg("description")) {
         print_desc();
@@ -58,7 +58,7 @@ void* AddCommand::action(ParsedArgs args) const {
 
     const bool verbose = args.hasArg("verbose"); 
     if (verbose)
-        INFO("Add command");
+        INFO("Add command\n");
 
     if (args.hasArg("description")) {
         print_desc();
@@ -107,7 +107,7 @@ CommitCommand::CommitCommand()
 void* CommitCommand::action(ParsedArgs args) const {
     const bool verbosedCommand = args.hasArg("verbose");
     if (verbosedCommand)
-        INFO("Commit command");
+        INFO("Commit command\n");
 
     if (args.hasArg("description")) {
         print_desc();
@@ -161,7 +161,7 @@ CheckoutCommand::CheckoutCommand()
  */
 void* CheckoutCommand::action(ParsedArgs args) const {
     if (args.hasArg("verbose"))
-        INFO("Checkout command");
+        INFO("Checkout command\n");
 
     if (args.hasArg("description")) {
         print_desc();
@@ -215,7 +215,7 @@ MergeCommand::MergeCommand()
 void* MergeCommand::action(ParsedArgs args) const {
     bool verbose = args.hasArg("verbose"); 
     if (verbose)
-        INFO("Merge command");
+        INFO("Merge command\n");
 
     if (args.hasArg("description")) {
         print_desc();
@@ -258,7 +258,7 @@ RevertToCommand::RevertToCommand()
  */
 void* RevertToCommand::action(ParsedArgs args) const {
     if (args.hasArg("verbose"))
-        INFO("Revert To command");
+        INFO("Revert To command\n");
 
     if (args.hasArg("description")) {
         print_desc();
@@ -301,7 +301,7 @@ RevertToArgs::RevertToArgs()
 */
 void* StatusCommand::action(ParsedArgs args) const {
     if (args.hasArg("verbose"))
-        INFO("Status command");
+        INFO("Status command\n");
 
     if (args.hasArg("description")) {
         print_desc();
@@ -337,7 +337,7 @@ StatusArgs::StatusArgs()
 */
 void* HelpCommand::action(ParsedArgs args) const {
     if (args.hasArg("verbose"))
-        INFO("Status command");
+        INFO("Status command\n");
 
     if (args.hasArg("description")) {
         print_desc();
