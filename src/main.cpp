@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     const RevertToCommand revertToCommand;
     const StatusCommand statusCommand;
     const HelpCommand helpCommand;
+    const ConfigCommand configCommand;
 
     auto invoker = CommandInvoker::getInstance();
 
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
     invoker->init_command(&revertToCommand);
     invoker->init_command(&statusCommand);
     invoker->init_command(&helpCommand);
+    invoker->init_command(&configCommand);
 
     if (!invoker->invoke_command(argc, argv)) ERROR("Command failed. Check output above to see more detailed info.");
 }

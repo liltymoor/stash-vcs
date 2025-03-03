@@ -16,6 +16,9 @@ private:
     inline const static std::filesystem::path stash_path = "./.stash"; ///< Path to the stash directory.
     inline static bool isExists = false; ///< Flag indicating whether the stash exists.
 
+    std::string configUsername;
+    std::string configEmail;
+
     /**
      * @brief Private constructor for the Stash class.
      */
@@ -40,6 +43,18 @@ public:
      */
     static const std::filesystem::path& getStashPath();
     static const std::filesystem::path& getUserPath();
+
+    void setStashUsername(const std::string& username);
+    void setStashEmail(const std::string& email);
+
+    std::string getConfigUsername() const;
+    std::string getConfigEmail() const;
+
+    void loadFromStash();
+    void stashMeta() const;
+
+    bool checkUserConfigured(const bool& verbose = false) const;
+
 };
 
 #endif // STASH_HPP

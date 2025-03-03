@@ -357,3 +357,64 @@ HelpArgs::HelpArgs()
 {
 
 }
+
+/**
+ * @brief Constructor for the ConfigCommand class.
+ */
+ ConfigCommand::ConfigCommand()
+ : Command("config", "Edit local stash config") {
+    expected_args = new ConfigArgs();
+}
+
+/**
+* @brief The action performed by the Config.
+* @param args The parsed arguments.
+* @return A pointer to the result of the action.
+*/
+void* ConfigCommand::action(ParsedArgs args) const {
+    if (args.hasArg("verbose"))
+        INFO("Status command\n");
+
+    if (args.hasArg("description")) {
+        print_desc();
+        return nullptr;
+    }
+
+    std::string username = args.hasArg("user") ? args.getArgValue("user") : std::string();
+    std::string email = args.hasArg("email") ? args.getArgValue("email") : std::string();
+
+    if (!username.empty()) {
+        Stash::getInstance().setStashUsername(username);
+        INFO("Username set");
+    }
+
+    if (!email.empty()) {
+        Stash::getInstance().setStashEmail(email);
+        INFO("Email set");
+    }
+
+    Stash::getInstance().stashMeta();
+
+    return nullptr;
+}
+
+/**
+* @brief Constructor for the ConfigArgs class.
+*/
+ConfigArgs::ConfigArgs()
+ : CommandArgs() // Init default args like verbose or description
+{
+    expected_args.push_back(new Arg(
+        "user",
+        "Argument to specify username in local stash config",
+        false,
+        true
+    ));
+
+    expected_args.push_back(new Arg(
+        "email",
+        "Argument to specify email in local stash config",
+        false,
+        true
+    ));
+}

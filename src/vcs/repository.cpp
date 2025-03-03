@@ -10,6 +10,7 @@
 #include <unordered_set>
 #include <variant>
 #include "../logger/logger.hpp"
+#include "stash.hpp"
 #include "state_diff.hpp"
 
 /**
@@ -104,6 +105,8 @@ void PersistenceStack::stashMeta() const {
         return;
     }
 
+    const std::string username = Stash::getInstance().getConfigUsername();
+
     metadataBranch[META_CURRENT_HEAD] = head->hash;
     if (head->prev != nullptr) {
         std::map<std::string, std::string> metadataFirstCommit;
@@ -111,6 +114,7 @@ void PersistenceStack::stashMeta() const {
         metadataFirstCommit[META_COMMIT_PREV] = head->prev->hash;
         metadataFirstCommit[META_COMMIT_MSG] = head->message;
         metadataFirstCommit[META_COMMIT_BRANCH] = head->branch;
+        metadataFirstCommit[META_COMMIT_USER] = username;
 
         MetadataHandler::save((Repo::getBranchesPath() / currentBranch / head->hash / META_FILENAME).c_str(),
                               metadataFirstCommit);
@@ -122,6 +126,7 @@ void PersistenceStack::stashMeta() const {
             metadataCommit[META_COMMIT_PREV] = prev.prev->hash;
             metadataCommit[META_COMMIT_MSG] = prev.message;
             metadataCommit[META_COMMIT_BRANCH] = prev.branch;
+            metadataCommit[META_COMMIT_USER] = username;
 
             MetadataHandler::save((Repo::getBranchesPath() / currentBranch / prev.hash / META_FILENAME).c_str(),
                                   metadataCommit);
@@ -133,6 +138,7 @@ void PersistenceStack::stashMeta() const {
         metadataLastCommit[META_COMMIT_PREV] = "NULL";
         metadataLastCommit[META_COMMIT_MSG] = prev.message;
         metadataLastCommit[META_COMMIT_BRANCH] = prev.branch;
+        metadataLastCommit[META_COMMIT_USER] = username;
 
         MetadataHandler::save((Repo::getBranchesPath() / currentBranch / prev.hash / META_FILENAME).c_str(),
                               metadataLastCommit);
@@ -142,6 +148,7 @@ void PersistenceStack::stashMeta() const {
         metadataLastCommit[META_COMMIT_PREV] = "NULL";
         metadataLastCommit[META_COMMIT_MSG] = head->message;
         metadataLastCommit[META_COMMIT_BRANCH] = head->branch;
+        metadataLastCommit[META_COMMIT_USER] = username;
 
         MetadataHandler::save((Repo::getBranchesPath() / currentBranch / head->hash / META_FILENAME).c_str(),
                               metadataLastCommit);
@@ -218,6 +225,10 @@ void PersistenceStack::commit(const std::string &message, const bool& verbose) {
         throw std::runtime_error("No changes staged");
     }
 
+    if (Repo::getInstance().isSignRequired() && !Stash::getInstance().checkUserConfigured()) {
+        throw UserNotConfigured();
+    }
+
     const auto newCommit = std::make_shared<Commit>(message, generate_hash(message), currentBranch, head);
     create_directories(Repo::getBranchesPath() / currentBranch / newCommit->hash / META_COMMIT_FILES_FOLDER);
 
@@ -281,6 +292,10 @@ void PersistenceStack::commit(const std::string &message, const bool& verbose) {
  * @param commit The Commit object.
  */
 void PersistenceStack::commit(const Commit &commit, const bool& verbose) {
+    if (Repo::getInstance().isSignRequired() && !Stash::getInstance().checkUserConfigured()) {
+        throw UserNotConfigured();
+    }
+
     std::string msg = "Reverted to commit " + commit.hash;
 
     const auto newCommit = std::make_shared<Commit>(msg, generate_hash(msg), currentBranch, head);
@@ -804,6 +819,7 @@ Repo::Repo()
         // TODO: Validate metadata
         repoName = metadata[META_REPO_NAME];
         branchStack = PersistenceStack(metadata[META_CURRENT_BRANCH]);
+        signCommits = metadata[META_STASH_USER_SIGN] == "true";
     }
 }
 
@@ -824,20 +840,21 @@ void Repo::initRepository(const RepoSettings &settings) {
     // TODO: Validate
     this->repoName = settings.str_repoName;
     this->branchStack = PersistenceStack();
+    this->signCommits = settings.userSignedCommits;
     branchStack.create_branch(settings.str_startBranchName);
 }
 
 /**
  * @brief Saves metadata to the stash.
  */
-void Repo::stashMeta() const {
+std::map<std::string, std::string> Repo::stashMeta() const {
     std::map<std::string, std::string> metadata;
     metadata[META_REPO_NAME] = repoName;
     metadata[META_CURRENT_BRANCH] = branchStack.getCurrentBranch();
-
-    MetadataHandler::save((Stash::getStashPath() / META_FILENAME).c_str(), metadata);
+    metadata[META_STASH_USER_SIGN] = signCommits ? "true" : "false";
 
     branchStack.stashMeta();
+    return metadata;
 }
 
 /**
@@ -884,3 +901,7 @@ bool Repo::IsEmpty() {
     Repo stashRepository = Repo::getInstance();
     return stashRepository.branchStack.isValid();
 }
+
+bool Repo::isSignRequired() const {
+    return signCommits;
+};

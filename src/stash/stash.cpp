@@ -20,6 +20,12 @@ RepoSettings ask_repo_stuff() {
 
     std::cout << "Please specify start branch name:" << std::endl;
     std::cin >> settings.str_startBranchName;
+
+    std::cout << "Commits must be signed [y/n]:" << std::endl;
+    std::string answer;
+    std::cin >> answer;
+    settings.userSignedCommits = answer == "y";
+
     settings.str_startBranchName = settings.str_startBranchName.empty() ? "core" : settings.str_startBranchName;
 
     return settings;
@@ -60,12 +66,14 @@ Stash::Stash() {
             return;
         }
 
-        Repo::getInstance().stashMeta();
+        stashMeta();
 
         INFO("Repository initialized");
     } else {
         isExists = true;
         // Ensure Repo::getInstance() is usable
+        loadFromStash();
+        checkUserConfigured(true);
         Repo::getInstance();
     }
 }
@@ -97,4 +105,45 @@ const std::filesystem::path& Stash::getStashPath() {
 
 const std::filesystem::path& Stash::getUserPath() {
     return user_dir_path;
+}
+
+void Stash::setStashUsername(const std::string& username) {
+    configUsername = username;
+};
+
+void Stash::setStashEmail(const std::string& email) {
+    configEmail = email;
+}
+
+std::string Stash::getConfigUsername() const {
+    return configUsername;
+}
+
+std::string Stash::getConfigEmail() const {
+    return configEmail;
+}
+
+void Stash::loadFromStash() {
+    if (exists(Stash::getStashPath() / META_FILENAME)) {
+        std::map<std::string, std::string> metadata = MetadataHandler::load(Stash::getStashPath() / META_FILENAME);
+        // TODO: Validate metadata
+        configUsername = metadata[META_STASH_USERNAME]  == "#" ? std::string() : metadata[META_STASH_USERNAME];
+        configEmail = metadata[META_STASH_EMAIL] == "#" ? std::string() : metadata[META_STASH_EMAIL];
+    }
+}
+
+void Stash::stashMeta() const {
+    auto metadata = Repo::getInstance().stashMeta();
+    metadata[META_STASH_USERNAME] = configUsername.empty() ? "#" : configUsername;
+    metadata[META_STASH_EMAIL] = configEmail.empty() ? "#" : configEmail;
+    MetadataHandler::save((Stash::getStashPath() / META_FILENAME).c_str(), metadata);
+}
+
+bool Stash::checkUserConfigured(const bool& verbose) const {
+    if (configUsername.empty() || configEmail.empty()) {
+        if (verbose) WARN("Stash doesn't configured with username or email. This may lead to problems if your repository needs to be user-signed.");
+        return false;
+    }
+
+    return true;
 }

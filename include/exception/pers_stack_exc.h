@@ -58,4 +58,16 @@ public:
     NoCommitsLeftException() : std::out_of_range("No commits back left") {}
 };
 
+/**
+ * @class NoCommitsLeftException
+ * @brief Exception thrown when there are no commits left to revert to.
+ */
+class UserNotConfigured : public std::runtime_error {
+public:
+    /**
+     * @brief Constructor for NoCommitsLeftException.
+     */
+    UserNotConfigured() : std::runtime_error("Your repository requires to sign your commits, but your user not configured. Please configure your user with 'stash config -u username -e email'.") {}
+};
+
 #endif // ITMO_VCS_PERS_STACK_EXC_H

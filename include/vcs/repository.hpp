@@ -22,10 +22,15 @@
 #define META_CURRENT_HEAD "CurrentHead" ///< Metadata key for current head commit.
 #define META_REPO_CORE_BRANCH "RepoStartBranch" ///< Metadata key for the core branch.
 
+#define META_STASH_USER_SIGN "UserSignedCommits" ///< Metadata key for b_userSignedCommits
+#define META_STASH_USERNAME "UsernameConfig" ///< Metadata key for storing username
+#define META_STASH_EMAIL "EmailConfig" ///< Metadata key for storing email
+
 #define META_COMMIT_MSG "CommitMessage" ///< Metadata key for commit message.
 #define META_COMMIT_PREV "PrevCommit" ///< Metadata key for previous commit.
 #define META_COMMIT_HASH "CommitHash" ///< Metadata key for commit hash.
 #define META_COMMIT_BRANCH "CommitBranch" ///< Metadata key for commit branch.
+#define META_COMMIT_USER "CommitUser" ///< Metadata key for storing commit owner's username
 
 #define META_STAGE_FILES_TO_UNTRACK "Files2Untrack" ///< Metadata key for files being marked as untracked
 
@@ -118,7 +123,7 @@ public:
     void commit(const std::string& message, const bool& verbose = false);
 
     /**
-     * @brief Creates a new commit from an existing Commit object.
+     * @brief Creates a new commit from an existing Commit object.sign
      * @param commit The Commit object.
      */
     void commit(const Commit &commit, const bool& verbose = false);
@@ -223,6 +228,7 @@ public:
 struct RepoSettings {
     std::string str_repoName; ///< The name of the repository.
     std::string str_startBranchName; ///< The name of the starting branch.
+    bool userSignedCommits;
 
     /**
      * @brief Converts the settings to a map of key-value pairs.
@@ -239,6 +245,8 @@ class Repo {
 private:
     std::string repoName; ///< The name of the repository.
     PersistenceStack branchStack; ///< The persistence stack for branches.
+    bool signCommits;
+
     static Repo *stashRepository; ///< Pointer to the singleton repository instance.
     inline const static std::filesystem::path branchesPath = Stash::getStashPath() / "branches"; ///< Path to the branches folder.
 
@@ -267,13 +275,15 @@ public:
     /**
      * @brief Saves metadata to the stash.
      */
-    void stashMeta() const;
+    std::map<std::string, std::string> stashMeta() const;
 
     /**
      * @brief Retrieves the persistence stack for the repository.
      * @return Reference to the persistence stack.
      */
     PersistenceStack& getRepoStack();
+
+    bool isSignRequired() const;
 
     /**
      * @brief Retrieves the singleton instance of the repository.
