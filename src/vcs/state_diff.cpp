@@ -25,13 +25,14 @@ void FileDiff::print(const int limit) const {
         INFO(FRED(std::string("File deleted")));
         return;
     }
-
+    uint32_t lineCounter = 0;
     for (const auto& change : changes) {
-        if (limit && change.lineNumber > limit) {
+        if (limit && lineCounter > limit) {
             INFO("... (truncated)");
             break;
         }
         INFO(change.lineNumber << ": " << change.toString());
+        lineCounter++;
     }
 }
 

@@ -4,6 +4,7 @@
 #include "stash.hpp"
 #include "repository.hpp"
 #include "../logger/logger.hpp"
+#include <string>
 
 /**
  * @brief Constructor for the InitCommand class.
@@ -118,8 +119,9 @@ void* CommitCommand::action(ParsedArgs args) const {
         // TODO: Verify value
         INFO("Commiting...")
         auto msg = args.getArgValue("message");
+        const bool emptyCommit = args.hasArg("empty");
         
-        Repo::getInstance().getRepoStack().commit(msg, verbosedCommand);
+        Repo::getInstance().getRepoStack().commit(msg, verbosedCommand, emptyCommit);
         Repo::getInstance().stashMeta();
     }
 
@@ -142,6 +144,10 @@ CommitArgs::CommitArgs()
                                     true));
     expected_args.push_back(new Arg("list",
                                     "List current branch commits",
+                                    false,
+                                    false));
+    expected_args.push_back(new Arg("empty",
+                                    "For empty commits",
                                     false,
                                     false));
 }
@@ -172,7 +178,7 @@ void* CheckoutCommand::action(ParsedArgs args) const {
         std::string value = args.getArgValue("branch");
 
         Repo::getInstance().getRepoStack().checkout_branch(value);
-        Repo::getInstance().stashMeta();
+        Stash::getInstance().stashMeta();
     }
 
     if (args.hasArg("list")) {
@@ -414,6 +420,53 @@ ConfigArgs::ConfigArgs()
     expected_args.push_back(new Arg(
         "email",
         "Argument to specify email in local stash config",
+        false,
+        true
+    ));
+}
+
+/**
+ * @brief Constructor for the ConfigCommand class.
+ */
+ ResetCommand::ResetCommand()
+ : Command("reset", "Reset your branch state. You can set your HEAD to special commit or discard changes.") {
+    expected_args = new ResetArgs();
+}
+
+/**
+* @brief The action performed by the Config.
+* @param args The parsed arguments.
+* @return A pointer to the result of the action.
+*/
+void* ResetCommand::action(ParsedArgs args) const {
+    const bool verbose = args.hasArg("verbose"); 
+    if (verbose)
+        INFO("Reset command\n");
+
+    if (args.hasArg("description")) {
+        print_desc();
+        return nullptr;
+    }
+
+    if (args.hasArg("hash")) {
+        const std::string commitHash = args.getArgValue("hash");
+
+        Repo::getInstance().getRepoStack().reset_to(commitHash);
+        Repo::getInstance().stashMeta();
+    }
+
+    return nullptr;
+}
+
+/**
+* @brief Constructor for the ConfigArgs class.
+*/
+ResetArgs::ResetArgs()
+ : CommandArgs() // Init default args like verbose or description
+{
+    expected_args.push_back(new Arg(
+        "hash",
+        "Argument to specify commit hash. This hash will be used to reset your branch state.",
         false,
         true
     ));

@@ -67,7 +67,11 @@ struct Commit {
      */
     Commit(std::map<std::string, std::string>& metaData, const std::unordered_map<std::string, File>& commit_files);
 
+    Commit(const std::string& hash);
+
     void set_commit_files(const std::unordered_map<std::string, File>& commit_files);
+    void set_commit_data(std::map<std::string, std::string>& metaData, const std::unordered_map<std::string, File>& commit_files);
+    bool is_valid() const;
 };
 
 /**
@@ -120,7 +124,7 @@ public:
      * @brief Creates a new commit with a message.
      * @param message The commit message.
      */
-    void commit(const std::string& message, const bool& verbose = false);
+    void commit(const std::string& message, const bool& verbose = false, const bool& empty = false);
 
     /**
      * @brief Creates a new commit from an existing Commit object.sign
@@ -146,7 +150,7 @@ public:
      * @param changes File changes to stage.
      * @return Files staged count (1 by default)
      */
-     uint32_t stageFile(const std::string& filename,  const FileDiff changes);
+     uint32_t stageFile(const std::string& filename,  const FileDiff changes, const bool& isRegexp = false);
 
     /**
      * @brief Reverts to the previous commit.
@@ -158,6 +162,8 @@ public:
      * @param hash The hash of the commit to revert to.
      */
     void revert_to(const std::string &hash);
+
+    void reset_to(const std::string& hash);
 
     /**
      * @brief Initializes a new branch.
@@ -214,6 +220,8 @@ public:
      * @brief Saves metadata to the stash.
      */
     void stashMeta() const;
+
+    std::shared_ptr<Commit> predefineCommit(const std::string hash);
 
     /**
      * @brief Logs the current state of the persistence stack.
